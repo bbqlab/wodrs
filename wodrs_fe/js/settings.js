@@ -4,7 +4,9 @@ App.prototype.load_settings = function()
   // is encoded in JSON
   //console.log("LOAD SETTINGS");
   var default_settings = { 
-                            backend: ['http://192.168.1.12:3000/',false],
+                            backend: ['http://wodrs.galiga.it:3000/',false],
+                            username: ['',false],
+                            token:['', false],
                             game_time: [60,false],
                             app_name: ['Wodrs',false],
                             current_version: [0,false],

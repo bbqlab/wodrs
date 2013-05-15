@@ -31,8 +31,33 @@
 
       <div id='content'>
 
-        <div class='panel' id='game_list' title='Game list' selected='true'>
+        <div class='panel' id='register' title='Wodrs register' 
+             data-footer='none'>
+            <label>Username</label>
+            <input class='jq-ui-forms' id='reg_username' placeholder='Username'/>
+            <label>Password</label>
+            <input class='jq-ui-forms' id='reg_password' placeholder='Password'/>
+            <a class='button' href='register'/>Register</a>
+        </div>
+
+        <div class='panel' id='login' title='Wodrs login' selected='true'
+             data-footer='none'>
+            <label>Username</label>
+            <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
+            <label>Password</label>
+            <input class='jq-ui-forms' id='login_password' placeholder='Password' value=''/>
+            <a class='button' href='login'/>Login</a>
+            <a class='button' href='show_register'/>Sign in</a>
+        </div>
+
+        <div class='panel' id='game_list' title='Game list' 
+             data-footer='none'>
           <a href='start_game' class='button'>Let's play!</a>
+          <a href='logout' class='button'>Logout</a>
+          
+          <h3>Partite</h3>
+          <ul id='game_details'>
+          </ul>
         </div>
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
@@ -46,9 +71,16 @@
             <div class='word' id='word_4'>Canzoniere</div>
             <div class='word' id='word_5'>Trenino</div>
           </div>
+          <a class='button' href='stop_game'/>Stop Game</a>
 
         </div>
 
+        <div class='panel' id='results' title='Finish!' 
+             data-footer='none'>
+          <div id='results_content'>
+          </div>
+          <a href='show_game_list' class='button'>Go Back</a>
+        </div>
       </div>
     </div>
 

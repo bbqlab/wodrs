@@ -81,16 +81,98 @@ function onUpdateAvailable(evt)
 }
 
 app.main = function(){
-  console.log("Main");
   app.load_settings();
-  app.start_game();
+  console.log("Main token:" + app.token);
+
+  if(!app.is_logged())
+  {
+    $.ui.loadContent('#login', false, false, 'fade');
+  }
+  else
+  {
+    app.show_game_list();
+  }
+//  app.start_game();
+};
+
+app.show_game_list = function() {
+  console.log
+  $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
+    $('#game_details').html('');
+    $.each(res.games, function(index, game) {
+      $('#game_details').append("<li>" + game.type + ": " + game.state + " SCORE: " + game.score + "</li>");
+    });
+    $.ui.loadContent('#game_list', false, false, 'fade');
+  });
 };
 
 app.start_game = function() {
-  window.scrollTo(0,1);
-  $.ui.loadContent('#game_play',false,false,'fade');
-  window.scrollTo(0,1);
-  app.current_game = new WodrsGame();
-  app.current_game.start();
+  $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
+    console.log("Start Game!"); 
+    window.scrollTo(0,1);
+    $.ui.loadContent('#game_play',false,false,'fade');
+    app.current_game = new WodrsGame(res.data.id);
+    app.current_game.start();
+  });
+};
+
+app.stop_game = function() {
+  $.getJSON(app.backend + 'stop_game', {token: app.token, 
+                                        id: app.current_game.id,
+                                        score: app.current_game.score}, function(res) { 
+    app.current_game.stop();
+  });
+}
+
+app.show_register = function() {
+  $.ui.loadContent('#register',false,false,'fade');
+};
+
+app.register = function() {
+  username = $('#reg_username').val();
+  password = $('#reg_password').val();
+  console.log("Registering " + username +"/"+ password);
+  $.getJSON(app.backend + 'register', {username: username, password: password },
+            function(data) {
+              if(data.error)
+              {
+                $('body').popup({title: "Error", message: data.data });
+              }
+              else
+              {
+                app.token = data.data.token;
+                localStorage.setItem('token', JSON.stringify(app.token))
+                $.ui.loadContent('#game_list', false, false, 'fade');
+              }
+    });
+};
+
+app.is_logged = function() {
+  return app.token != '';
+};
+
+app.login = function() {
+  username = $('#login_username').val();
+  password = $('#login_password').val();
+  console.log("Login of " + username +"/"+ password);
+  console.log(app.backend + 'login');
+  $.getJSON(app.backend + 'login', {username: username, password: password },
+            function(data) {
+              if(data.error)
+              {
+                $('body').popup({title: "Error", message: data.data });
+              }
+              else
+              {
+                app.token = data.data.token;
+                localStorage.setItem('token', app.token)
+                $.ui.loadContent('#game_list', false, false, 'fade');
+              }
+    });
+};
+
+app.logout = function() {
+  localStorage.setItem('token', '')
+  $.ui.loadContent('#login', false, false, 'fade');
 };
 

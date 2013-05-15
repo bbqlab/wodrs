@@ -1,22 +1,26 @@
 var mongo = require('./db'),
     config = require('./config');
 
-exports.login = function(username, password, done) {
-    console.log('auth: ' + username);
+exports.login = function(req, res) {
+    username = req.query.username;
+    password = req.query.password;
     mongo.db.collection(config.users_table, function(err, collection) {
       collection.findOne({ 'username': username }, function (err, user) {
-        console.log(JSON.stringify(user));
-        if (err) { return done(err); }
-        console.log('noerr');
-        console.log(JSON.stringify(user));
+        if (err) { 
+          res.send({error: true, data: "Error"});
+          return; 
+        }
         if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
+          res.send({error: true, data: "Incorrect username"});
+          return;
         }
-        console.log('testing ' + user.password +' == ' + password);
-        if (user.password != password) {
-          return done(null, false, { message: 'Incorrect password.' });
+        else if(user.password != password) {
+          res.send({error: true, data: "Incorrect password"});
         }
-        return done(null, user);
+        else
+        {
+          res.send({error: false, data: {'token' : req.sessionID}});
+        }
       });
    });
 };
@@ -24,10 +28,15 @@ exports.login = function(username, password, done) {
 exports.logout = function(req, res){
   req.logout();
   res.redirect('/');
-});
+};
 
 exports.register = function(req, res) {
-  user = req.body;
+  console.log(req.query);
+  user = { username: req.query.username,
+           password: req.query.password,
+           token: req.sessionID };
+
+  
   console.log("Registering: " + user.username);
   mongo.db.collection(config.users_table, function(err, collection) {
       collection.findOne({'username':user.username}, function(err, item) {
@@ -36,23 +45,22 @@ exports.register = function(req, res) {
            mongo.db.collection(config.users_table, function(err, collection) {
                  collection.insert(user, {safe:true}, function(err, result) {
                      if (err) {
-                       res.send({'error':'An error has occurred'});
+                       res.send({'error': true, 'data': 'Error'});
                      } else {
                        console.log('Success: ' + JSON.stringify(result[0]));
-                       res.send('Success: ' + JSON.stringify(result[0]));
+                       res.send({'error': false, 'data': {token: req.sessionID}});
                      }
                  });
            });
          }
          else
          {
-           res.send({'error':'Item exists'});
+           res.send({'error': true, 'data': 'Username already taken.'});
          }
 
       });
   });
 }
-
 
 exports.findOne = function(params, callback) {
     console.log('Retrieving user: ' + params['username']);
