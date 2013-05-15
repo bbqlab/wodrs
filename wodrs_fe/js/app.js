@@ -84,6 +84,9 @@ app.main = function(){
   app.load_settings();
   console.log("Main token:" + app.token);
 
+  app.start_game();
+  return;
+
   if(!app.is_logged())
   {
     $.ui.loadContent('#login', false, false, 'fade');
@@ -92,7 +95,6 @@ app.main = function(){
   {
     app.show_game_list();
   }
-//  app.start_game();
 };
 
 app.show_game_list = function() {
@@ -107,13 +109,13 @@ app.show_game_list = function() {
 };
 
 app.start_game = function() {
-  $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
+//  $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
     console.log("Start Game!"); 
     window.scrollTo(0,1);
     $.ui.loadContent('#game_play',false,false,'fade');
-    app.current_game = new WodrsGame(res.data.id);
+    app.current_game = new WodrsGame();//res.data.id);
     app.current_game.start();
-  });
+//  });
 };
 
 app.stop_game = function() {

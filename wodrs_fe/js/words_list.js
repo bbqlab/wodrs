@@ -3,8 +3,8 @@ function WordList(){
   this.dictionary = [];
   this.words = [];
   this.completed = [];
-  this.load();
   this.n_dictionary_words=0;
+  this.load();
 }
 
 WordList.prototype.each = function(callback) {
@@ -14,7 +14,7 @@ WordList.prototype.each = function(callback) {
 };
 
 WordList.prototype.load = function() {
-  this.dictionary = english_dictionary;
+  this.dictionary = italian_dictionary;
   this.n_dictionary_words = this.dictionary.length;
   this.init_current_words();
 };
@@ -29,7 +29,7 @@ WordList.prototype.take_dictionary_words = function(n) {
   var i=0,id;
   var words = [];
 
-  for(;i<=n;i++)
+  for(;i<n;i++)
   {
     id=Math.floor(Math.random()*this.n_dictionary_words);
     words = words.concat(this.dictionary.splice(id,1));
@@ -59,6 +59,7 @@ WordList.prototype.get_word = function(id) {
 };
 
 WordList.prototype.update_word = function(id) {
-  this.words[id]=this.take_dictionary_words(1);
+
+  this.words[id]=this.take_dictionary_words(1)[0];
 };
 

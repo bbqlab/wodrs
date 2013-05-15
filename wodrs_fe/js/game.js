@@ -18,6 +18,8 @@ WodrsGame.prototype.start = function() {
 
   window.scrollTo(0,1);
   setTimeout( "$('#typing')[0].focus();", 10);
+
+
   this.words_slider.addClass('animate');
 };
 
@@ -26,12 +28,17 @@ WodrsGame.prototype.timer_tick = function() {
   var game = app.current_game;
   var game_time = --game.game_time;
 
-  //if(game_time==0) game.stop();
+  if(game_time==0) game.stop();
+
+  if(game_time<10)
+  {
+    if(game_time%2)
+      $('.game_timer').removeClass('bounce');
+    else
+      $('.game_timer').addClass('bounce');
+  }
 
   $('.game_timer').html('0:'+game_time);
-
-  // speed up animation
-  //this.words_slider[0].style
 
   
 };
@@ -69,7 +76,7 @@ WodrsGame.prototype.check_word = function() {
 
   this.n_key_pressed++;
 
-  if( id>0 )
+  if( id>=0 )
   {
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
@@ -77,7 +84,7 @@ WodrsGame.prototype.check_word = function() {
     this.clear_current_word();
   }
 
-  $('.game_score').html(this.n_key_pressed + '/' + this.n_key_matched + '(' + this.score + ')');
+  $('.game_score').html(this.n_key_pressed + '/' + this.n_key_matched + ' (' + this.score + ')');
 
 };
 
@@ -103,6 +110,14 @@ WodrsGame.prototype.refresh_word = function() {
 
 WodrsGame.prototype.bind_events = function() {
   $('#typing').on('keydown',this.key_down );
+  this.words_slider.on('webkitAnimationEnd',function(){ 
+
+    this.style.webkitAnimationDuration = app.current_game.game_time/6+1 + 's';
+    this.style.webkitAnimationPlayState = "paused";
+    this.style.webkitAnimationPlayState = "running";
+
+  });
+
 };
 
 WodrsGame.prototype.populate_list = function() {
