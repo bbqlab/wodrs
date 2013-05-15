@@ -12,8 +12,29 @@
 }*/
 
 
+@font-face
+{
+  font-family: wodrfont;
+  src: url('MBBlockType.ttf');/*
+  src: url('KOMIKRAK.ttf');
+  src: url('Mignone.ttf');
+  src: url('Neon.ttf');
+  src: url('Neon2.ttf');
+  src: url('Fishfingers.ttf');
+  src: url('nakedchick.ttf');*/
+}
+
+html,body {
+  font-family: wodrfont !important;
+}
+
+
 #typing {
-  opacity: 0;
+  position: absolute;
+  overflow:hidden;
+  width: 0px;
+  height: 0px;
+  border: 1px solid rgb(19,29,38);
 }
 
 
@@ -29,7 +50,6 @@
 
 .game_timer {
 	color:#fff;
-  text-shadow: 1px 1px 20px #99f;
   font-size: 30px;
   position: absolute;
   top: 5px;
@@ -45,22 +65,27 @@
 }
 
 #words_slider {
-  font-size: 70px;
-  font-family: Helvetica;
-  font-weight: bold;
+  font-size: 60px;
+  font-family: wodrfont;
+  /*font-weight: bold;*/
   -webkit-transform:translate3d(0,0,0);
-  text-shadow: 1px 1px 30px #99f;
+  -webkit-box-sizing: border-box;
 
-  -webkit-backface-visibility: hidden;
+  text-shadow: 0px 0px 15px #9f9;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
 	-webkit-box-sizing:border-box; 
   box-sizing:border-box;
   text-align: center;
-  height: 400px;
+  height: 300px; 
+  margin-top: 10px;
   -webkit-transition: opacity .5s;
   opacity: 0;
+  -webkit-transform-origin-z: 0px;
+  -webkit-transform-origin-x: 200px;
+  -webkit-transform-origin-y: 50%;
+  -webkit-perspective: none;
 }
 
 .animate {
@@ -68,7 +93,7 @@
   -webkit-transform-style: preserve-3d;
 
   -webkit-animation-timing-function: linear;
-  -webkit-animation-duration: 5s;
+  -webkit-animation-duration: 2s;
   -webkit-animation-name: rotate;
   -webkit-animation-iteration-count: infinite;
 
@@ -87,12 +112,15 @@
   text-transform: lowercase;
   -webkit-transform:translate3d(0,0,0);
   -webkit-backface-visibility: hidden;
+  -webkit-box-sizing: border-box;
+  -webkit-transform-style: preserve-3d;
+
   position: absolute;
   top: 0px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  height: 400px;
+  height: 100%; 
 
 }
 

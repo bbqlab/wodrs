@@ -87,10 +87,10 @@ app.main = function(){
 };
 
 app.start_game = function() {
-  console.log("Start Game!"); 
+  window.scrollTo(0,1);
   $.ui.loadContent('#game_play',false,false,'fade');
+  window.scrollTo(0,1);
   app.current_game = new WodrsGame();
   app.current_game.start();
-  window.scrollTo(0,1);
 };
 

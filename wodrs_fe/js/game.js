@@ -5,6 +5,8 @@ function WodrsGame(){
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
+  this.n_key_pressed=0;
+  this.n_key_matched=0;
 }
 
 WodrsGame.prototype.start = function() {
@@ -12,7 +14,9 @@ WodrsGame.prototype.start = function() {
   this.populate_list();
   this.bind_events();
   this.game_interval = window.setInterval( this.timer_tick, 1000 );
-  $('#typing')[0].focus();
+
+  window.scrollTo(0,1);
+  setTimeout( "$('#typing')[0].focus();", 10);
   this.words_slider.addClass('animate');
 };
 
@@ -40,15 +44,18 @@ WodrsGame.prototype.stop = function() {
 WodrsGame.prototype.key_down = function(evt) {
   var key = evt.which;
 
+
   // check if keycode è un ascii lettera US no numeri, caratteri speciali
   if( key >= 65 &&  key <= 90 )
   {
     app.current_game.add_letter(String.fromCharCode(key));
   }
 
+  app.current_game.check_word();
+
   if( key == 13 )
   {
-    app.current_game.check_word();
+    app.current_game.clear_current_word();
   }
 
 };
@@ -58,23 +65,23 @@ WodrsGame.prototype.check_word = function() {
   var id = this.word_list.check_word(word);
   var new_word;
 
+  this.n_key_pressed++;
+
   if( id>0 )
   {
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
     $('#word_'+id).html(new_word);
-  }
-  else
-  {
-    console.log("PERSO!");
+    this.clear_current_word();
   }
 
-  this.clear_current_word();
+  $('.game_score').html(this.n_key_pressed + '/' + this.n_key_matched + '(' + this.score + ')');
 
 };
 
 WodrsGame.prototype.word_hit = function(word) {
   this.score += word.length*this.rules.letter_weight;
+  this.n_key_matched+=word.length;
   $('.game_score').html(this.score);
 };
 

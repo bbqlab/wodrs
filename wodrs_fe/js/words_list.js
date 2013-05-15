@@ -1,11 +1,10 @@
-list = ['antani', 'perdue','ciao','peppino','sblindato','puppa','dai','fabrysfigato','cibo',
-        'mangiare','freddo','morte','estate','porcoiltuodio'];
 
 function WordList(){
   this.dictionary = [];
   this.words = [];
   this.completed = [];
   this.load();
+  this.n_dictionary_words=0;
 }
 
 WordList.prototype.each = function(callback) {
@@ -15,19 +14,32 @@ WordList.prototype.each = function(callback) {
 };
 
 WordList.prototype.load = function() {
-  this.dictionary = list;
+  this.dictionary = english_dictionary;
+  this.n_dictionary_words = this.dictionary.length;
   this.init_current_words();
 };
 
 WordList.prototype.init_current_words = function() {
 
-  this.words = this.dictionary.splice(0,6);
+  this.words = this.take_dictionary_words(6);
+
+};
+
+WordList.prototype.take_dictionary_words = function(n) {
+  var i=0,id;
+  var words = [];
+
+  for(;i<=n;i++)
+  {
+    id=Math.floor(Math.random()*this.n_dictionary_words);
+    words = words.concat(this.dictionary.splice(id,1));
+  }
+
+  return words;
 
 };
 
 WordList.prototype.check_word = function(word) {
-
-  console.log("Controllo la parola " + word);
 
   var id = this.words.indexOf(word.toLowerCase());
   if(id>=0)
@@ -47,6 +59,6 @@ WordList.prototype.get_word = function(id) {
 };
 
 WordList.prototype.update_word = function(id) {
-  this.words[id]=this.dictionary.pop();
+  this.words[id]=this.take_dictionary_words(1);
 };
 
