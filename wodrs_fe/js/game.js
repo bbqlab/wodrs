@@ -1,4 +1,5 @@
-function WodrsGame(){
+function WodrsGame(id){
+  this.id = id;
   this.words = [];
   this.current_word = [];
   this.game_time = 60;//app['game_time'];
@@ -34,7 +35,8 @@ WodrsGame.prototype.timer_tick = function() {
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
     $('#words_slider').removeClass('animate');
-    $('body').popup({title: "Finish!", message: "<h1>You did " + this.score + ' points!</h1>'});
+    $('#results_content').html("<h1>You did " + this.score + ' points!</h1>');
+    $.ui.loadContent('#results', false, false, 'fade');
 };
 
 WodrsGame.prototype.key_down = function(evt) {

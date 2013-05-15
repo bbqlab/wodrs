@@ -1,50 +1,47 @@
 var express = require('express'),
     wodrs = require('./app/wodrs'),
     users = require('./app/users'),
-    passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn,
+    games = require('./app/games'),
     config = require('./app/config');
 
-passport.use(new LocalStrategy(users.login));
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
 
 var app = express();
-
 app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.bodyParser());
-  app.use(express.session({ secret: 'keyboard cat' }));
-  app.use(passport.initialize());
-  app.use(passport.session());
+  app.use(express.session({ secret: 'tarapiatapiococomefosseantani' }));
+  app.use(express.methodOverride());
+  app.use(allowCrossDomain);
   app.use(app.router);
 });
 
-app.get('/', function(req, res) { res.send({'msg': 'index'})});
- 
-app.get('/games', ensureLoggedIn('/'), function(req, res) {
-    res.send([{name:'wine1'}, {name:'wine2'}]);
-});
-
-app.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    res.send({'msg': 'Auth successful ' + req.user.username});
-  });
-
-app.get('/logout', user.logout);
-app.get('/login', function(req, res) { res.send({error:'not auth'})});
-app.post('/register', users.register);
+app.get('/login', users.login);
+app.get('/logout', users.logout);
+app.get('/register', users.register);
 
 app.listen(config.port);
 
-console.log('Listening on port 3000...');
+// PRIVATE
+
+app.get('/games', function(req, res) {
+    res.send([{name:'wine1'}, {name:'wine2'}]);
+});
+
+app.get('/start_game', games.start_game);
+app.get('/stop_game', games.stop_game);
+app.get('/list_games', games.list_games);
+
+console.log('Listening on port ' + config.port);
