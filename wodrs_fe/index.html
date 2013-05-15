@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+
+  <head>
+    <title>Wodrs</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/jq.ui.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
+    <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/log.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/settings.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/words_list.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+
+  <body>
+
+    <div id='jQUi'>
+
+      <header id='game_play_header'>
+          <div class='game_score right'>0</div>
+          <div class='game_timer left'>1:00</div>
+          <div class='word_typer'></div>
+      </header>
+
+      <div id='content'>
+
+        <div class='panel' id='game_list' title='Game list' selected='true'>
+          <a href='start_game' class='button'>Let's play!</a>
+        </div>
+
+        <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
+          <input type='text' id='typing'>
+
+          <div id="words_slider">
+            <div class='word' id='word_0'>Palloncino</div>
+            <div class='word' id='word_1'>Scarpa</div>
+            <div class='word' id='word_2'>Antani</div>
+            <div class='word' id='word_3'>Sblinda</div>
+            <div class='word' id='word_4'>Canzoniere</div>
+            <div class='word' id='word_5'>Trenino</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

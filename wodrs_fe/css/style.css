@@ -1,0 +1,112 @@
+/*html, body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: white;
+  font-size: 70px;
+  font-family: Helvetica;
+  font-weight: bold;
+  -webkit-transform:translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+  text-shadow: 1px 1px 30px #99f;
+}*/
+
+
+#typing {
+  opacity: 0;
+}
+
+
+.word_typer, .game_score { 
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+	color:#fff;
+  text-shadow: 1px 5px 20px #99f;
+  font-size: 30px;
+  text-transform: lowercase;
+} /* These properties combine to create the look of the input fields. */
+
+.game_timer {
+	color:#fff;
+  text-shadow: 1px 1px 20px #99f;
+  font-size: 30px;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+
+
+/*** ANIMATION ***/
+
+@-webkit-keyframes rotate {
+  0% { -webkit-transform: rotateX(360deg); }
+  100% { -webkit-transform: rotateX(0deg); }
+}
+
+#words_slider {
+  font-size: 70px;
+  font-family: Helvetica;
+  font-weight: bold;
+  -webkit-transform:translate3d(0,0,0);
+  text-shadow: 1px 1px 30px #99f;
+
+  -webkit-backface-visibility: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+	-webkit-box-sizing:border-box; 
+  box-sizing:border-box;
+  text-align: center;
+  height: 400px;
+  -webkit-transition: opacity .5s;
+  opacity: 0;
+}
+
+.animate {
+  -webkit-transform:translate3d(0,0,0);
+  -webkit-transform-style: preserve-3d;
+
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-duration: 5s;
+  -webkit-animation-name: rotate;
+  -webkit-animation-iteration-count: infinite;
+
+  opacity: 1 !important;
+}
+
+.speed_1 {
+  
+}
+
+.speed_2 {
+
+}
+
+.word {
+  text-transform: lowercase;
+  -webkit-transform:translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 400px;
+
+}
+
+#word_1 { -webkit-transform: rotateX(300deg); }
+#word_2 { -webkit-transform: rotateX(240deg); }
+#word_3 { -webkit-transform: rotateX(180deg); }
+#word_4 { -webkit-transform: rotateX(120deg); }
+#word_5 { -webkit-transform: rotateX(60deg); }
+
+
+.left {
+  float:left;
+}
+
+.right {
+  float: right;
+}
