@@ -15,7 +15,8 @@
 @font-face
 {
   font-family: wodrfont;
-  src: url('MBBlockType.ttf');/*
+  src: url('MBBlockType.ttf');
+  /*src: url('MBBlockType.ttf');
   src: url('KOMIKRAK.ttf');
   src: url('Mignone.ttf');
   src: url('Neon.ttf');
@@ -27,7 +28,6 @@
 html,body {
   font-family: wodrfont !important;
 }
-
 
 #typing {
   position: absolute;

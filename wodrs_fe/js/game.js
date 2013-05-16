@@ -8,6 +8,7 @@ function WodrsGame(id){
   this.words_slider = $('#words_slider');
   this.n_key_pressed=0;
   this.n_key_matched=0;
+  this.audio_ok = new Audio('drop.wav');
 }
 
 WodrsGame.prototype.start = function() {
@@ -78,6 +79,7 @@ WodrsGame.prototype.check_word = function() {
 
   if( id>=0 )
   {
+    this.audio_ok.play();
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
     $('#word_'+id).html(new_word);
