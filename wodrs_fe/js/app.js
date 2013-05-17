@@ -131,17 +131,17 @@ app.show_game_list = function() {
 
 app.fill_game_list = function(games) {
   var html = '';
-  $('#game_details').html(html);
+  $('#completed_games').html(html);
+  $('#running_games').html(html);
   console.log(games);
   $.each(games.running, function(index, game) {
-    console.log(game);
     html = $.template('view_game_row', {game: game});
     $('#running_games').append(html);
   });
 
   $.each(games.completed, function(index, game) {
-    html = $.template('games_row', {game: game});
-    $('#running_games').append(html);
+    html = $.template('view_game_row', {game: game});
+    $('#completed_games').append(html);
   });
 
   if(games.pending && games.pending.length > 0)
