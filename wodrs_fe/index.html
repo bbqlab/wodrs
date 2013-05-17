@@ -77,24 +77,32 @@
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
           <input type='text' id='typing'>
           <div id="words_slider">
-            <div class='word' id='word_0'>Palloncino</div>
-            <div class='word' id='word_1'>Scarpa</div>
-            <div class='word' id='word_2'>Antani</div>
-            <div class='word' id='word_3'>Sblinda</div>
-            <div class='word' id='word_4'>Canzoniere</div>
-            <div class='word' id='word_5'>Trenino</div>
+            <div class='word' id='word_0'></div>
+            <div class='word' id='word_1'></div>
+            <div class='word' id='word_2'></div>
+            <div class='word' id='word_3'></div>
+            <div class='word' id='word_4'></div>
+            <div class='word' id='word_5'></div>
           </div>
-          <a class='button' href='stop_game'/>Stop Game</a>
-
         </div>
 
         <div class='panel' id='results' title='Finish!' data-footer='none' style='overflow: hidden;' >
-          <div class='meter'><span id='stats'><span></span></span></div>
           <input type='hidden' game_id=''>
-          <div id='results_content'>
-          </div>
-          <a href='show_game_list' class='button'>Go Back</a>
+
+          <div class='padder'>
+            <h4 id='results_score' >Score: 100</h3><br>
+            <h4 id='results_precision'>Precision: 20</h4>
+            <div class='meter'><span id='stats_precision'><span></div><br>
+
+            <h4 id='results_n_key_pressed'>Pressed keys: 23</h4>
+            <div class='meter'><span id='stats_n_key_pressed'><span></div><br>
+
+            <h4 id='results_n_key_matched'>Matched keys: 2323</h4>
+            <div class='meter'><span id='stats_n_key_matched'><span></div><br>
+
+            <a href='show_game_list' class='button center'>Done</a>
         </div>
+
       </div>
     </div>
 
