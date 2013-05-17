@@ -25,7 +25,8 @@ class Games extends BaseEntity
   var $gamesId;
   var $player1;
   var $player2;
-  var $score;
+  var $score1;
+  var $score2;
   var $date;
   var $state;
   var $turn;
@@ -34,9 +35,42 @@ class Games extends BaseEntity
   {
     $this->player1 = '';
     $this->player2 = '';
-    $this->score = array();
+    $this->score1 = -1;
+    $this->score2 = -1;
     $this->date = date("Y-m-d H:i:s");
     $this->state = 'pending';
     $this->turn = 1;
+  }
+
+  public function getRole($user)
+  {
+    if($this->player1 == $user->usersId)
+    {
+      return 1;
+    }
+
+    return 2;
+  }
+
+  public function setScore($user, $score)
+  {
+    $role = $this->getRole($user);
+    $scoreLabel = 'score' . $role;
+    $this->$scoreLabel = $score;
+    
+    if($this->score1 >= 0 and $this->score2 >= 0)
+    {
+      $this->state = 'completed';
+    }
+
+    $this->save();
+  }
+
+  public function serializeScore()
+  {
+  }
+
+  public function deserializeScore()
+  {
   }
 }

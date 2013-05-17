@@ -143,12 +143,29 @@ class Wodrs extends CI_Controller {
     $user = new Users();
     $user->loadFromToken($token);
     $games = $user->listGames();
-    Wodrs::log('games:');
-    Wodrs::log($games);
 
     $response['data'] = array('games' => $games);
 
     $this->response($response);
+  }
+
+  public function send_results()
+  {
+    $gamesId = $this->input->get('game_id');
+    $token = $this->input->get('token');
+    $score = $this->input->get('score');
+
+    $user = new Users();
+    $user->loadFromToken($token);
+    Wodrs::log("Result {$user->username} for $gamesId: $score"); 
+
+    if($user->usersId != '')
+    {
+      $game = new Games($gamesId);
+      if($game->gamesId != '')
+        $completed = $game->setScore($user, $score);
+      
+    }
   }
 
 
