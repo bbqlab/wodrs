@@ -111,7 +111,6 @@ app.show_game_list = function() {
 app.start_game = function() {
 //  $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
     console.log("Start Game!"); 
-    window.scrollTo(0,1);
     $.ui.loadContent('#game_play',false,false,'fade');
     app.current_game = new WodrsGame();//res.data.id);
     app.current_game.start();
