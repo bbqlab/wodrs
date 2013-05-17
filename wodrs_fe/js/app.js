@@ -66,7 +66,7 @@ function App()
       }
       else if( controller != '' ){
         $.ui.loadContent('#'+controller,true,false);
-        return false;
+        return true;
       }
     }
     catch(e){
@@ -99,12 +99,10 @@ app.main = function(){
   console.log("Main token:" + app.token);
 
   $('#running_games').delegate('.game_playable', 'click', function(ev) {
-    console.log($(this).attr('id'));
-    $.ui.loadContent('#results');
+    app.current_game_id = $(this).attr('game_id');
+    $.ui.loadContent('#game_intro');
   });
 
-//  app.start_game();
-//  return;
   if(app.username != '')
   {
     app.login(true, function() {
@@ -179,22 +177,19 @@ app.check_games = function() {
 };
 
 app.start_game = function() {
- // $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
     console.log("Start Game!"); 
     window.scrollTo(0,1);
     $.ui.loadContent('#game_play',false,false);
-    app.current_game = new WodrsGame();//res.data.id);
+    
+    // PORCATA !
+    app.current_game = new WodrsGame(app.current_game_id);
+
     app.current_game.start();
- // });
 };
 
 app.stop_game = function() {
   console.log("Dentro stopgame");
-  //$.getJSON(app.backend + 'stop_game', {token: app.token, 
-  //                                      id: app.current_game.id,
-  //                                      score: app.current_game.score}, function(res) { 
-    app.current_game.stop();
- // });
+  app.current_game.stop();
 }
 
 app.show_register = function() {
@@ -272,4 +267,13 @@ app.logout = function() {
   localStorage.setItem('passsword', '')
   $.ui.loadContent('#login', false, false);
 };
+
+app.send_results = function(game_id,score){
+  $.getJSON( app.backend + 'send_results', 
+            { game_id: game_id, score: score, token: app.token }, 
+            function(res){
+
+            });
+};
+
 

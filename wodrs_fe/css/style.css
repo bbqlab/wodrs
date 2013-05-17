@@ -137,3 +137,20 @@ html,body {
 #searching_player {
  display:none;
 }
+
+
+#results {
+  padding: 15px;
+}
+
+#results h4 {
+  font-size: 24px;
+  font-weight: normal !important;
+  text-shadow: 0px 0px 5px #88F;
+}
+
+.center {
+  display: table;
+  margin: auto;
+  text-align: center;
+}

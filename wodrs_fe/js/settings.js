@@ -4,7 +4,7 @@ App.prototype.load_settings = function()
   // is encoded in JSON
   //console.log("LOAD SETTINGS");
   var default_settings = { 
-                            backend: ['http://be.wodrs.com/wodrs/',false],
+                            backend: ['http://192.168.1.140/wodrs_be/wodrs/',false],
                             username: ['',false],
                             password: ['',false],
                             token:['', false],
@@ -35,3 +35,7 @@ App.prototype.load_settings = function()
 };
 
 
+
+App.prototype.reset = function() {
+  localStorage.clear();
+};

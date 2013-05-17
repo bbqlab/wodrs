@@ -41,17 +41,23 @@ WordList.prototype.take_dictionary_words = function(n) {
 
 WordList.prototype.check_word = function(word) {
 
+  word = word.toLowerCase();
   var id = this.words.indexOf(word.toLowerCase());
+
+  // WORD MATCHED (remove it and getting a new one from dictionary)
   if(id>=0)
   {
     this.update_word(id);
+    return id;
   }
-  return id;
-
-   // si
-   //
-   // toglilo e aggiungi in current una nuova
-   // se lista globale vuota fai un altro load
+  else
+  {
+    id = -2;
+    $.each(this.words,function(index,selected_word){
+      if(selected_word.indexOf(word)==0){ id = -1; return false; }
+    });
+    return id;
+  }
 };
 
 WordList.prototype.get_word = function(id) {

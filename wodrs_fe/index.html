@@ -50,6 +50,7 @@
             <input class='jq-ui-forms' id='login_password' placeholder='Password' value=''/>
             <a class='button' href='login'/>Login</a>
             <a class='button' href='show_register'/>Sign in</a>
+            <a class='button' href='reset'/>Reset</a>
         </div>
 
         <div class='panel' id='game_list' title='Game list' 
@@ -86,8 +87,12 @@
           </div>
         </div>
 
+        <div class='panel' id='game_intro' title='Game Intro' data-footer='none' style='overflow: hidden;'>
+          <input type='hidden' id='game_id' game_id=''>
+          <a class='button' href='start_game'>PLAY!</a>
+        </div>
+
         <div class='panel' id='results' title='Finish!' data-footer='none' style='overflow: hidden;' >
-          <input type='hidden' game_id=''>
 
           <div class='padder'>
             <h4 id='results_score' >Score: 100</h3><br>
@@ -100,7 +105,7 @@
             <h4 id='results_n_key_matched'>Matched keys: 2323</h4>
             <div class='meter'><span id='stats_n_key_matched'><span></div><br>
 
-            <a href='show_game_list' class='button center'>Done</a>
+            <a href='game_intro' class='button center'>Done</a>
         </div>
 
       </div>
