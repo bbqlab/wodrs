@@ -161,7 +161,6 @@ app.request_player = function() {
   if(!app.random_game) 
   {
     $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
-      app.random_game = res.data.game;
       app.game_check_interval = setTimeout(app.check_games,1000);
     });
   }
