@@ -6,8 +6,13 @@ class Wodrs extends CI_Controller {
 		echo "OK";
 	}
 
-  public function login($username, $password)
+  public function login()
   {
+    $username = $this->input->get('username'); 
+    $password = $this->input->get('password'); 
+
+    
+
     Wodrs::log("Logging in $username");
     $user = new Users();
     $response = array('error'=> true,
@@ -32,8 +37,9 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
-  public function logout($token)
+  public function logout()
   {
+    $token = $this->input->get('token'); 
     $user = new Users();
     $user->loadFromToken($token);
     $user->token = '';
@@ -42,8 +48,11 @@ class Wodrs extends CI_Controller {
     $this->response(array('error'=> false, 'data'=>''));
   }
 
-  public function register($username, $password)
+  public function register()
   {
+    $username = $this->input->get('username'); 
+    $password = $this->input->get('password'); 
+
     $response = array('error'=> true, 'data' => '');
 
     $user = new Users();
@@ -68,8 +77,10 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
   
-  public function request_player($token)
+  public function request_player()
   {
+    $token = $this->input->get('token'); 
+
     $user = new Users();
     $user->loadFromToken($token);
     $response = array('error'=> true, 'data' => '');
@@ -107,16 +118,23 @@ class Wodrs extends CI_Controller {
   }
 
 
-  public function start_game($gamesId, $token)
+  public function start_game()
   {
+    $gamesId = $this->input->get('game_id'); 
+    $token = $this->input->get('token'); 
+
   }
 
-  public function stop_game($gamesId)
+  public function stop_game()
   {
+    $gamesId = $this->input->get('game_id'); 
+
   }
 
-  public function list_games($token)
+  public function list_games()
   {
+    $token = $this->input->get('token'); 
+
     $response = array('error' => false, 'data' => '');
     $user = new Users();
     $user->loadFromToken($token);
