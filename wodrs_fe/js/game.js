@@ -29,7 +29,7 @@ WodrsGame.prototype.timer_tick = function() {
   var game = app.current_game;
   var game_time = --game.game_time;
 
-  if(game_time==0) game.stop();
+  if(game_time==0) app.stop_game();
 
   if(game_time<10)
   {

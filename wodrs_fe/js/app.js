@@ -2,6 +2,16 @@ function App()
 {
   this.state = 0;          // using this to know if i'm ready to start application
 
+  this.views = ['game_row'];
+
+  App.prototype.load_views = function() {
+    $.each(this.views, function(index, view) {
+      $.get('views/' + view + '.js', function(data) {
+        $('body').append('<script id="' + view + '" type="text/html">' + data + '</script>');
+      });
+    });
+  }
+
   App.prototype.try_to_start = function()
   {
     app.state++;
@@ -15,6 +25,8 @@ function App()
   App.prototype.setup = function()
   {
     console.log("STARTING");
+    this.load_views();
+
     if(typeof AppMobi.device!='undefined')
     {
       AppMobi.device.setRotateOrientation('portrait');
@@ -68,11 +80,12 @@ function App()
 }
 
 var app = new App();
+
 document.addEventListener("DOMContentLoaded",app.try_to_start,false);
 document.addEventListener("jq.ui.ready",app.try_to_start,false);
 document.addEventListener("appMobi.device.ready",app.try_to_start,false);
-
 document.addEventListener("appMobi.device.update.available",onUpdateAvailable,false); 
+
 function onUpdateAvailable(evt) 
 {
   if (evt.type == "appMobi.device.update.available") 
@@ -84,12 +97,18 @@ app.main = function(){
   app.load_settings();
   console.log("Main token:" + app.token);
 
-  app.start_game();
-  return;
+  $('#running_games').delegate('.game_playable', 'click', function(ev) {
+    console.log($(this).attr('id'));
+    $.ui.loadContent('#results');
+  });
+
+//  app.start_game();
+//  return;
 
   if(!app.is_logged())
   {
-    $.ui.loadContent('#login', false, false, 'fade');
+    console.log('not logged');
+    $.ui.loadContent('#login', false, false);
   }
   else
   {
@@ -98,24 +117,43 @@ app.main = function(){
 };
 
 app.show_game_list = function() {
-  console.log
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
-    $('#game_details').html('');
-    $.each(res.games, function(index, game) {
-      $('#game_details').append("<li>" + game.type + ": " + game.state + " SCORE: " + game.score + "</li>");
+    var html = '';
+    $('#game_details').html(html);
+    console.log(res.games);
+    $.each(res.games.running, function(index, game) {
+      console.log(game);
+      html = $.template('game_row', {game: game});
+      $('#running_games').append(html);
     });
-    $.ui.loadContent('#game_list', false, false, 'fade');
+
+    $.each(res.games.completed, function(index, game) {
+      html = $.template('games_row', {game: game});
+      $('#running_games').append(html);
+    });
+
+    if(res.games.pending && res.games.pending.length > 0)
+    {
+      $('#searching_player').show();
+    }
+
+    $.ui.loadContent('#game_list', false, false);
   });
 };
 
+app.request_player = function() {
+  $.getJSON(app.backend + 'request_player', {token: app.token});
+  $('#searching_player').show();
+};
+
 app.start_game = function() {
-//  $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
+  $.getJSON(app.backend + 'start_game', {token: app.token, type: 'alone'}, function(res) { 
     console.log("Start Game!"); 
     window.scrollTo(0,1);
-    $.ui.loadContent('#game_play',false,false,'fade');
+    $.ui.loadContent('#game_play',false,false);
     app.current_game = new WodrsGame();//res.data.id);
     app.current_game.start();
-//  });
+  });
 };
 
 app.stop_game = function() {
@@ -127,7 +165,7 @@ app.stop_game = function() {
 }
 
 app.show_register = function() {
-  $.ui.loadContent('#register',false,false,'fade');
+  $.ui.loadContent('#register',false,false);
 };
 
 app.register = function() {
@@ -144,7 +182,7 @@ app.register = function() {
               {
                 app.token = data.data.token;
                 localStorage.setItem('token', JSON.stringify(app.token))
-                $.ui.loadContent('#game_list', false, false, 'fade');
+                $.ui.loadContent('#game_list', false, false);
               }
     });
 };
@@ -168,13 +206,13 @@ app.login = function() {
               {
                 app.token = data.data.token;
                 localStorage.setItem('token', app.token)
-                $.ui.loadContent('#game_list', false, false, 'fade');
+                $.ui.loadContent('#game_list', false, false);
               }
     });
 };
 
 app.logout = function() {
   localStorage.setItem('token', '')
-  $.ui.loadContent('#login', false, false, 'fade');
+  $.ui.loadContent('#login', false, false);
 };
 
