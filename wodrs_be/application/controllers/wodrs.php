@@ -6,16 +6,19 @@ class Wodrs extends CI_Controller {
 		echo "OK";
 	}
 
-  public function login($username, $password)
+  public function login()
   {
+    $username = $this->input->get('username'); 
+    $password = $this->input->get('password'); 
+
     Wodrs::log("Logging in $username");
+    Wodrs::log("Logging in $password");
+
     $user = new Users();
     $response = array('error'=> true,
                       'data'=> 'Authentication error');
 
     $user->loadFromUsername($username);
-
-    Wodrs::log($username);
 
     if($user->password == $password)
     {
@@ -32,8 +35,9 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
-  public function logout($token)
+  public function logout()
   {
+    $token = $this->input->get('token'); 
     $user = new Users();
     $user->loadFromToken($token);
     $user->token = '';
@@ -42,8 +46,11 @@ class Wodrs extends CI_Controller {
     $this->response(array('error'=> false, 'data'=>''));
   }
 
-  public function register($username, $password)
+  public function register()
   {
+    $username = $this->input->get('username'); 
+    $password = $this->input->get('password'); 
+
     $response = array('error'=> true, 'data' => '');
 
     $user = new Users();
@@ -68,36 +75,44 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
   
-  public function request_player($token)
+  public function request_player()
   {
+    $token = $this->input->get('token'); 
+
     $user = new Users();
     $user->loadFromToken($token);
+
+    Wodrs::log("Requesting game for " . $user->username);
     $response = array('error'=> true, 'data' => '');
     
     $queue = new Queue();
-    $game = new Game();
+    $game = new Games();
 
     if($queue->count($user->usersId) > 0)
     {
+      Wodrs::log('Player found');
       // add new player
-      $gameInfo = $queue->pop();
+      $gameInfo = $queue->pop($user->usersId);
 
       $game->load($gameInfo->gamesId);
       $game->player2 = $user->usersId;
       $game->state = 'running';
+      Wodrs::log($game);
       $game->save();
+      $gameInfo->delete();
 
       $response['error'] = false;
       $response['data'] = array('game' => $game);
     }
     else
     {
+      Wodrs::log('Player not found: enqueue');
       // player in the queue
       $game->init();
-      $games->player1 = $user->usersId;
+      $game->player1 = $user->usersId;
       $game->save();
 
-      $queue->push($user);
+      $queue->push($user, $game->gamesId);
 
       $response['error'] = false;
       $response['data'] = array('game' => $game);
@@ -107,21 +122,31 @@ class Wodrs extends CI_Controller {
   }
 
 
-  public function start_game($gamesId, $token)
+  public function start_game()
   {
+    $gamesId = $this->input->get('game_id'); 
+    $token = $this->input->get('token'); 
+
   }
 
-  public function stop_game($gamesId)
+  public function stop_game()
   {
+    $gamesId = $this->input->get('game_id'); 
+
   }
 
-  public function list_games($token)
+  public function list_games()
   {
+    $token = $this->input->get('token'); 
+
     $response = array('error' => false, 'data' => '');
     $user = new Users();
     $user->loadFromToken($token);
-
     $games = $user->listGames();
+    Wodrs::log('games:');
+    Wodrs::log($games);
+
+    $response['data'] = array('games' => $games);
 
     $this->response($response);
   }

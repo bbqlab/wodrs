@@ -82,8 +82,8 @@ class BaseEntity extends CI_Model {
     }
 
     $query = $this->db->get();
-
     $result = $query->result();
+
     return $result;
 
   }
@@ -118,6 +118,18 @@ class BaseEntity extends CI_Model {
     $this->db->where(array( $attribute => $value ));
     $result = $this->db->get()->row();
     $this->initFromDB($result);
+  }
+
+  function toArray()
+  {
+    $array = array();
+
+    foreach($this as $key => $value)
+    {
+      $array[$key] = $value;
+    }
+
+    return $array;
   }
 
   /*!
@@ -234,6 +246,12 @@ class BaseEntity extends CI_Model {
       $this->db->update( $this->table(), $this );
       $this->$id = $temp;
     }
+  }
+
+  function delete()
+  {
+    $id = $this->id();
+    $this->db->delete($this->table(), array($id => $this->$id));
   }
 }
 
