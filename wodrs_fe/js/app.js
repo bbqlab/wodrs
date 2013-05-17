@@ -137,7 +137,7 @@ app.fill_game_list = function(games) {
   console.log(games);
   $.each(games.running, function(index, game) {
     console.log(game);
-    html = $.template('game_row', {game: game});
+    html = $.template('view_game_row', {game: game});
     $('#running_games').append(html);
   });
 
