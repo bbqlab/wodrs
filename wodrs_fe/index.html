@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/jq.ui.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="css/progress.css" type="text/css" media="screen" charset="utf-8">
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
@@ -62,7 +63,6 @@
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
           <input type='text' id='typing'>
-
           <div id="words_slider">
             <div class='word' id='word_0'>Palloncino</div>
             <div class='word' id='word_1'>Scarpa</div>
@@ -75,8 +75,8 @@
 
         </div>
 
-        <div class='panel' id='results' title='Finish!' 
-             data-footer='none'>
+        <div class='panel' id='results' title='Finish!' data-footer='none' style='overflow: hidden;' >
+          <div class='meter'><span id='stats'><span></span></span></div>
           <div id='results_content'>
           </div>
           <a href='show_game_list' class='button'>Go Back</a>
