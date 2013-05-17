@@ -1,6 +1,7 @@
 function App()
 {
   this.state = 0;          // using this to know if i'm ready to start application
+  this.online = false;
 
   this.views = ['game_row'];
 
@@ -104,46 +105,81 @@ app.main = function(){
 
 //  app.start_game();
 //  return;
-
-  if(!app.is_logged())
+  console.log('dadsa');
+  console.log(app.username);
+  if(app.username != '')
   {
-    console.log('not logged');
-    $.ui.loadContent('#login', false, false);
-  }
-  else
-  {
-    app.show_game_list();
+    app.login(true, function() {
+      console.log('try login');
+      app.online = true;
+      if(!app.is_logged())
+      {
+        console.log('not logged');
+        $.ui.loadContent('#login', false, false);
+      }
+      else
+      {
+        console.log('show list');
+        app.show_game_list();
+      }
+    });
   }
 };
 
 app.show_game_list = function() {
+  console.log('show games');
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
-    var html = '';
-    $('#game_details').html(html);
-    console.log(res.games);
-    $.each(res.games.running, function(index, game) {
-      console.log(game);
-      html = $.template('game_row', {game: game});
-      $('#running_games').append(html);
-    });
-
-    $.each(res.games.completed, function(index, game) {
-      html = $.template('games_row', {game: game});
-      $('#running_games').append(html);
-    });
-
-    if(res.games.pending && res.games.pending.length > 0)
-    {
-      $('#searching_player').show();
-    }
-
-    $.ui.loadContent('#game_list', false, false);
+    console.log(res);
+    app.fill_game_list(res.data.games);
   });
 };
 
+app.fill_game_list = function(games) {
+  var html = '';
+  $('#game_details').html(html);
+  console.log(games);
+  $.each(games.running, function(index, game) {
+    console.log(game);
+    html = $.template('game_row', {game: game});
+    $('#running_games').append(html);
+  });
+
+  $.each(games.completed, function(index, game) {
+    html = $.template('games_row', {game: game});
+    $('#running_games').append(html);
+  });
+
+  if(games.pending && games.pending.length > 0)
+  {
+    $('#searching_player').show();
+  }
+
+  $.ui.loadContent('#game_list', false, false);
+};
+
 app.request_player = function() {
-  $.getJSON(app.backend + 'request_player', {token: app.token});
-  $('#searching_player').show();
+  if(!app.random_game) 
+  {
+    $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
+      app.random_game = res.data.game;
+      app.game_check_interval = setTimeout(app.check_games,1000);
+    });
+  }
+};
+
+app.check_games = function() {
+  $.getJSON(app.backend +'list_games', {token:app.token}, function(res) {
+    console.log(res);
+    if(res.data.games.running.length > 0)
+    {
+      clearInterval(app.game_check_interval);
+      app.fill_game_list(res.data.games);
+    }
+    else
+    {
+      app.game_check_interval = setTimeout(app.check_games,1000);
+    }
+  });
 };
 
 app.start_game = function() {
@@ -181,7 +217,9 @@ app.register = function() {
               else
               {
                 app.token = data.data.token;
-                localStorage.setItem('token', JSON.stringify(app.token))
+                localStorage.setItem('token', JSON.stringify(app.token));
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
                 $.ui.loadContent('#game_list', false, false);
               }
     });
@@ -191,9 +229,19 @@ app.is_logged = function() {
   return app.token != '';
 };
 
-app.login = function() {
-  username = $('#login_username').val();
-  password = $('#login_password').val();
+app.login = function(storage, callback) {
+  if(storage)
+  {
+    username = app.username;
+    password = app.password;
+    console.log('storage login');
+  }
+  else
+  {
+    console.log('normal login');
+    username = $('#login_username').val();
+    password = $('#login_password').val();
+  }
   console.log("Login of " + username +"/"+ password);
   console.log(app.backend + 'login');
   $.getJSON(app.backend + 'login', {username: username, password: password },
@@ -206,13 +254,25 @@ app.login = function() {
               {
                 app.token = data.data.token;
                 localStorage.setItem('token', app.token)
-                $.ui.loadContent('#game_list', false, false);
+                localStorage.setItem('username', username)
+                localStorage.setItem('password', password)
+                if(callback)
+                { 
+                  callback();
+                }
+                else
+                {
+                  $.ui.loadContent('#game_list', false, false);
+                }
               }
     });
 };
 
 app.logout = function() {
+  app.random_game = false;
   localStorage.setItem('token', '')
+  localStorage.setItem('username', '')
+  localStorage.setItem('passsword', '')
   $.ui.loadContent('#login', false, false);
 };
 

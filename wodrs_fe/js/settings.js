@@ -6,6 +6,7 @@ App.prototype.load_settings = function()
   var default_settings = { 
                             backend: ['http://be.wodrs.com/wodrs/',false],
                             username: ['',false],
+                            password: ['',false],
                             token:['', false],
                             game_time: [60,false],
                             app_name: ['Wodrs',false],

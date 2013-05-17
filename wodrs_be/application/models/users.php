@@ -29,10 +29,26 @@ class Users extends BaseEntity
   public function listGames()
   {
     $game = new Games();
+    $list = array(
+      'pending' => array(),
+      'running' => array(),
+      'completed' => array()
+    );
 
     $games = $game->search(array( 'player1 =' => $this->usersId,
-                         'or player2 =' => $this->usersId),'','',array('created','DESC'));
+                           'or player2 =' => $this->usersId),'','',
+                           array('date','DESC'));
+    
+    foreach($games as $game)
+    {
+      $player1 = new Users($game->player1);
+      $player2 = new Users($game->player2);
 
-    return $games;
+      $game->player1 = $player1->toArray();
+      $game->player2 = $player2->toArray();
+      $list[$game->state][] = $game;
+    }
+    
+    return $list;
   }
 }

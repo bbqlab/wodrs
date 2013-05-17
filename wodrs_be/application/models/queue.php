@@ -16,19 +16,41 @@ CREATE TABLE IF NOT EXISTS `queue` (
 class Queue extends BaseEntity
 {
   var $queueId;
-  var $userId;
+  var $usersId;
   var $timestamp;
 
-  public function push($user)
+  public function push($user, $gamesId)
   {
+    $gameInfo = new Queue();
+    $gameInfo->usersId = $user->usersId;
+    $gameInfo->gamesId = $gamesId;
+    $gameInfo->timestamp = date('Y-m-d H:i:s');
+    $gameInfo->save();
   }
 
-  public function pop()
-  {
+  public function pop($usersId)
+  { 
+    $info = $this->search(array('usersId != ' => $usersId),
+                          1,'', array('timestamp','DESC'));
+    if(count($info) > 0)
+    {
+      $queueInfo = new Queue();
+      foreach($info[0] as $key => $value)
+      {
+        $queueInfo->$key = $value;
+      }
+      return $queueInfo;
+    }
+
+
+    return false;
   }
 
-  public function count()
+  public function count($usersId)
   {
-   
+    $query = $this->db->query('select count(*) as total from queue '.
+                               "where usersId != '$usersId'");
+    $data = $query->result_array();
+    return $data[0]['total'];
   }
 }
