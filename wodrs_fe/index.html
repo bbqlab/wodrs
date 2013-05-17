@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/progress.css" type="text/css" media="screen" charset="utf-8">
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jq.template.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/log.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/settings.js" type="text/javascript" charset="utf-8"></script>
@@ -41,7 +42,7 @@
             <a class='button' href='register'/>Register</a>
         </div>
 
-        <div class='panel' id='login' title='Wodrs login' selected='true'
+        <div class='panel' id='login' title='Wodrs login'
              data-footer='none'>
             <label>Username</label>
             <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
@@ -53,12 +54,24 @@
 
         <div class='panel' id='game_list' title='Game list' 
              data-footer='none'>
-          <a href='start_game' class='button'>Let's play!</a>
+          <a href='start_game' class='button'>Play alone</a>
+          <a href='request_player' class='button'>Random opponent</a>
           <a href='logout' class='button'>Logout</a>
           
-          <h3>Partite</h3>
-          <ul id='game_details'>
-          </ul>
+          <div id='searching_player'>
+            <h2>Cerco un avverario</h2>
+          </div>
+          <div>
+            <h3>Partite in corso</h3>
+            <ul id='running_games'>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Partite Giocate</h3>
+            <ul id='completed_games'>
+            </ul>
+          </div>
         </div>
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
@@ -77,6 +90,7 @@
 
         <div class='panel' id='results' title='Finish!' data-footer='none' style='overflow: hidden;' >
           <div class='meter'><span id='stats'><span></span></span></div>
+          <input type='hidden' game_id=''>
           <div id='results_content'>
           </div>
           <a href='show_game_list' class='button'>Go Back</a>
