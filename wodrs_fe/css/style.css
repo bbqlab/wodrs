@@ -133,3 +133,7 @@ html,body {
 .right {
   float: right;
 }
+
+#searching_player {
+ display:none;
+}
