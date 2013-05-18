@@ -656,6 +656,7 @@ input.jq-ui-forms {
 	background:#595D61;
 	-webkit-border-radius:6px; border-radius:6px;
 	-webkit-box-shadow:inset 2px 2px 6px rgba(0,0,0,.5); box-shadow:inset 2px 2px 6px rgba(0,0,0,.5);
+  font-size: 20px;
 } /* These properties combine to create the look of the input fields. */
 
 
@@ -1044,9 +1045,11 @@ BODY>DIV#mask{
     background: rgba(70,70,70,1);
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(70,70,70,0.8)),    to(rgba(0,20,20,0.8)));
 }
+
+/*
 .jqPopup * {
 color:white;
-}
+}*/
 
 .jqPopup.hidden {
     opacity: 0;
