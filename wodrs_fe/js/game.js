@@ -58,6 +58,7 @@ WodrsGame.prototype.stop = function() {
     var precision = (100*this.n_key_matched/this.n_key_pressed).toPrecision(2);
 
     $.ui.loadContent('#results', false, false );
+    app.set_game_score(this.id,this.score);
     $('#results_score').html('Score: ' + this.score );
     $('#results_precision').html('Precision: ' + precision + '%' );
     $('#results_n_key_pressed').html('Pressed keys: ' + this.n_key_pressed );

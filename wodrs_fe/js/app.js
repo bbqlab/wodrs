@@ -25,7 +25,6 @@ function App()
 
   App.prototype.setup = function()
   {
-    console.log("STARTING");
     this.load_views();
 
     if(typeof AppMobi.device!='undefined')
@@ -95,7 +94,6 @@ function onUpdateAvailable(evt)
 
 app.main = function(){
   app.load_settings();
-  console.log("Main token:" + app.token);
 
   /*
   $('#running_games').delegate('.game_playable', 'click', function(ev) {
@@ -106,16 +104,13 @@ app.main = function(){
   if(app.username != '')
   {
     app.login(true, function() {
-      console.log('try login');
       app.online = true;
       if(!app.is_logged())
       {
-        console.log('not logged');
         $.ui.loadContent('#login', false, false);
       }
       else
       {
-        console.log('show list');
         app.show_game_list();
       }
     });
@@ -123,7 +118,6 @@ app.main = function(){
 };
 
 app.show_game_list = function() {
-  console.log('show games');
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
     app.fill_game_list(res.data.games);
   });
@@ -134,15 +128,14 @@ app.fill_game_list = function(games) {
   app.game_list=games;
   $('#completed_games').html(html);
   $('#running_games').html(html);
+
   $.each(games.running, function(index, game) {
-    game.state = 'running'
     html = $.template('view_game_row', {game: game});
     $('#running_games').append(html);
   });
 
   $.each(games.completed, function(index, game) {
     html = $.template('view_game_row', {game: game});
-    game.state = 'completed'
     $('#completed_games').append(html);
   });
 
@@ -153,6 +146,17 @@ app.fill_game_list = function(games) {
 
   $.ui.loadContent('#game_list', false, false);
 };
+
+app.set_game_score = function(id,score){
+  $.each(app.game_list.running, function(index, game) {
+    if( game.gamesId == id ){
+      app.game_list.running[index].score1 = score;
+
+      return false;
+    }
+  });
+
+}
 
 app.get_game = function(id){
   var game_found = null;
@@ -188,7 +192,6 @@ app.request_player = function() {
 
 app.check_games = function() {
   $.getJSON(app.backend +'list_games', {token:app.token}, function(res) {
-    console.log(res);
     if(res.data.games.running.length > 0)
     {
       clearInterval(app.game_check_interval);
@@ -202,7 +205,6 @@ app.check_games = function() {
 };
 
 app.start_game = function(game_id) {
-    console.log("Start Game!"); 
     window.scrollTo(0,1);
     $.ui.loadContent('#game_play',false,false);
     
@@ -211,7 +213,6 @@ app.start_game = function(game_id) {
 };
 
 app.stop_game = function() {
-  console.log("Dentro stopgame");
   app.current_game.stop();
 }
 
@@ -222,7 +223,6 @@ app.show_register = function() {
 app.register = function() {
   username = $('#reg_username').val();
   password = $('#reg_password').val();
-  console.log("Registering " + username +"/"+ password);
   $.getJSON(app.backend + 'register', {username: username, password: password },
             function(data) {
               if(data.error)
@@ -249,16 +249,12 @@ app.login = function(storage, callback) {
   {
     username = app.username;
     password = app.password;
-    console.log('storage login');
   }
   else
   {
-    console.log('normal login');
     username = $('#login_username').val();
     password = $('#login_password').val();
   }
-  console.log("Login of " + username +"/"+ password);
-  console.log(app.backend + 'login');
   $.getJSON(app.backend + 'login', {username: username, password: password },
             function(data) {
               if(data.error)
@@ -300,6 +296,8 @@ app.send_results = function(game_id,score){
 
 
 app.show_game_info = function(game_id){
+  if(typeof game_id=='undefined')
+    game_id=app.current_game.id;
   var game = app.get_game(game_id);
   $('#game_info').html($.template('view_game_info',{ game: game }));
   $.ui.loadContent('#game_info');

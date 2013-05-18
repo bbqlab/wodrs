@@ -23,7 +23,6 @@ body {
 	-webkit-text-size-adjust:none;
 	color:#fff;
 	font-size:14px;
-	background:rgba(19,29,38,1); /* primary background color */
 	
 	
 	display: -webkit-box;
@@ -177,6 +176,9 @@ z-index:2;
 	text-overflow:ellipsis; 
 	-webkit-border-radius:6px; border-radius:6px;
 	background-image:-webkit-gradient(linear,left top, left bottom, from(#fff), to(#999));
+
+	background:linear-gradient(0deg, #999, #fff);
+
   line-height: 40px;
   font-size: 20px;
 } /* Styling for CSS-generated buttons, including the back button. These buttons can bue used anywhere in the UI. */
@@ -240,7 +242,6 @@ background:#333;
 	display:none;
   /*position:absolute; */
   top:0px; left:0px;
-	background:rgba(19,29,38,1);
     margin-top:10px;
     margin-bottom:10px;
 	overflow-y:auto;
@@ -645,6 +646,7 @@ textarea.jq-ui-forms {
 
 input.jq-ui-forms { 
 	
+  opacity: 0.6;
   margin: 0 auto;
 	display:block;
 	width:65%;

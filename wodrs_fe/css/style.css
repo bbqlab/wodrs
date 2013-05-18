@@ -30,6 +30,11 @@
   src: url('nakedchick.ttf');*/
 }
 
+body {
+  background-image: url(bk.png);
+  background-size: 90px;
+}
+
 html,body,input {
   font-family: wodrfont !important;
 }
@@ -389,6 +394,7 @@ label {
 	color:#fff;
   position: absolute;
   -webkit-transition: all 1s;
+  transition: all 1s;
 }
 
 .bounce {
@@ -405,30 +411,40 @@ label {
   100% { -webkit-transform: rotateX(0deg); }
 }
 
+@-moz-keyframes rotate {
+  0% { -moz-transform: rotateX(360deg); }
+  100% { -moz-transform: rotateX(0deg); }
+}
+
+
 #words_slider {
   font-size: 60px;
   font-family: wodrfont;
   /*font-weight: bold;*/
   -webkit-transform:translate3d(0,0,0);
+  transform:translate3d(0,0,0);
   -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 
   text-shadow: 0px 0px 5px #9f9;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
-	-webkit-box-sizing:border-box; 
-  box-sizing:border-box;
   text-align: center;
   height: 415px; 
   margin-top: 18px;
   -webkit-transition: opacity .5s;
+  transition: opacity 0.5s;
   opacity: 0;
+
   -webkit-transform-origin-z: 0px;
   -webkit-transform-origin-x: 200px;
   -webkit-transform-origin-y: 50%;
   -webkit-perspective: none;
   -webkit-transform:translate3d(0,0,0);
   -webkit-transform-style: preserve-3d;
+
+
 }
 
 .animate {
@@ -455,11 +471,11 @@ label {
 
 }
 
-#word_1 { -webkit-transform: rotateX(300deg); }
+#word_1 { -webkit-transform: rotateX(300deg);  }
 #word_2 { -webkit-transform: rotateX(240deg); }
 #word_3 { -webkit-transform: rotateX(180deg); }
-#word_4 { -webkit-transform: rotateX(120deg); }
-#word_5 { -webkit-transform: rotateX(60deg); }
+#word_4 { -webkit-transform: rotateX(120deg);  }
+#word_5 { -webkit-transform: rotateX(60deg);  }
 
 
 .left {
