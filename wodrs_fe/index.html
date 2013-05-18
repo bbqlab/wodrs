@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/jq.ui.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="css/icons.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/progress.css" type="text/css" media="screen" charset="utf-8">
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
@@ -38,41 +39,49 @@
             <label>Username</label>
             <input class='jq-ui-forms' id='reg_username' placeholder='Username'/>
             <label>Password</label>
-            <input class='jq-ui-forms' id='reg_password' placeholder='Password'/>
+            <input class='jq-ui-forms' type='password' id='reg_password' placeholder='Password'/>
             <a class='button' href='register'/>Register</a>
         </div>
 
-        <div class='panel' id='login' title='Wodrs login' selected=true
-             data-footer='none'>
+        <div class='panel' id='login' title='Wodrs login' selected=true data-footer='none'>
             <label>Username</label>
             <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
             <label>Password</label>
-            <input class='jq-ui-forms' id='login_password' placeholder='Password' value=''/>
+            <input class='jq-ui-forms' type='password' id='login_password' placeholder='Password' value=''/>
             <a class='button' href='login'/>Login</a>
             <a class='button' href='show_register'/>Sign in</a>
             <a class='button' href='reset'/>Reset</a>
         </div>
 
-        <div class='panel' id='game_list' title='Game list' 
-             data-footer='none'>
-          <a href='start_game' class='button'>Play alone</a>
-          <a href='request_player' class='button'>Random opponent</a>
-          <a href='logout' class='button'>Logout</a>
-          
-          <div id='searching_player'>
-            <h2>Cerco un avverario</h2>
+        <div class='panel' id='game_list' title='Wodrs' data-footer='none'>
+          <div class='center'>
+            <a href='start_game' class='button'>Play alone</a>
+            <a href='request_player' class='button'>Random opponent</a>
           </div>
+          <br><br>
+          
           <div>
-            <h3>Partite in corso</h3>
+            <h3>Running games</h3>
             <ul id='running_games'>
             </ul>
           </div>
 
           <div>
-            <h3>Partite Giocate</h3>
+            <h3>Completed</h3>
             <ul id='completed_games'>
             </ul>
           </div>
+          <script type="text/javascript"><!--
+            google_ad_client = "ca-pub-9759098288036220";
+            /* wodrs_horiz */
+            google_ad_slot = "6746931024";
+            google_ad_width = 970;
+            google_ad_height = 90;
+            //-->
+          </script>
+          <script type="text/javascript"
+            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+          </script>
         </div>
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
@@ -87,9 +96,7 @@
           </div>
         </div>
 
-        <div class='panel' id='game_intro' title='Game Intro' data-footer='none' style='overflow: hidden;'>
-          <input type='hidden' id='game_id' game_id=''>
-          <a class='button' href='start_game'>PLAY!</a>
+        <div class='panel' id='game_info' title='Game' data-footer='none' style='overflow: hidden;'>
         </div>
 
         <div class='panel' id='results' title='Finish!' data-footer='none' style='overflow: hidden;' >
@@ -105,7 +112,7 @@
             <h4 id='results_n_key_matched'>Matched keys: 2323</h4>
             <div class='meter'><span id='stats_n_key_matched'><span></div><br>
 
-            <a href='game_intro' class='button center'>Done</a>
+            <a href='game_info' class='button center'>Done</a>
         </div>
 
       </div>

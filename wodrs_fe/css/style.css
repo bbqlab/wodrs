@@ -25,8 +25,13 @@
   src: url('nakedchick.ttf');*/
 }
 
-html,body {
+html,body,input {
   font-family: wodrfont !important;
+}
+
+label {
+  font-size: 18px;
+  margin: 0 auto;
 }
 
 #typing {
@@ -128,20 +133,38 @@ html,body {
 
 .left {
   float:left;
+  text-align: left;
 }
 
 .right {
   float: right;
-}
-
-#searching_player {
- display:none;
+  text-align: right;
 }
 
 
-#results {
+.panel {
   padding: 15px;
 }
+
+.panel h3 {
+  font-size: 21px;
+  font-weight: normal !important;
+  text-shadow: 0px 0px 5px #88F;
+}
+
+.game_running {
+  text-shadow: 0px 0px 5px #777;
+  font-weight: normal !important;
+}
+
+.game_won {
+  text-shadow: 0px 0px 5px #4F4;
+}
+
+.game_lost {
+  text-shadow: 0px 0px 5px #F44;
+}
+
 
 #results h4 {
   font-size: 24px;
@@ -153,4 +176,9 @@ html,body {
   display: table;
   margin: auto;
   text-align: center;
+}
+
+
+.game_completed .left, .game_completed .right, .game_running .left, .game_running .right {
+  width: 100px;
 }
