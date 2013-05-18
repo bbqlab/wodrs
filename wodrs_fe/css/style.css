@@ -29,6 +29,10 @@ html,body {
   font-family: wodrfont !important;
 }
 
+.panel {
+  -webkit-transform-style: preserve-3d;
+}
+
 #typing {
   position: absolute;
   overflow:hidden;
