@@ -66,6 +66,20 @@ label {
   transition: all 1s;
 }
 
+.button {
+  background:rgba(200,200,200,0.2);
+  color:#fff;
+  font-weight:normal;
+  text-shadow:0px 0px 5px #88F;
+  margin-bottom:20px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -moz-box-shadow: 10px 10px 5px #888;
+  -webkit-box-shadow: 10px 10px 15px #888;
+  box-shadow: 0 0 5px 5px #333;
+
+}
+
 .box {
   background:rgba(255,255,255,0.1);
   margin-bottom:20px;
@@ -75,6 +89,7 @@ label {
   -webkit-box-shadow: 10px 10px 15px #888;
   box-shadow: 0 0 5px 5px #333;
 }
+
 .box h3{
   padding:15px;
   background:rgba(200,200,200,0.2);
