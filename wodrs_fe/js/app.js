@@ -3,7 +3,7 @@ function App()
   this.state = 0;          // using this to know if i'm ready to start application
   this.online = false;
 
-  this.views = ['game_row','results'];
+  this.views = ['game_row','results','game_info'];
 
   App.prototype.load_views = function() {
     $.each(this.views, function(index, view) {
@@ -71,7 +71,6 @@ function App()
     }
     catch(e){
       app.log("ERROR IN CLICKHANDLER " + e);
-      //console.trace();
       return false;
     }
     //returning true prevent default jq.ui event to be handled
@@ -98,11 +97,12 @@ app.main = function(){
   app.load_settings();
   console.log("Main token:" + app.token);
 
+  /*
   $('#running_games').delegate('.game_playable', 'click', function(ev) {
     app.current_game_id = $(this).attr('game_id');
     $.ui.loadContent('#game_intro');
   });
-
+*/
   if(app.username != '')
   {
     app.login(true, function() {
@@ -131,16 +131,18 @@ app.show_game_list = function() {
 
 app.fill_game_list = function(games) {
   var html = '';
+  app.game_list=games;
   $('#completed_games').html(html);
   $('#running_games').html(html);
-  console.log(games);
   $.each(games.running, function(index, game) {
+    game.state = 'running'
     html = $.template('view_game_row', {game: game});
     $('#running_games').append(html);
   });
 
   $.each(games.completed, function(index, game) {
     html = $.template('view_game_row', {game: game});
+    game.state = 'completed'
     $('#completed_games').append(html);
   });
 
@@ -152,13 +154,36 @@ app.fill_game_list = function(games) {
   $.ui.loadContent('#game_list', false, false);
 };
 
-app.request_player = function() {
-  if(!app.random_game) 
+app.get_game = function(id){
+  var game_found = null;
+
+  $.each(app.game_list.running, function(index, game) {
+    if( game.gamesId == id ){
+      game.state = 'running';
+      game_found = game;
+      return false;
+    }
+
+  });
+
+  if(! game_found )
   {
-    $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
-      app.game_check_interval = setTimeout(app.check_games,1000);
+    $.each(app.game_list.completed, function(index, game) {
+      if( game.gamesId == id ){
+        game.state='completed';
+        game_found = game;
+        return false;
+      }
     });
-  }
+  } 
+
+  return game_found;
+};
+
+app.request_player = function() {
+  $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
+    app.game_check_interval = setTimeout(app.check_games,1000);
+  });
 };
 
 app.check_games = function() {
@@ -176,14 +201,12 @@ app.check_games = function() {
   });
 };
 
-app.start_game = function() {
+app.start_game = function(game_id) {
     console.log("Start Game!"); 
     window.scrollTo(0,1);
     $.ui.loadContent('#game_play',false,false);
     
-    // PORCATA !
-    app.current_game = new WodrsGame(app.current_game_id);
-
+    app.current_game = new WodrsGame(game_id);
     app.current_game.start();
 };
 
@@ -261,7 +284,6 @@ app.login = function(storage, callback) {
 };
 
 app.logout = function() {
-  app.random_game = false;
   localStorage.setItem('token', '')
   localStorage.setItem('username', '')
   localStorage.setItem('passsword', '')
@@ -274,6 +296,13 @@ app.send_results = function(game_id,score){
             function(res){
 
             });
+};
+
+
+app.show_game_info = function(game_id){
+  var game = app.get_game(game_id);
+  $('#game_info').html($.template('view_game_info',{ game: game }));
+  $.ui.loadContent('#game_info');
 };
 
 
