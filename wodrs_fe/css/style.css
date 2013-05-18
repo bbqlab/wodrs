@@ -11,6 +11,11 @@
   text-shadow: 1px 1px 30px #99f;
 }*/
 
+@font-face
+{
+  font-family: wodrlogofont;
+  src: url('typewriter.ttf');
+}
 
 @font-face
 {
@@ -32,6 +37,332 @@ html,body,input {
 label {
   font-size: 18px;
   margin: 0 auto;
+}
+
+#wodrs_logo {
+  font-family: wodrlogofont !important;
+  font-size:120px;
+  text-align:center;
+  margin-top:200px;
+  text-shadow:10px;
+  position:absolute;
+  animation-name:logouno;
+  animation-duration:12s;
+  animation-timing-function:ease;
+  animation-delay:-1s;
+  animation-iteration-count:infinite;
+  animation-direction:alternate;
+  animation-play-state:running;
+
+  /* Firefox: */
+  -moz-animation-name:logouno;
+  -moz-animation-duration:12s;
+  -moz-animation-timing-function:ease;
+  -moz-animation-delay:-1s;
+  -moz-animation-iteration-count:infinite;
+  -moz-animation-direction:alternate;
+  -moz-animation-play-state:running;
+
+  /* Safari and Chrome: */
+  -webkit-animation-name:logouno;
+  -webkit-animation-duration:12s;
+  -webkit-animation-timing-function:ease;
+  -webkit-animation-delay:-1s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-direction:alternate;
+  -webkit-animation-play-state:running;
+}
+
+@keyframes logouno{
+
+0%   {opacity:0;}
+
+3%  { opacity:0.1; }
+
+6%  { opacity:0.2; }
+
+9%  {opacity:0.3; }
+
+12%  { opacity:0.4; }
+
+15%  { opacity:0.5;}
+
+18%  {opacity:0.6;}
+
+21%  {opacity:0.7;}
+
+24%  {opacity:0.8; }
+
+27%  {opacity:0.9 }
+
+29% {top:100px; left:0px;}
+
+30% {opacity:1; top:100px; left:0px;}
+
+31%{opacity:1; top:104px; left:0px;}
+
+32%{opacity:1; top:104px; left:0px;}
+
+33%{opacity:1; top:104px; left:0px;}
+
+34%{opacity:1; top:104px; left:6px;}
+
+36%{opacity:0.8; top:104px; left:-12px;}
+
+38% { opacity:1; top:105px; left:0px}
+
+40% {opacity:0.5; top:104px; left:12px}
+
+42% { opacity:0.4; top:104px; left:0px}
+
+44%{opacity:0.3; top:104px; left:-8px;}
+
+46%{ opacity:0.3; top:104px; left:6px}
+
+47%{ opacity:0.3; top:104px; left:0px}
+
+50%{ opacity:1; top:100px; left:0px}
+
+51%{opacity:1; top:104px; left:6px;}
+
+52%{opacity:0.8; top:104px; left:-12px;}
+
+53% { opacity:1; top:105px; left:0px}
+
+54% {opacity:0.5; top:104px; left:12px}
+
+55% { opacity:0.4; top:104px; left:0px}
+
+56%{opacity:0.3; top:104px; left:-8px;}
+
+57%{ opacity:0.3; top:104px; left:6px}
+
+58%{ opacity:0.3; top:104px; left:0px}
+
+59%{ opacity:1; top:100px; left:0px}
+
+60%{ opacity:1; top:100px;}
+
+61%{ opacity:1;  left:8px}
+
+62%{ opacity:0.8; left:4px}
+
+63%{ opacity:0.3; left:-4pxpx}
+
+64%{ opacity:1; left:0px}
+
+65%{ opacity:1;left:4px}
+
+66%{ opacity:1;  leftt:0px}
+
+67%{ opacity:0.2; left:-6px}
+
+68%{ opacity:0.5;left:0px}
+
+69%{ opacity:1; top:100px; }
+
+70%{ opacity:1; top:100px;}
+
+100%  {opacity:1; top:100px; left:0px  }
+
+}
+
+
+
+
+
+
+
+@-moz-keyframes logouno /* Firefox 5% }*/
+
+{
+
+0%   {opacity:0;}
+
+3%  { opacity:0.1; }
+
+6%  { opacity:0.2; }
+
+9%  {opacity:0.3; }
+
+12%  { opacity:0.4; }
+
+15%  { opacity:0.5;}
+
+18%  {opacity:0.6;}
+
+21%  {opacity:0.7;}
+
+24%  {opacity:0.8; }
+
+27%  {opacity:0.9 }
+
+29% {top:100px; left:0px;}
+
+30% {opacity:1; top:100px; left:0px;}
+
+31%{opacity:1; top:104px; left:0px;}
+
+32%{opacity:1; top:104px; left:0px;}
+
+33%{opacity:1; top:104px; left:0px;}
+
+34%{opacity:1; top:104px; left:6px;}
+
+36%{opacity:0.8; top:104px; left:-12px;}
+
+38% { opacity:1; top:105px; left:0px}
+
+40% {opacity:0.5; top:104px; left:12px}
+
+42% { opacity:0.4; top:104px; left:0px}
+
+44%{opacity:0.3; top:104px; left:-8px;}
+
+46%{ opacity:0.3; top:104px; left:6px}
+
+47%{ opacity:0.3; top:104px; left:0px}
+
+50%{ opacity:1; top:100px; left:0px}
+
+51%{opacity:1; top:104px; left:6px;}
+
+52%{opacity:0.8; top:104px; left:-12px;}
+
+53% { opacity:1; top:105px; left:0px}
+
+54% {opacity:0.5; top:104px; left:12px}
+
+55% { opacity:0.4; top:104px; left:0px}
+
+56%{opacity:0.3; top:104px; left:-8px;}
+
+57%{ opacity:0.3; top:104px; left:6px}
+
+58%{ opacity:0.3; top:104px; left:0px}
+
+59%{ opacity:1; top:100px; left:0px}
+
+60%{ opacity:1; top:100px;}
+
+61%{ opacity:1;  left:8px}
+
+62%{ opacity:0.8; left:4px}
+
+63%{ opacity:0.3; left:-4px; }
+
+64%{ opacity:1; left:0px;}
+
+65%{ opacity:1;left:4px}
+
+66%{ opacity:1;  leftt:0px}
+
+67%{ opacity:0.2; left:-6px}
+
+68%{ opacity:0.5;left:0px}
+
+69%{ opacity:1; top:100px; }
+
+70%{ opacity:1; top:100px;}
+
+100%  {opacity:1; top:100px; left:0}
+}
+
+
+
+@-webkit-keyframes logouno /*safari e chrome }*/
+{
+
+0%   {opacity:0;}
+
+3%  { opacity:0.1; }
+
+6%  { opacity:0.2; }
+
+9%  {opacity:0.3; }
+
+12%  { opacity:0.4; }
+
+15%  { opacity:0.5;}
+
+18%  {opacity:0.6;}
+
+21%  {opacity:0.7;}
+
+24%  {opacity:0.8; }
+
+27%  {opacity:0.9 }
+
+29% {top:100px; left:0px;}
+
+30% {opacity:1; top:100px; left:0px;}
+
+31%{opacity:1; top:104px; left:0px;}
+
+32%{opacity:1; top:104px; left:0px;}
+
+33%{opacity:1; top:104px; left:0px;}
+
+34%{opacity:1; top:104px; left:6px;}
+
+36%{opacity:0.8; top:104px; left:-12px;}
+
+38% { opacity:1; top:105px; left:0px}
+
+40% {opacity:0.5; top:104px; left:12px}
+
+42% { opacity:0.4; top:104px; left:0px}
+
+44%{opacity:0.3; top:104px; left:-8px;}
+
+46%{ opacity:0.3; top:104px; left:6px}
+
+47%{ opacity:0.3; top:104px; left:0px}
+
+50%{ opacity:1; top:100px; left:0px}
+
+51%{opacity:1; top:104px; left:6px;}
+
+52%{opacity:0.8; top:104px; left:-12px;}
+
+53% { opacity:1; top:105px; left:0px}
+
+54% {opacity:0.5; top:104px; left:12px}
+
+55% { opacity:0.4; top:104px; left:0px}
+
+56%{opacity:0.3; top:104px; left:-8px;}
+
+57%{ opacity:0.3; top:104px; left:6px}
+
+58%{ opacity:0.3; top:104px; left:0px}
+
+59%{ opacity:1; top:100px; left:0px}
+
+60%{ opacity:1; top:100px;}
+
+61%{ opacity:1;  left:8px}
+
+62%{ opacity:0.8; left:4px}
+
+63%{ opacity:0.3; left:-4pxpx}
+
+64%{ opacity:1; left:0px}
+
+65%{ opacity:1;left:4px}
+
+66%{ opacity:1;  leftt:0px}
+
+67%{ opacity:0.2; left:-6px}
+
+68%{ opacity:0.5;left:0px}
+
+69%{ opacity:1; top:100px; }
+
+70%{ opacity:1; top:100px;}
+
+100%  {opacity:1; top:100px; left:0  }
+
 }
 
 #typing {

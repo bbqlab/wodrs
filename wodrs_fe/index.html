@@ -25,6 +25,7 @@
   <body>
 
     <div id='jQUi'>
+      
 
       <header id='game_play_header'>
           <div class='game_score right'>0/0 (0)</div>
@@ -34,6 +35,11 @@
 
       <div id='content'>
 
+        <div class='panel' id='splash' data-header='none' 
+             data-footer='none'>
+             
+             <div id='wodrs_logo'>wodrs</div>
+        </div>
         <div class='panel' id='register' title='Wodrs sign in' 
              data-footer='none'>
             <input class='jq-ui-forms' id='reg_username' placeholder='Username'/>
@@ -41,7 +47,7 @@
             <a class='button center' href='register'/>Sign in</a>
         </div>
 
-        <div class='panel' id='login' title='Wodrs login' selected=true data-footer='none'>
+        <div class='panel' id='login' title='Wodrs login' data-footer='none'>
             <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
             <input class='jq-ui-forms' type='password' id='login_password' placeholder='Password' value=''/>
             <div class='center'>
