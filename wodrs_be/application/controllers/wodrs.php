@@ -145,7 +145,6 @@ class Wodrs extends CI_Controller {
     $games = $user->listGames();
 
     $response['data'] = array('games' => $games);
-
     $this->response($response);
   }
 
@@ -167,7 +166,6 @@ class Wodrs extends CI_Controller {
       
     }
   }
-
 
   /* private functions */
   private function response($ret)

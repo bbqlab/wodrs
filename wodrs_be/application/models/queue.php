@@ -31,7 +31,7 @@ class Queue extends BaseEntity
   public function pop($usersId)
   { 
     $info = $this->search(array('usersId != ' => $usersId),
-                          1,'', array('timestamp','DESC'));
+                          1,'');
     if(count($info) > 0)
     {
       $queueInfo = new Queue();
