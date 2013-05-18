@@ -36,16 +36,35 @@ class Users extends BaseEntity
     );
 
     $games = $game->search(array( 'player1 =' => $this->usersId,
-                           'or player2 =' => $this->usersId),'','',
+                                  'or player2 =' => $this->usersId,
+                                  'state !=' => 'completed'),'','',
                            array('date','DESC'));
     
+    $completed = $game->search(array( 'player1 =' => $this->usersId,
+                                      'or player2 =' => $this->usersId,
+                                      'state =' => 'completed'), 10,'',
+                               array('date','DESC'));
+    $games = array_merge($games, $completed);
+
     foreach($games as $game)
     {
+      if($game->player1 != $this->usersId)
+      {
+        $game->player2 = $game->player1;
+        $game->player1 = $this->usersId;
+
+        $userScore = $game->score2;
+        $game->score2 = $game->score1;
+        $game->score1 = $userScore;
+      }
+
       $player1 = new Users($game->player1);
       $player2 = new Users($game->player2);
 
-      $game->player1 = $player1->toArray();
-      $game->player2 = $player2->toArray();
+      $game->player1 = $player1->username;
+      $game->player2 = $player2->username;
+
+
       $list[$game->state][] = $game;
     }
     
