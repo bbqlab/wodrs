@@ -29,6 +29,8 @@ html,body,input {
   font-family: wodrfont !important;
 }
 
+
+
 label {
   font-size: 18px;
   margin: 0 auto;
@@ -144,6 +146,10 @@ label {
 
 .panel {
   padding: 15px;
+  background:url('bg.png');
+}
+body{
+  background:url('bg.png');
 }
 
 .panel h3 {
