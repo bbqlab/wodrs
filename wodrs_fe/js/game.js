@@ -64,7 +64,7 @@ WodrsGame.prototype.stop = function() {
 
     //new Audio('stop.wav').play();
     
-    var precision = (100*this.n_key_matched/this.n_key_pressed).toPrecision(2);
+    var precision = (100*this.n_key_matched/this.n_key_pressed);
 
     $.ui.loadContent('#results', false, false );
     app.set_game_score(this.id,this.score);
