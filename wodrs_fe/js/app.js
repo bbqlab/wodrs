@@ -194,7 +194,7 @@ app.get_game = function(id){
 };
 
 app.request_player = function() {
-  $
+  $('#request_player_button').addClass('spin').html('Waiting..').addClass('button_disabled');
   $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
     app.game_check_interval = setTimeout(app.check_games,1000);
   });
@@ -204,6 +204,7 @@ app.check_games = function() {
   $.getJSON(app.backend +'list_games', {token:app.token}, function(res) {
     if(res.data.games.running.length > 0)
     {
+      $('#request_player_button').removeClass('spin').html('New game').removeClass('button_disabled');
       clearInterval(app.game_check_interval);
       app.fill_game_list(res.data.games);
     }

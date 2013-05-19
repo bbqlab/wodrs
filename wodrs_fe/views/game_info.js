@@ -11,7 +11,7 @@
   <div class='box box_big center'>
     <h3>
      <%if(game.score1==-1){%>Your turn!<%}
-       else if(games.score2==-1) {%>Opponent turn!<%}
+       else if(game.score2==-1) {%>Opponent turn!<%}
        else if(game.score1>game.score2) {%>You won!<%} 
        else if(game.score2>game.score1) {%>You lose!<%} 
        else {%>Draw!<%}%> 

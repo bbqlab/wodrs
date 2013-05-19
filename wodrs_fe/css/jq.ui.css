@@ -547,14 +547,14 @@ h2 {
 .ui-loader .ui-icon { position: static; display: block; opacity: .9; margin: 0 auto; width: 35px; height: 35px; background-color: transparent; }
 
 .spin  {
-	-webkit-transform: rotate(360deg);
+	-webkit-transform: rotateX(360deg);
 	-webkit-animation-name: spin;
-	-webkit-animation-duration: 1s;
+	-webkit-animation-duration: 1.5s;
 	-webkit-animation-iteration-count:  infinite;
 }
 @-webkit-keyframes spin {
-	from {-webkit-transform: rotate(0deg);}
-  	to {-webkit-transform: rotate(360deg);}
+	from {-webkit-transform: rotateX(0deg);}
+  	to {-webkit-transform: rotateX(360deg);}
 }
 
 .ui-icon-loading {

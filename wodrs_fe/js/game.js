@@ -9,7 +9,7 @@ function WodrsGame(id){
   this.n_key_pressed=0;
   this.n_key_matched=0;
   this.audio_error = new Audio('audio/error.wav');
-  this.audio_error.load();
+  this.audio_ok = new Audio('audio/ok.wav');
 }
 
 WodrsGame.prototype.start = function() {
@@ -64,7 +64,7 @@ WodrsGame.prototype.stop = function() {
 
     //new Audio('stop.wav').play();
     
-    var precision = (100*this.n_key_matched/this.n_key_pressed);
+    var precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
 
     $.ui.loadContent('#results', false, false );
     app.set_game_score(this.id,this.score);
@@ -120,6 +120,7 @@ WodrsGame.prototype.check_word = function() {
   // the word matched !! 
   if( id>=0 )
   {
+    this.audio_ok.play();
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
     $('#word_'+id).html(new_word);
