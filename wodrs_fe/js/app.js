@@ -128,10 +128,16 @@ app.fill_game_list = function(games) {
   app.game_list=games;
   $('#completed_games').html(html);
   $('#running_games').html(html);
+  $('#opponent_games').html(html);
 
   $.each(games.running, function(index, game) {
     html = $.template('view_game_row', {game: game});
     $('#running_games').append(html);
+  });
+
+  $.each(games.running_opponent, function(index, game) {
+    html = $.template('view_game_row', {game: game});
+    $('#opponent_games').append(html);
   });
 
   $.each(games.completed, function(index, game) {
@@ -151,7 +157,6 @@ app.set_game_score = function(id,score){
   $.each(app.game_list.running, function(index, game) {
     if( game.gamesId == id ){
       app.game_list.running[index].score1 = score;
-
       return false;
     }
   });
@@ -185,6 +190,7 @@ app.get_game = function(id){
 };
 
 app.request_player = function() {
+  $
   $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
     app.game_check_interval = setTimeout(app.check_games,1000);
   });

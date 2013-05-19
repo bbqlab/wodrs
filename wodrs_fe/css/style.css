@@ -31,7 +31,7 @@
 }
 
 body {
-  background-image: url(bk.png);
+  background: #000a01 url(bk.png);
   background-size: 90px;
 }
 
@@ -47,15 +47,24 @@ label {
 #header h1 {
   font-family: wodrlogofont !important;
   text-align:center;
-  margin-top:200px;
   text-shadow:10px;
 }
 
-#wodrs_logo {
+
+#wodrs_logo, #wodrs_title {
   font-family: wodrlogofont !important;
   text-align:center;
-  margin-top:200px;
   text-shadow:10px;
+}
+
+#wodrs_title {
+  font-size:150px;
+  margin-top:70px;
+  color:rgba(150,150,150,0.15);
+}
+
+.score {
+  font-size:35px !important;
 }
 
 .wodrs_logo_big {
@@ -98,10 +107,11 @@ label {
   margin-bottom:20px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  -moz-box-shadow: 10px 10px 5px #888;
-  -webkit-box-shadow: 10px 10px 15px #888;
-  box-shadow: 0 0 5px 5px #333;
-
+  height:55px;
+  padding:10px 20px;
+  -moz-box-shadow: 10px 10px 5px #333;
+  -webkit-box-shadow: 10px 10px 15px #333;
+  box-shadow: 0 0 3px 3px #333;
 }
 
 .box {
@@ -109,9 +119,9 @@ label {
   margin-bottom:20px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  -moz-box-shadow: 10px 10px 5px #888;
-  -webkit-box-shadow: 10px 10px 15px #888;
-  box-shadow: 0 0 5px 5px #333;
+  -moz-box-shadow: 10px 10px 5px #333;
+  -webkit-box-shadow: 10px 10px 15px #333;
+  box-shadow: 0 0 3px 3px #333;
 }
 
 .box h3{
@@ -221,6 +231,19 @@ label {
   padding: 15px;
 }
 
+.panel_header {
+  height:70px;
+}
+
+.panel_content {
+  margin-top:280px;
+}
+
+.panel_footer {
+  margin-top:100px;
+  text-align:center;
+}
+
 .panel h3 {
   font-size: 21px;
   font-weight: normal !important;
@@ -256,4 +279,8 @@ label {
 
 .game_completed .left, .game_completed .right, .game_running .left, .game_running .right {
   width: 100px;
+}
+
+.requesting_player {
+  display:none;
 }
