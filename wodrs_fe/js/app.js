@@ -95,12 +95,6 @@ function onUpdateAvailable(evt)
 app.main = function(){
   app.load_settings();
 
-  /*
-  $('#running_games').delegate('.game_playable', 'click', function(ev) {
-    app.current_game_id = $(this).attr('game_id');
-    $.ui.loadContent('#game_intro');
-  });
-*/
   if(app.username != '')
   {
     app.login(true, function() {
@@ -168,18 +162,27 @@ app.get_game = function(id){
 
   $.each(app.game_list.running, function(index, game) {
     if( game.gamesId == id ){
-      game.state = 'running';
       game_found = game;
       return false;
     }
-
   });
+
+
+  if(! game_found )
+  {
+    $.each(app.game_list.running_opponent, function(index, game) {
+      if( game.gamesId == id ){
+        game_found = game;
+        return false;
+      }
+    });
+  } 
+
 
   if(! game_found )
   {
     $.each(app.game_list.completed, function(index, game) {
       if( game.gamesId == id ){
-        game.state='completed';
         game_found = game;
         return false;
       }
@@ -288,7 +291,7 @@ app.login = function(storage, callback) {
 app.logout = function() {
   localStorage.setItem('token', '')
   localStorage.setItem('username', '')
-  localStorage.setItem('passsword', '')
+  localStorage.setItem('password', '')
   $.ui.loadContent('#login', false, false);
 };
 
@@ -304,6 +307,14 @@ app.send_results = function(game_id,score){
 app.show_game_info = function(game_id){
   if(typeof game_id=='undefined')
     game_id=app.current_game.id;
+
+  // training mode 
+  if(game_id==-1)
+  {
+    $.ui.loadContent('#game_list');
+    return;
+  }
+
   var game = app.get_game(game_id);
   $('#game_info').html($.template('view_game_info',{ game: game }));
   $.ui.loadContent('#game_info');
