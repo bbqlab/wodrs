@@ -230,7 +230,7 @@ background:#333;
 	display:block;
 	position:absolute;
 	top:48px;
-	bottom:62px;
+	bottom:0px;
 	left:0px;right:0px;
 	overflow:hidden;
 } /* Accounts for positioning of the content area, which is everything below the header and above the navbar. */
