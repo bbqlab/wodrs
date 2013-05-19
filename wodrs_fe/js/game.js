@@ -22,8 +22,6 @@ WodrsGame.prototype.start = function() {
   setTimeout( "$('#typing')[0].focus(); window.scrollTo(0,1);", 50);
   $('#typing').on('blur',this.do_not_blur_input);
 
-});
-
   this.words_slider.addClass('animate');
 };
 
