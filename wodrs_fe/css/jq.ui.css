@@ -494,10 +494,6 @@ ul > li > a {
 	padding-right:-80px;
 } /* A touchable, interactive list item. */
 
- ul > li > a[selected], ul > li > a:active {
-	color:#fff !important;
-
-} /* A selected and active states for interactive list items. */
 
 ul > li.group {
 	position:relative;
