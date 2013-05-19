@@ -8,8 +8,8 @@ function WodrsGame(id){
   this.words_slider = $('#words_slider');
   this.n_key_pressed=0;
   this.n_key_matched=0;
-  this.audio_time = new Audio('drop.wav');
-  /*this.audio_key = new Audio('key.wav');*/
+  this.audio_error = new Audio('audio/error.wav');
+  this.audio_error.load();
 }
 
 WodrsGame.prototype.start = function() {
@@ -19,9 +19,17 @@ WodrsGame.prototype.start = function() {
   window.scrollTo(0,1);
 
   this.game_interval = window.setInterval( this.timer_tick, 1000 );
-  setTimeout( "$('#typing')[0].focus();", 10);
+  setTimeout( "$('#typing')[0].focus(); window.scrollTo(0,1);", 50);
+  $('#typing').on('blur',this.do_not_blur_input);
 
   this.words_slider.addClass('animate');
+};
+
+
+WodrsGame.prototype.do_not_blur_input = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#typing')[0].focus(); 
 };
 
 
@@ -50,12 +58,13 @@ WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
     $('#words_slider').removeClass('animate');
 
+    $('#typing').off('blur',this.do_not_blur_input);
 
     app.send_results(this.id,this.score);
 
     //new Audio('stop.wav').play();
     
-    var precision = (100*this.n_key_matched/this.n_key_pressed).toPrecision(2);
+    var precision = (100*this.n_key_matched/this.n_key_pressed);
 
     $.ui.loadContent('#results', false, false );
     app.set_game_score(this.id,this.score);
@@ -64,7 +73,8 @@ WodrsGame.prototype.stop = function() {
     $('#results_n_key_pressed').html('Pressed keys: ' + this.n_key_pressed );
     $('#results_n_key_matched').html('Matched keys: ' + this.n_key_matched );
 
-    setTimeout( "$('#typing')[0].blur();", 10);
+    setTimeout( "$('#typing')[0].blur();", 40);
+
     function set_results()
     {
       var game = app.current_game;
@@ -117,7 +127,7 @@ WodrsGame.prototype.check_word = function() {
   }
   else if(id==-2)
   {
-    //this.audio_time.play();
+    this.audio_error.play();
     this.clear_current_word();
   }
 
