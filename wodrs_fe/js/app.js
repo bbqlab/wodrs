@@ -37,6 +37,7 @@ function App()
     $.ui.transitionTime = '4';
     $.ui.customClickHandler = this.clickHandler;
     $.ui.showBackbutton=false
+
   }
 
   // clickhandler: each touch on active object pass here
@@ -214,14 +215,16 @@ app.check_games = function() {
 };
 
 app.start_game = function(game_id) {
-    window.scrollTo(0,1);
-    $.ui.loadContent('#game_play',false,false);
+  window.scrollTo(0,1);
+  $('#wodrs_title').addClass('title_out');
+  $.ui.loadContent('#game_play',false,false);
     
-    app.current_game = new WodrsGame(game_id);
-    app.current_game.start();
+  app.current_game = new WodrsGame(game_id);
+  app.current_game.start();
 };
 
 app.stop_game = function() {
+  $('#wodrs_title').removeClass('title_out');
   app.current_game.stop();
 }
 
@@ -321,3 +324,6 @@ app.show_game_info = function(game_id){
 };
 
 
+app.animate_logo = function(ev) {
+  console.log('scrolling');
+};

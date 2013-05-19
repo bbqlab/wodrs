@@ -31,7 +31,7 @@
 }
 
 body {
-  background: #040028 url(bk.png);
+  background: #cfcfcf url(bk.png);
   background-size: 90px;
 }
 
@@ -45,27 +45,39 @@ label {
 }
 
 #header h1 {
-  font-family: wodrlogofont !important;
   text-align:center;
   text-shadow:10px;
 }
 
-
-#wodrs_logo, #wodrs_title {
-  font-family: wodrfont !important;
-  text-align:center;
-  text-shadow:10px;
-}
 
 #wodrs_title {
+  text-align:center;
+  letter-spacing:-22px;
   font-size:150px;
   margin-top:70px;
-  text-shadow:0px 3px 3px #fff;
+  text-shadow:0px 3px 3px #666;
+  color:#333; 
   color:rgba(181,94,30,1);
+/*  rgba(181,94,30,1);*/
+  -webkit-transition: all 1s ease-out;
+}
+
+.title_out {
+  opacity:0;
+  font-size:300px;
+  text-align:right;
+}
+
+.title_light {
+  opacity:0.1;
+  font-size:300px;
+  text-align:right;
 }
 
 .score {
   font-size:35px !important;
+  color:#fff !important;
+  text-shadow:0px 3px 3px #
 }
 
 .wodrs_logo_big {
@@ -94,18 +106,18 @@ label {
 } /* These properties combine to create the look of the input fields. */
 
 .game_timer {
-	color:#fff;
   position: absolute;
   -webkit-transition: all 1s;
   transition: all 1s;
+  text-shadow:0px 3px 3px #fff;
+  color:rgba(229,125,21,0.9);
 }
 
 .button {
-  background:rgba(200,200,200,0.2);
-  color:#fff;
+  background:rgba(180,180,180,0.8);
+  font-weight:normal;
+  text-shadow:0px 1px 1px #666;
   color:rgba(181,94,30,1);
-  font-weight:bold;
-  text-shadow:0px 1px 1px #fff;
   font-size:26px;
   margin-bottom:20px;
   -moz-border-radius: 15px;
@@ -114,22 +126,38 @@ label {
   padding:10px 20px;
   -moz-box-shadow: 10px 10px 5px #333;
   -webkit-box-shadow: 10px 10px 15px #333;
-  box-shadow: 0 0 3px 3px #333;
+  box-shadow: 0 0 1px 1px #999;
 }
 
 .box {
-  background:rgba(255,255,255,0.1);
+  background:rgba(180,180,180,0.8);
   margin-bottom:20px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  -moz-box-shadow: 10px 10px 5px #333;
-  -webkit-box-shadow: 10px 10px 15px #333;
-  box-shadow: 0 0 3px 3px #333;
+  -moz-box-shadow: 10px 10px 5px #999;
+  -webkit-box-shadow: 10px 10px 15px #999;
+  box-shadow: 0 0 1px 1px #999;
+}
+
+.box a, .box a:active {
+  color:#444;
+  font-weight:normal;
+}
+
+.box_big {
+  font-size:25px;
+}
+
+.box_big p {
+  padding:20px;
+  line-height:35px;
+  font-size:25px;
 }
 
 .box h3{
   padding:15px;
-  background:rgba(200,200,200,0.2);
+  text-shadow:0px 1px 1px #666 !important;
+  background:rgba(140,140,140,0.4);
   -moz-border-radius: 15px 15px 0px 0px;
   border-radius: 15px 15px 0px 0px;
   }
@@ -166,8 +194,8 @@ label {
   transform:translate3d(0,0,0);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-
-  text-shadow: 0px 0px 5px #9f9;
+  text-shadow:0px 3px 3px #fff;
+  color:rgba(229,125,21,0.9);
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -243,7 +271,7 @@ label {
 }
 
 .panel_footer {
-  margin-top:100px;
+  margin-top:20px;
   text-align:center;
 }
 
