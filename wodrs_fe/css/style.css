@@ -314,9 +314,9 @@ label {
 
 
 #results h4 {
-  font-size: 24px;
+  font-size: 34px;
   font-weight: normal !important;
-  text-shadow: 0px 0px 5px #88F;
+  text-align: center;
 }
 
 .center {
