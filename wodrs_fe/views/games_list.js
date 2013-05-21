@@ -3,7 +3,6 @@
       <span class='active'>New game</a>
       <span class='requesting_player'>Requesting player</span></a>
   <a href='start_game/-1' class='button left'>Training</a>
-  <div class='panel_header'></div>
 </div>
 <div class='panel_content'>
   <% 
