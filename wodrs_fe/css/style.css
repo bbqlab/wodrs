@@ -32,7 +32,7 @@
 
 body {
   background: #cfcfcf url(bk.png);
-  background: #000;
+  background: #111;
   background-size: 90px;
 }
 
@@ -47,8 +47,8 @@ html,body,input {
   width:100%;
   height:200px;
   font-size:30px;
-  color:#222;
-  text-shadow: 2px 2px 2px #111;
+  color:#333;
+  text-shadow: 1px 1px 1px #222;
   word-wrap:break-word;
   line-height:28px;
 }
@@ -69,7 +69,7 @@ label {
   letter-spacing:-22px;
   font-size:150px;
   margin-top:70px;
-  text-shadow:0px 3px 3px #666;
+  text-shadow:0px 1px 1px #666;
   color:rgba(200,200,200,1);
 /*  rgba(181,94,30,1);*/
   -webkit-transition: all 1s ease-out;
@@ -134,7 +134,7 @@ label {
 }
 
 .button {
-  background:rgba(180,180,180,0.8);
+  background:rgba(100,100,100,0.8);
   font-weight:normal;
   text-shadow:0px 1px 1px #666;
   color:rgba(200,200,200,1);
@@ -155,7 +155,7 @@ label {
 }
 
 .box {
-  background:rgba(180,180,180,0.8);
+  background:rgba(100,100,100,0.8);
   margin-bottom:20px;
   -moz-border-radius: 15px;
   border-radius: 15px;
@@ -165,12 +165,12 @@ label {
 }
 
 .box a {
-  color:#666;
+  color:rgba(200,200,200,1);
   font-weight:normal;
 }
 
 .box a:active {
-  color:rgba(200,200,200,1);
+  color:#666;
 }
 
 .box_big {
@@ -181,6 +181,7 @@ label {
   padding:20px;
   line-height:35px;
   font-size:25px;
+  color:rgba(200,200,200,1) !important;
 }
 
 .box h3{
