@@ -3,7 +3,7 @@ function App()
   this.state = 0;          // using this to know if i'm ready to start application
   this.online = false;
 
-  this.views = ['game_row','results','game_info'];
+  this.views = ['game_row','results','game_info','games_list'];
 
   App.prototype.load_views = function() {
     $.each(this.views, function(index, view) {
@@ -123,30 +123,8 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
-  $('#completed_games').html(html);
-  $('#running_games').html(html);
-  $('#opponent_games').html(html);
-
-  $.each(games.running, function(index, game) {
-    html = $.template('view_game_row', {game: game});
-    $('#running_games').append(html);
-  });
-
-  $.each(games.running_opponent, function(index, game) {
-    html = $.template('view_game_row', {game: game});
-    $('#opponent_games').append(html);
-  });
-
-  $.each(games.completed, function(index, game) {
-    html = $.template('view_game_row', {game: game});
-    $('#completed_games').append(html);
-  });
-
-  if(games.pending && games.pending.length > 0)
-  {
-    $('#searching_player').show();
-  }
-
+  console.log(app.game_list);
+  $('#game_list').html($.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
 };
 
@@ -250,6 +228,7 @@ app.register = function() {
                 localStorage.setItem('username', username);
                 localStorage.setItem('password', password);
                 $.ui.loadContent('#game_list', false, false);
+                window.scrollTo(0,1);
               }
     });
 };
