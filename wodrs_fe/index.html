@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="images/favicon.ico" type="image/x-icon" rel="icon" />
     <link rel="stylesheet" href="css/jq.ui.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/icons.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
@@ -23,7 +24,7 @@
   </head>
 
   <body>
-
+    <div id='background'></div>
     <div id='jQUi'>
       
 
@@ -32,7 +33,7 @@
           <div class='game_timer left'>1:00</div>
           <div class='word_typer'></div>
       </header>
-
+      
       <div id='wodrs_title'>
         <span class='red'>W</span>
         <span class='orange'>o</span>
@@ -71,22 +72,11 @@
         </div>
 
         <div class='panel' id='game_list' title='Wodrs' data-footer='none' data-header='none'>
-          <script type="text/javascript"><!--
-            google_ad_client = "ca-pub-9759098288036220";
-            /* wodrs_horiz */
-            google_ad_slot = "6746931024";
-            google_ad_width = 970;
-            google_ad_height = 90;
-            //-->
-          </script>
-          <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-          </script>
           <div class='panel_header'>
             <a href='request_player' id='request_player_button' class='button right'>
-                <span class='active'>Play now</a>
+                <span class='active'>New game</a>
                 <span class='requesting_player'>Requesting player</span></a>
-            <a href='start_game' class='button left'>Training</a>
+            <a href='start_game/-1' class='button left'>Training</a>
             <div class='panel_header'></div>
           </div>
           <div class='panel_content'>
@@ -123,7 +113,7 @@
         </div>
 
         <div class='panel' id='game_info' title='Game' data-header='none'
-             data-footer='none' style='overflow: hidden;'>
+             data-footer='none' style=''>
         </div>
 
         <div class='panel' id='results' title='Finish!' data-header='none'

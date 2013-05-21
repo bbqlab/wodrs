@@ -4,7 +4,7 @@
 
 * {
 	-webkit-user-select:none; /* Prevent copy paste for all elements except text fields */
-	-webkit-tap-highlight-color:rgba(255, 255, 255, 0); /* set highlight color for user interaction */
+	-webkit-tap-highlight-color:rgba(200, 200, 200, 0.1); /* set highlight color for user interaction */
 	-ms-touch-action:none;
 	-webkit-touch-callout: none; /* prevent the popup menu on any links*/
 } 
@@ -230,8 +230,8 @@ background:#333;
 	display:block;
 	position:absolute;
 	top:48px;
+	bottom:0px;
 	left:0px;right:0px;
-	overflow:hidden;
 } /* Accounts for positioning of the content area, which is everything below the header and above the navbar. */
 
 .panel {
@@ -494,10 +494,6 @@ ul > li > a {
 	padding-right:-80px;
 } /* A touchable, interactive list item. */
 
- ul > li > a[selected], ul > li > a:active {
-	color:#fff !important;
-
-} /* A selected and active states for interactive list items. */
 
 ul > li.group {
 	position:relative;
