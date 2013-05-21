@@ -16,7 +16,7 @@ function App()
   App.prototype.try_to_start = function()
   {
     app.state++;
-    if(app.state==2)
+    if(app.state==3)
     {
       app.setup();
       app.main();
@@ -29,7 +29,7 @@ function App()
 
     if(typeof AppMobi.device!='undefined')
     {
-      AppMobi.device.setRotateOrientation('portrait');
+      AppMobi.device.setRotateOrientation('landscape');
       AppMobi.device.setAutoRotate(false);
       AppMobi.device.managePower(false,false);
       AppMobi.device.hideSplashScreen();
