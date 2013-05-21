@@ -121,20 +121,6 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
-
-  public function start_game()
-  {
-    $gamesId = $this->input->get('game_id'); 
-    $token = $this->input->get('token'); 
-
-  }
-
-  public function stop_game()
-  {
-    $gamesId = $this->input->get('game_id'); 
-
-  }
-
   public function list_games()
   {
     $token = $this->input->get('token'); 
@@ -145,9 +131,11 @@ class Wodrs extends CI_Controller {
     if($user->usersId != '')
     {
       $games = $user->listGames();
-      Wodrs::log($games);
- 
-      $response['data']['games'] = $games;
+
+      $game = new Games();
+
+      $games['topten'] = $game->getTopTen();
+      $response['data'] = array('games' => $games);
     }
     $this->response($response);
   }
