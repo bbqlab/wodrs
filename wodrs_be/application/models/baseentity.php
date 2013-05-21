@@ -56,21 +56,28 @@ class BaseEntity extends CI_Model {
   {
     $this->db->select('*');
     $this->db->from($this->table());
-
-    foreach($conditions as $key => $condition)
+    
+    if(is_array($conditions))
     {
-      if(is_array($condition))
+      foreach($conditions as $key => $condition)
       {
-        $this->db->where_in($key, $condition);
+        if(is_array($condition))
+        {
+          $this->db->where_in($key, $condition);
+        }
+        elseif(stristr(substr($key, 0, 3), 'or'))
+        {
+          $this->db->or_where(array(substr($key, 3) => $condition));
+        }
+        else
+        {
+          $this->db->where(array($key => $condition));
+        }
       }
-      elseif(stristr(substr($key, 0, 3), 'or'))
-      {
-        $this->db->or_where(array(substr($key, 3) => $condition));
-      }
-      else
-      {
-        $this->db->where(array($key => $condition));
-      }
+    }
+    else
+    {
+      $this->db->where($conditions);
     }
     
     if($limit > 0)
