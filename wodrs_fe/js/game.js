@@ -2,16 +2,28 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 50;//app['game_time'];
+  this.game_time = 15;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
   this.n_key_pressed=0;
   this.n_key_matched=0;
-  this.audio_ok = new Audio('audio/ok.wav');
-  this.audio_ok.load();
+  this.audio_ok = [];
+  this.audio_ok.push(new Audio('audio/ok1.wav'));
+  this.audio_ok.push(new Audio('audio/ok2.wav'));
+  this.audio_ok.push(new Audio('audio/ok3.wav'));
+  for(i in this.audio_ok)
+  {
+    this.audio_ok[i].load();
+  }
   this.audio_error = new Audio('audio/error.wav');
   this.audio_ok = new Audio('audio/ok.wav');
+  this.audio_error.load();
+  this.audio_panic = new Audio('audio/panic.wav');
+  this.audio_panic.load();
+
+  this.audio_gong = new Audio('audio/gong.wav');
+  this.audio_gong.load();
 }
 
 WodrsGame.prototype.start = function() {
@@ -39,7 +51,11 @@ WodrsGame.prototype.timer_tick = function() {
   var game = app.current_game;
   var game_time = --game.game_time;
 
-  if(game_time==0){  app.stop_game(); return; };
+  if(game_time==0)
+  {
+    game.audio_gong.play();
+    app.stop_game(); return; 
+  };
 
   if(game_time<10)
   {
@@ -48,6 +64,11 @@ WodrsGame.prototype.timer_tick = function() {
       $('.game_timer').removeClass('bounce');
     else
       $('.game_timer').addClass('bounce');
+  }
+
+  if(game_time==10)
+  {
+    game.audio_panic.play();
   }
 
   $('.game_timer').html('0:'+game_time);
@@ -126,7 +147,8 @@ WodrsGame.prototype.check_word = function() {
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
     $('#word_'+id).html(new_word);
-    this.audio_ok.play();
+    audio_ok = this.random_ok();
+    audio_ok.play();
     console.log('playing ok');
     this.clear_current_word();
   }
@@ -139,6 +161,11 @@ WodrsGame.prototype.check_word = function() {
   $('.game_score').html(this.n_key_pressed + '/' + this.n_key_matched + ' (' + this.score + ')');
 
 };
+
+WodrsGame.prototype.random_ok = function() {
+  rand =  Math.floor(Math.random() * 3);
+  return this.audio_ok[rand];
+}
 
 WodrsGame.prototype.word_hit = function(word) {
   this.score += word.length*this.rules.letter_weight;
