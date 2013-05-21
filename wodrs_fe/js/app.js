@@ -38,6 +38,8 @@ function App()
     $.ui.customClickHandler = this.clickHandler;
     $.ui.showBackbutton=false
 
+    this.fill_background();
+
   }
 
   // clickhandler: each touch on active object pass here
@@ -327,3 +329,26 @@ app.show_game_info = function(game_id){
 app.animate_logo = function(ev) {
   console.log('scrolling');
 };
+
+app.fill_background = function() {
+  $('#background').height($('body').height());
+
+  html = '';
+  for(i = 0; i < 140; i++)
+  {
+    html += randomString(10);
+  }
+
+  $('#background').html(html);
+
+};
+
+function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+      var randomPoz = Math.floor(Math.random() * charSet.length);
+      randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+    return randomString;
+}
