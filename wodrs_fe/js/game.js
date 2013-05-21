@@ -8,6 +8,8 @@ function WodrsGame(id){
   this.words_slider = $('#words_slider');
   this.n_key_pressed=0;
   this.n_key_matched=0;
+  this.audio_ok = new Audio('audio/ok.wav');
+  this.audio_ok.load();
   this.audio_error = new Audio('audio/error.wav');
   this.audio_error.load();
 }
@@ -123,6 +125,8 @@ WodrsGame.prototype.check_word = function() {
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
     $('#word_'+id).html(new_word);
+    this.audio_ok.play();
+    console.log('playing ok');
     this.clear_current_word();
   }
   else if(id==-2)
