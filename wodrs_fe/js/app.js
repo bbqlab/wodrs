@@ -3,7 +3,7 @@ function App()
   this.state = 0;          // using this to know if i'm ready to start application
   this.online = false;
 
-  this.views = ['game_row','results','game_info','games_list'];
+  this.views = ['game_row','results','game_info','games_list','topten_row'];
 
   App.prototype.load_views = function() {
     $.each(this.views, function(index, view) {
@@ -116,6 +116,7 @@ app.main = function(){
 
 app.show_game_list = function() {
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
+    console.log(res.data.games);
     app.fill_game_list(res.data.games);
   });
 };

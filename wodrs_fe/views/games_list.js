@@ -11,60 +11,52 @@
       <div class='box'>
         <h3>Your turn</h3>
         <ul id='running_games'>
+         <% for(game in games.running) { %>
+            <%=$.template('view_game_row', {game: games.running[game]})%>
+         <% } %>
         </ul>
       </div>
   <% 
-    console.log('qui');
-      $.each(games.running, function(index, game) {
-        html = $.template('view_game_row', {game: game});
-        $('#running_games').append(html);
-      });
     }
   
-    console.log('qu2i');
     if(games.running_opponent.length > 0) { %>
       <div class='box'>
         <h3>Opponent turn</h3>
         <ul id='opponent_games'>
+         <% for(game in games.running_opponent) { %>
+           <%=$.template('view_game_row', 
+                         {game: games.running_opponent[game]})%>
+         <%}%>
         </ul>
       </div>
   <%
-
-      $.each(games.running_opponent, function(index, game) {
-        html = $.template('view_game_row', {game: game});
-        $('#opponent_games').append(html);
-      });
     }
-
-
-  %>
-   kdjaklsjdkl
-   <%  
 
 
    if(games.topten.length > 0) { %>
       <div class="box">
         <h3>Top ten</h3>
         <ul id='topten'>
+        <% for(score in games.topten) { %>
+          <%=$.template('view_topten_row', 
+                        {score: games.topten[score], pos: (parseInt(score) + 1)})%>
+        <%}%>
         </ul>
       </div>
   <% 
-      $.each(games.topten, function(index, score) {
-        html = $.template('view_topten_row', {game: score});
-        $('#topten').append(html);
-      });
     }
+
    if(games.completed.length > 0) { %>
       <div class="box">
         <h3>Completed</h3>
         <ul id='completed_games'>
+         <% for(game in games.completed) { %>
+           <%=$.template('view_game_row', 
+                         {game:games.completed[game]})%>
+         <%}%>
         </ul>
       </div>
   <% 
-      $.each(games.completed, function(index, game) {
-        html = $.template('view_game_row', {game: game});
-        $('#completed_games').append(html);
-      });
     }
   %>
 </div>
