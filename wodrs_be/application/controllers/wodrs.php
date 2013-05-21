@@ -144,7 +144,11 @@ class Wodrs extends CI_Controller {
     $user->loadFromToken($token);
     $games = $user->listGames();
 
+    $game = new Games();
+
+    $games['topten'] = $game->getTopTen();
     $response['data'] = array('games' => $games);
+
     $this->response($response);
   }
 

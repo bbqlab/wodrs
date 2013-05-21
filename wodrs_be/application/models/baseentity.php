@@ -46,7 +46,9 @@ class BaseEntity extends CI_Model {
   {
     return $this->table() . "Id";
   }
-  
+
+
+
   /*!
    * \brief Search inside a collection of objects
    */
