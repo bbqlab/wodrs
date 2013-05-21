@@ -121,30 +121,22 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
-
-  public function start_game()
-  {
-    $gamesId = $this->input->get('game_id'); 
-    $token = $this->input->get('token'); 
-
-  }
-
-  public function stop_game()
-  {
-    $gamesId = $this->input->get('game_id'); 
-
-  }
-
   public function list_games()
   {
     $token = $this->input->get('token'); 
 
-    $response = array('error' => false, 'data' => '');
+    $response = array('error' => false, 'data' => array('games' => array()));
     $user = new Users();
     $user->loadFromToken($token);
-    $games = $user->listGames();
+    if($user->usersId != '')
+    {
+      $games = $user->listGames();
 
-    $response['data'] = array('games' => $games);
+      $game = new Games();
+
+      $games['topten'] = $game->getTopTen();
+      $response['data'] = array('games' => $games);
+    }
     $this->response($response);
   }
 
@@ -187,7 +179,7 @@ class Wodrs extends CI_Controller {
     echo $content;
   }
 
-  private static function log($message)
+  static function log($message)
   {
     if(is_array($message) or is_object($message))
     {

@@ -21,7 +21,7 @@
 {
   font-family: wodrfont;
   src: url('MBBlockType.ttf');
-  /*src: url('MBBlockType.ttf');
+  /*
   src: url('KOMIKRAK.ttf');
   src: url('Mignone.ttf');
   src: url('Neon.ttf');
@@ -32,12 +32,25 @@
 
 body {
   background: #cfcfcf url(bk.png);
+  background: #111;
   background-size: 90px;
 }
 
 html,body,input {
   font-family: wodrfont !important;
+  font-weight:bold;
   color:#666;
+}
+
+#background {
+  position:absolute;
+  width:100%;
+  height:200px;
+  font-size:30px;
+  color:#333;
+  text-shadow: 1px 1px 1px #222;
+  word-wrap:break-word;
+  line-height:28px;
 }
 
 label {
@@ -56,8 +69,8 @@ label {
   letter-spacing:-22px;
   font-size:150px;
   margin-top:70px;
-  text-shadow:0px 3px 3px #666;
-  color:rgba(181,94,30,1);
+  text-shadow:0px 1px 1px #666;
+  color:rgba(200,200,200,1);
 /*  rgba(181,94,30,1);*/
   -webkit-transition: all 1s ease-out;
 }
@@ -100,10 +113,10 @@ label {
   text-align:center;
   text-transform: lowercase;
   width: 40%;
-  border-bottom: 2px dashed rgba(229,125,21,0.9);
+  border-bottom: 2px dashed rgba(200,200,200,0.9);
   line-height: 35px;
   height: 35px;
-  color:rgba(229,125,21,0.9);
+  color:rgba(200,200,200,1);
   text-shadow:0px 1px 1px #666 !important;
 } /* These properties combine to create the look of the input fields. */
 
@@ -112,19 +125,19 @@ label {
   -webkit-transition: all 1s;
   transition: all 1s;
   text-shadow:0px 1px 1px #666 !important;
-  color:rgba(229,125,21,0.9);
+  color:rgba(200,200,200,1);
 }
 
 .game_score {
-  color:rgba(229,125,21,0.9);
+  color:rgba(200,200,200,1);
   text-shadow:0px 1px 1px #666;
 }
 
 .button {
-  background:rgba(180,180,180,0.8);
+  background:rgba(100,100,100,0.8);
   font-weight:normal;
   text-shadow:0px 1px 1px #666;
-  color:rgba(181,94,30,1);
+  color:rgba(200,200,200,1);
   font-size:26px;
   margin-bottom:20px;
   -moz-border-radius: 15px;
@@ -142,7 +155,7 @@ label {
 }
 
 .box {
-  background:rgba(180,180,180,0.8);
+  background:rgba(100,100,100,0.8);
   margin-bottom:20px;
   -moz-border-radius: 15px;
   border-radius: 15px;
@@ -152,12 +165,12 @@ label {
 }
 
 .box a {
-  color:#666;
+  color:rgba(200,200,200,1);
   font-weight:normal;
 }
 
 .box a:active {
-  color:rgba(181,94,30,1);
+  color:#666;
 }
 
 .box_big {
@@ -168,6 +181,7 @@ label {
   padding:20px;
   line-height:35px;
   font-size:25px;
+  color:rgba(200,200,200,1) !important;
 }
 
 .box h3{
@@ -212,6 +226,7 @@ label {
   box-sizing: border-box;
   text-shadow:0px 1px 1px #666 !important;
   color:rgba(229,125,21,0.9);
+  color:rgba(200,200,200,1);
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -295,7 +310,7 @@ label {
   font-size: 26px;
   font-weight: normal !important;
   text-shadow:0px 1px 1px #fff;
-  color:rgba(181,94,30,1);
+  color:rgba(200,200,200,1);
 }
 
 .game_running, .game_running_opponent {
@@ -337,4 +352,18 @@ label {
 
 .requesting_player {
   display:none;
+}
+
+#topten {
+  padding:20px;
+  color:rgba(200,200,200,1);
+}
+
+#topten .player_pos {
+  font-size:25px;
+}
+
+#topten .player_score {
+  font-size:15px;
+  color:#aaa;
 }

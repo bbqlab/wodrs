@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="images/favicon.ico" type="image/x-icon" rel="icon" />
     <link rel="stylesheet" href="css/jq.ui.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/icons.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
@@ -31,7 +32,7 @@
   </head>
 
   <body>
-
+    <div id='background'></div>
     <div id='jQUi'>
       
 
@@ -79,32 +80,6 @@
         </div>
 
         <div class='panel' id='game_list' title='Wodrs' data-footer='none' data-header='none'>
-          <div class='panel_header'>
-            <a href='request_player' id='request_player_button' class='button right'>
-                <span class='active'>New game</a>
-                <span class='requesting_player'>Requesting player</span></a>
-            <a href='start_game/-1' class='button left'>Training</a>
-            <div class='panel_header'></div>
-          </div>
-          <div class='panel_content'>
-            <div class='box'>
-              <h3>Your turn</h3>
-              <ul id='running_games'>
-              </ul>
-            </div>
-            
-            <div class='box'>
-              <h3>Opponent turn</h3>
-              <ul id='opponent_games'>
-              </ul>
-            </div>
-     
-            <div class="box">
-              <h3>Completed</h3>
-              <ul id='completed_games'>
-              </ul>
-            </div>
-          </div>
         </div>
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>

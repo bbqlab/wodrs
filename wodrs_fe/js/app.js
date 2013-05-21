@@ -3,7 +3,7 @@ function App()
   this.state = 0;          // using this to know if i'm ready to start application
   this.online = false;
 
-  this.views = ['game_row','results','game_info'];
+  this.views = ['game_row','results','game_info','games_list','topten_row'];
 
   App.prototype.load_views = function() {
     $.each(this.views, function(index, view) {
@@ -37,6 +37,8 @@ function App()
     $.ui.transitionTime = '4';
     $.ui.customClickHandler = this.clickHandler;
     $.ui.showBackbutton=false
+
+    this.fill_background();
 
   }
 
@@ -114,6 +116,7 @@ app.main = function(){
 
 app.show_game_list = function() {
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
+    console.log(res.data.games);
     app.fill_game_list(res.data.games);
   });
 };
@@ -121,30 +124,8 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
-  $('#completed_games').html(html);
-  $('#running_games').html(html);
-  $('#opponent_games').html(html);
-
-  $.each(games.running, function(index, game) {
-    html = $.template('view_game_row', {game: game});
-    $('#running_games').append(html);
-  });
-
-  $.each(games.running_opponent, function(index, game) {
-    html = $.template('view_game_row', {game: game});
-    $('#opponent_games').append(html);
-  });
-
-  $.each(games.completed, function(index, game) {
-    html = $.template('view_game_row', {game: game});
-    $('#completed_games').append(html);
-  });
-
-  if(games.pending && games.pending.length > 0)
-  {
-    $('#searching_player').show();
-  }
-
+  console.log(app.game_list);
+  $('#game_list').html($.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
 };
 
@@ -249,6 +230,7 @@ app.register = function() {
                 localStorage.setItem('username', username);
                 localStorage.setItem('password', password);
                 $.ui.loadContent('#game_list', false, false);
+                window.scrollTo(0,1);
               }
     });
 };
@@ -328,3 +310,26 @@ app.show_game_info = function(game_id){
 app.animate_logo = function(ev) {
   console.log('scrolling');
 };
+
+app.fill_background = function() {
+  $('#background').height($('body').height());
+
+  html = '';
+  for(i = 0; i < 140; i++)
+  {
+    html += randomString(10);
+  }
+
+  $('#background').html(html);
+
+};
+
+function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+      var randomPoz = Math.floor(Math.random() * charSet.length);
+      randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+    return randomString;
+}
