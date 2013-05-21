@@ -139,12 +139,16 @@ class Wodrs extends CI_Controller {
   {
     $token = $this->input->get('token'); 
 
-    $response = array('error' => false, 'data' => '');
+    $response = array('error' => false, 'data' => array('games' => array()));
     $user = new Users();
     $user->loadFromToken($token);
-    $games = $user->listGames();
-
-    $response['data'] = array('games' => $games);
+    if($user->usersId != '')
+    {
+      $games = $user->listGames();
+      Wodrs::log($games);
+ 
+      $response['data']['games'] = $games;
+    }
     $this->response($response);
   }
 
@@ -187,7 +191,7 @@ class Wodrs extends CI_Controller {
     echo $content;
   }
 
-  private static function log($message)
+  static function log($message)
   {
     if(is_array($message) or is_object($message))
     {
