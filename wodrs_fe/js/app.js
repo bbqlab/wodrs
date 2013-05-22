@@ -332,3 +332,10 @@ function randomString(len, charSet) {
     }
     return randomString;
 }
+
+
+app.focus_keyboard = function(){
+  app.current_game.typing[0].blur();
+  app.current_game.typing[0].click();
+  app.current_game.typing[0].focus();
+};

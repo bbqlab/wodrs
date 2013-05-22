@@ -18,7 +18,6 @@ function WodrsGame(id){
     this.audio_ok[i].load();
   }
   this.audio_error = new Audio('audio/error.wav');
-  this.audio_ok = new Audio('audio/ok.wav');
   this.audio_error.load();
   this.audio_panic = new Audio('audio/panic.wav');
   this.audio_panic.load();
@@ -37,16 +36,19 @@ WodrsGame.prototype.start = function() {
 
   this.words_slider.addClass('animate');
 
-  $('#typing').on('blur',this.do_not_blur_input);
+  //$('#typing').on('blur',this.do_not_blur_input);
   this.typing[0].focus();
   window.scrollTo(0,0);
 };
 
 
 WodrsGame.prototype.do_not_blur_input = function(e) {
+  app.current_game.typing[0].blur();
+  app.current_game.typing[0].click();
   app.current_game.typing[0].focus();
-    
 };
+
+
 
 
 WodrsGame.prototype.timer_tick = function() {
@@ -140,19 +142,18 @@ WodrsGame.prototype.check_word = function() {
   var word = this.current_word.join('');
   var id = this.word_list.check_word(word);
   var new_word;
+  var audio_ok;
 
   this.n_key_pressed++;
 
   // the word matched !! 
   if( id>=0 )
   {
-    this.audio_ok.play();
     this.word_hit(word);
     new_word = this.word_list.get_word(id);
     $('#word_'+id).html(new_word);
     audio_ok = this.random_ok();
     audio_ok.play();
-    console.log('playing ok');
     this.clear_current_word();
   }
   else if(id==-2)
@@ -166,7 +167,7 @@ WodrsGame.prototype.check_word = function() {
 };
 
 WodrsGame.prototype.random_ok = function() {
-  rand =  Math.floor(Math.random() * 3);
+  var rand =  Math.floor(Math.random() * 3);
   return this.audio_ok[rand];
 }
 

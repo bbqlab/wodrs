@@ -364,3 +364,12 @@ label {
   font-size:15px;
   color:#aaa;
 }
+
+
+#keyboard_icon {
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+  top: 330px;
+  text-align:center;
+}
