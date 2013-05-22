@@ -3,7 +3,7 @@
     <% if(game.state=='running' && game.score1==-1) { %>
       <a class='button right' href='start_game/<%=game.gamesId%>'>PLAY!</a>
     <% } %>
-    <a class='button left' href='game_list'>Back</a>
+    <a class='button left' href='show_game_list'>Back</a>
 </div>
 
 <div class='panel_content'>
