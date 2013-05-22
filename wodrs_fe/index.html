@@ -20,7 +20,7 @@
 
 <!-- the line below is required for access to the appMobi JS library -->
 
-<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/appmobi.js"></script>
+<!--<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/appmobi.js"></script>-->
 
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
@@ -86,6 +86,8 @@
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
           <input type='text' id='typing'>
+          <div id='wrong_letters' class='letter_fader right'><span>.</span></div>
+          <div id='correct_letters' class='letter_fader left'><span>.</span></div>
           <div id="words_slider">
             <div class='word' id='word_0'></div>
             <div class='word' id='word_1'></div>

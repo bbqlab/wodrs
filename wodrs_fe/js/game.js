@@ -126,8 +126,9 @@ WodrsGame.prototype.key_down = function(evt) {
   // check if keycode è un ascii lettera US no numeri, caratteri speciali
   if( key >= 65 &&  key <= 90 )
   {
-    app.current_game.add_letter(String.fromCharCode(key));
-    app.current_game.check_word();
+    var letter = String.fromCharCode(key);
+    app.current_game.add_letter(letter);
+    app.current_game.check_word(letter);
   }
 
 
@@ -138,7 +139,7 @@ WodrsGame.prototype.key_down = function(evt) {
 
 };
 
-WodrsGame.prototype.check_word = function() {
+WodrsGame.prototype.check_word = function(letter) {
   var word = this.current_word.join('');
   var id = this.word_list.check_word(word);
   var new_word;
@@ -156,14 +157,29 @@ WodrsGame.prototype.check_word = function() {
     audio_ok.play();
     this.clear_current_word();
   }
-  else if(id==-2)
+  else if(id==-1) // right letter on uncompleted word
   {
+    this.add_letter_fader(letter, 'correct');
+  }
+  else if(id==-2) // wrong letter
+  {
+    this.add_letter_fader(letter, 'wrong');
     this.audio_error.play();
     this.clear_current_word();
   }
 
   $('.game_score').html(this.n_key_pressed + '/' + this.n_key_matched + ' (' + this.score + ')');
+};
 
+WodrsGame.prototype.add_letter_fader = function(letter, fader) {
+  var fader = $('#' + fader + '_letters');
+  var span = $('<span>'+ letter +'</span>');
+  console.log('adding letter to ' + fader + ' :: ' + letter);
+
+  fader.append(span);
+
+  setTimeout( function() {span.addClass('fade_out'); }, 50);
+  setTimeout(function() {span.remove() }, 2000);
 };
 
 WodrsGame.prototype.random_ok = function() {

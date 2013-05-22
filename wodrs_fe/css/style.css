@@ -373,3 +373,39 @@ label {
   top: 330px;
   text-align:center;
 }
+
+#correct_letters {
+  margin-left:30px;
+}
+
+#wrong_letters {
+  margin-right:75px;
+}
+
+.letter_fader {
+  padding:0px 5px;
+  position:relative;
+}
+
+.letter_fader span {
+  text-align:right;
+  position:absolute;
+  -webkit-transition: all 1.3s, color 0.7s, margin 0.2s ease-out;
+  opacity:1;
+  padding-top:150px;
+  font-size:50px;
+}
+
+.letter_fader span.fade_out {
+  opacity:0;
+  font-size:120px;
+  padding-top:0px;
+}
+
+#wrong_letters span.fade_out {
+  color:red;
+}
+
+#correct_letters span.fade_out {
+  color:green;
+}

@@ -16,7 +16,7 @@ function App()
   App.prototype.try_to_start = function()
   {
     app.state++;
-    if(app.state==3)
+    if(app.state==2)
     {
       app.setup();
       app.main();
