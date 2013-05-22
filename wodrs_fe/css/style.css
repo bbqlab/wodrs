@@ -68,7 +68,7 @@ label {
   text-align:center;
   letter-spacing:-22px;
   font-size:150px;
-  margin-top:70px;
+  margin-top:95px;
   text-shadow:0px 1px 1px #666;
   color:rgba(200,200,200,1);
 /*  rgba(181,94,30,1);*/
@@ -100,7 +100,6 @@ label {
 #typing {
   position: absolute;
   overflow:hidden;
-
   width: 0px;
   height: 0px;
   border: 1px solid rgb(19,29,38);
@@ -170,7 +169,8 @@ label {
 }
 
 .box a:active {
-  color:#666;
+  color:#333;
+  background-color: rgba(200,200,200,0.3);
 }
 
 .box_big {
@@ -190,10 +190,6 @@ label {
   background:rgba(140,140,140,0.4);
   -moz-border-radius: 15px 15px 0px 0px;
   border-radius: 15px 15px 0px 0px;
-  }
-
-.box ul{
-  padding:15px;
   }
 
 .bounce {
@@ -328,9 +324,10 @@ label {
 
 
 #results h4 {
-  font-size: 34px;
+  font-size: 25px;
   font-weight: normal !important;
   text-align: center;
+  color: rgb(200,200,200);
 }
 
 .center {

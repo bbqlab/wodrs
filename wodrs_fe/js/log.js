@@ -6,12 +6,12 @@ App.prototype.log = function(message) {
     for( property in message )
       msg += property + ' ' + message[property] + "\n";
     console.log(msg);
-    //$.post(app.log_backend + 'log', { message: msg });
+    $.post(app.log_backend + 'log', { message: msg });
   }
   else
   {
     console.log(message);
-    //$.post(app.log_backend + 'log', { message: message });
+    $.post(app.log_backend + 'log', { message: message });
   }
 };
 

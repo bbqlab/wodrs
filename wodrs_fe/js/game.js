@@ -2,7 +2,7 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 15;//app['game_time'];
+  this.game_time = 60;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
@@ -12,6 +12,7 @@ function WodrsGame(id){
   this.audio_ok.push(new Audio('audio/ok1.wav'));
   this.audio_ok.push(new Audio('audio/ok2.wav'));
   this.audio_ok.push(new Audio('audio/ok3.wav'));
+  this.typing = $('#typing');
   for(i in this.audio_ok)
   {
     this.audio_ok[i].load();
@@ -30,20 +31,21 @@ WodrsGame.prototype.start = function() {
   this.word_list = new WordList();
   this.populate_list();
   this.bind_events();
-  window.scrollTo(0,1);
+  window.scrollTo(0,0);
 
   this.game_interval = window.setInterval( this.timer_tick, 1000 );
-  setTimeout( "$('#typing')[0].focus(); window.scrollTo(0,1);", 50);
-  $('#typing').on('blur',this.do_not_blur_input);
 
   this.words_slider.addClass('animate');
+
+  $('#typing').on('blur',this.do_not_blur_input);
+  this.typing[0].focus();
+  window.scrollTo(0,0);
 };
 
 
 WodrsGame.prototype.do_not_blur_input = function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $('#typing')[0].focus(); 
+  app.current_game.typing[0].focus();
+    
 };
 
 
@@ -79,7 +81,8 @@ WodrsGame.prototype.timer_tick = function() {
 WodrsGame.prototype.stop = function() {
   
     window.clearInterval(this.game_interval);
-    $('#words_slider').removeClass('animate');
+    $('#words_slider').removeClass('animate')[0].style.webkitAnimationDuration='7s';
+
 
     $('#typing').off('blur',this.do_not_blur_input);
 
@@ -191,9 +194,18 @@ WodrsGame.prototype.bind_events = function() {
   $('#typing').on('keydown',this.key_down );
   this.words_slider.on('webkitAnimationEnd',function(){ 
 
-    this.style.webkitAnimationDuration = app.current_game.game_time/6+1 + 's';
-    this.style.webkitAnimationPlayState = "paused";
-    this.style.webkitAnimationPlayState = "running";
+    if(app.current_game.game_time>1) 
+    {
+      this.style.webkitAnimationPlayState = "paused";
+      this.style.webkitAnimationDuration = ((app.current_game.game_time/10)+1).toFixed(2) + 's';
+
+      this.style.webkitAnimationPlayState = "running";
+    }
+    else{
+      this.style.webkitAnimationPlayState = "paused";
+      this.style.webkitAnimationDuration = '7s';
+      this.style.webkitAnimationPlayState = "running";
+    }
 
   });
 

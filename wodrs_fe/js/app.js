@@ -116,7 +116,6 @@ app.main = function(){
 
 app.show_game_list = function() {
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
-    console.log(res.data.games);
     app.fill_game_list(res.data.games);
   });
 };
@@ -124,7 +123,6 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
-  console.log(app.game_list);
   $('#game_list').html($.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
 };
@@ -229,7 +227,7 @@ app.register = function() {
                 localStorage.setItem('token', JSON.stringify(app.token));
                 localStorage.setItem('username', username);
                 localStorage.setItem('password', password);
-                $.ui.loadContent('#game_list', false, false);
+                app.show_game_list();
                 window.scrollTo(0,1);
               }
     });
@@ -268,7 +266,9 @@ app.login = function(storage, callback) {
                 }
                 else
                 {
-                  $.ui.loadContent('#game_list', false, false);
+
+                  app.show_game_list();
+                  //$.ui.loadContent('#game_list', false, false);
                 }
               }
     });
@@ -308,7 +308,6 @@ app.show_game_info = function(game_id){
 
 
 app.animate_logo = function(ev) {
-  console.log('scrolling');
 };
 
 app.fill_background = function() {
