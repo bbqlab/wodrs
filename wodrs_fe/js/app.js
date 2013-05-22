@@ -297,6 +297,7 @@ app.send_results = function(game_id,score){
 
 
 app.show_game_info = function(game_id){
+  window.scrollTo(0,1);
   if(typeof game_id=='undefined')
     game_id=app.current_game.id;
 

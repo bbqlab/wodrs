@@ -388,24 +388,25 @@ label {
 }
 
 .letter_fader span {
+  color:rgb(200,200,200);
   text-align:right;
   position:absolute;
   -webkit-transition: all 1.3s, color 0.7s, margin 0.2s ease-out;
   opacity:1;
-  padding-top:150px;
-  font-size:50px;
+  padding-top:120px;
+  font-size:40px;
 }
 
-.letter_fader span.fade_out {
+.letter_fader .fade_out {
   opacity:0;
-  font-size:120px;
+  font-size:100px;
   padding-top:0px;
 }
 
-#wrong_letters span.fade_out {
-  color:red;
+#wrong_letters span {
+  text-shadow:1px 1px 3px red;
 }
 
-#correct_letters span.fade_out {
-  color:green;
+#correct_letters span {
+  text-shadow:1px 1px 3px green;
 }

@@ -2,7 +2,7 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 60;//app['game_time'];
+  this.game_time = 10;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
@@ -68,12 +68,9 @@ WodrsGame.prototype.timer_tick = function() {
   }
 
   $('.game_timer').html('0:'+game_time);
-
-  
 };
 
 WodrsGame.prototype.stop = function() {
-  
     window.clearInterval(this.game_interval);
     $('#words_slider').removeClass('animate')[0].style.webkitAnimationDuration='7s';
 
@@ -81,6 +78,7 @@ WodrsGame.prototype.stop = function() {
     app.send_results(this.id,this.score);
 
     var precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
+    this.unbind_events();
 
     $.ui.loadContent('#results', false, false );
     app.set_game_score(this.id,this.score);
@@ -196,8 +194,15 @@ WodrsGame.prototype.refresh_word = function() {
 
 WodrsGame.prototype.bind_events = function() {
   $('#typing').on('keydown',this.key_down );
-  this.words_slider.on('webkitAnimationEnd',function(){ 
+  this.words_slider.on('webkitAnimationEnd',this.accelerate_slider);
+};
 
+WodrsGame.prototype.unbind_events = function() {
+  $('#typing').off('keydown', this.key_down);
+  this.words_slider.off('webkitAnimationEnd', this.accelerate_slider);
+};
+
+WodrsGame.prototype.accelerate_slider = function() {
     if(app.current_game.game_time>1) 
     {
       this.style.webkitAnimationPlayState = "paused";
@@ -211,9 +216,8 @@ WodrsGame.prototype.bind_events = function() {
       this.style.webkitAnimationPlayState = "running";
     }
 
-  });
-
 };
+
 
 WodrsGame.prototype.populate_list = function() {
   
