@@ -102,7 +102,7 @@ label {
   overflow:hidden;
   width: 0px;
   height: 0px;
-  border: 1px solid rgb(19,29,38);
+  border: 1px solid rgba(19,29,38,0.1);
 }
 
 
@@ -139,11 +139,10 @@ label {
   color:rgba(200,200,200,1);
   font-size:26px;
   margin-bottom:20px;
-  -moz-border-radius: 15px;
   border-radius: 15px;
-  height:55px;
+  height:55px !important;
+  line-height: 40px !important;
   padding:10px 20px;
-  -moz-box-shadow: 10px 10px 5px #333;
   -webkit-box-shadow: 10px 10px 15px #333;
   box-shadow: 0 0 1px 1px #999;
 }
@@ -391,16 +390,15 @@ label {
   color:rgb(200,200,200);
   text-align:right;
   position:absolute;
-  -webkit-transition: all 1.3s, color 0.7s, margin 0.2s ease-out;
+  -webkit-transition: opacity .6s, font .3s;
   opacity:1;
-  padding-top:120px;
+  top:60px;
   font-size:40px;
 }
 
 .letter_fader .fade_out {
   opacity:0;
-  font-size:100px;
-  padding-top:0px;
+  font-size:150px;
 }
 
 #wrong_letters span {

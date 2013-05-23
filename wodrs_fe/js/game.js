@@ -2,7 +2,7 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 10;//app['game_time'];
+  this.game_time = 60;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
@@ -39,8 +39,8 @@ WodrsGame.prototype.start = function() {
 
   window.scrollTo(0,0);
   this.words_slider.addClass('animate');
+  app.focus_keyboard();
 
-  this.typing[0].focus();
 };
 
 
