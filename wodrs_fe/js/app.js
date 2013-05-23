@@ -6,8 +6,11 @@ function App()
   this.views = ['game_row','results','game_info','games_list','topten_row'];
 
   App.prototype.load_views = function() {
-    $.each(this.views, function(index, view) {
+    console.log('loading view');
+    $.each(this.views, function(index, view) { 
+      console.log('requesting: ' + view);
       $.get('views/' + view + '.js', function(data) {
+        console.log('loading: ' + view);
         $('body').append('<script id="view_' + view + '" type="text/html">' + data + '</script>');
       });
     });
@@ -72,7 +75,7 @@ function App()
       }
     }
     catch(e){
-      app.log("ERROR IN CLICKHANDLER " + e);
+      console.log("ERROR IN CLICKHANDLER " + e);
       return false;
     }
     //returning true prevent default jq.ui event to be handled
@@ -178,7 +181,7 @@ app.get_game = function(id){
 };
 
 app.request_player = function() {
-  $('#request_player_button').addClass('spin').html('Waiting..').addClass('button_disabled');
+  $('#request_player_button').addClass('spin').html('Waiting player..').addClass('button_disabled');
   $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
     app.game_check_interval = setTimeout(app.check_games,1000);
   });
@@ -342,7 +345,8 @@ function randomString(len, charSet) {
 
 
 app.focus_keyboard = function(){
-  app.current_game.typing[0].blur();
+//  app.current_game.typing[0].blur();
   app.current_game.typing[0].click();
+  console.log('calling focus');
   app.current_game.typing[0].focus();
 };

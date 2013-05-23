@@ -29,7 +29,7 @@ function WodrsGame(id){
 }
 
 WodrsGame.prototype.start = function() {
-  app.log("Dentro start del game!");
+//  app.log("Dentro start del game!");
   this.word_list = new WordList();
   this.populate_list();
   this.bind_events();
@@ -39,7 +39,7 @@ WodrsGame.prototype.start = function() {
 
   window.scrollTo(0,0);
   this.words_slider.addClass('animate');
-  app.focus_keyboard();
+  setTimeout(app.focus_keyboard, 20);
 
 };
 
@@ -108,6 +108,8 @@ WodrsGame.prototype.stop = function() {
 WodrsGame.prototype.key_down = function(evt) {
   var key = evt.which;
 
+  console.log('on key down');
+
 
   // check if keycode è un ascii lettera US no numeri, caratteri speciali
   if( key >= 65 &&  key <= 90 )
@@ -141,6 +143,7 @@ WodrsGame.prototype.check_word = function(letter) {
     $('#word_'+id).html(new_word);
     audio_ok = this.random_ok();
     audio_ok.play();
+    this.add_letter_fader(letter, 'correct');
     this.clear_current_word();
   }
   else if(id==-1) // right letter on uncompleted word

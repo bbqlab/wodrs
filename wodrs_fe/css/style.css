@@ -101,7 +101,7 @@ label {
   position: absolute;
   overflow:hidden;
   width: 0px;
-  height: 0px;
+  height:0px;
   border: 1px solid rgba(19,29,38,0.1);
 }
 
