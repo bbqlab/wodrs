@@ -5,6 +5,7 @@
   <a href='start_game/-1' class='button left'>Training</a>
 </div>
 <div class='panel_content'>
+
   <% 
   if(games.running.length > 0) { %>
       <div class='box'>

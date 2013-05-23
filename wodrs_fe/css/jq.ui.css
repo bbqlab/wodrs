@@ -249,7 +249,7 @@ background:#333;
 	-webkit-backface-visibility: hidden;
 	-webkit-perspective: 1000;
   margin: 0 auto;
-  max-width: 970px;
+  /*max-width: 970px;*/
 } /* This class is applied to the divs that contain the various "views" or pages of the app. */ 
 
 .panel > * {
