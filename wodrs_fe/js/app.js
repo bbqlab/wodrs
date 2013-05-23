@@ -112,6 +112,10 @@ app.main = function(){
       }
     });
   }
+  else {
+    $.ui.loadContent('#login', false, false);
+  }
+
 };
 
 app.show_game_list = function() {
@@ -125,6 +129,7 @@ app.fill_game_list = function(games) {
   app.game_list=games;
   $('#game_list').html($.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
+  window.scrollTo(0,1);
 };
 
 app.set_game_score = function(id,score){
@@ -197,10 +202,11 @@ app.check_games = function() {
 app.start_game = function(game_id) {
   window.scrollTo(0,1);
   $('#wodrs_title').addClass('title_out');
-  $.ui.loadContent('#game_play',false,false);
     
   app.current_game = new WodrsGame(game_id);
   app.current_game.start();
+  $.ui.loadContent('#game_play',false,false);
+  window.scrollTo(0,1);
 };
 
 app.stop_game = function() {
