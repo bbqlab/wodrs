@@ -32,6 +32,7 @@ class Users extends BaseEntity
     $list = array(
       'pending' => array(),
       'running' => array(),
+      'running_opponent' => array(),
       'completed' => array()
     );
 
