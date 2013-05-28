@@ -45,26 +45,17 @@ class Games extends BaseEntity
   public function getTopTen()
   {
     $topten = array();
-    $query = $this->db->query("SELECT *,GREATEST(score1, score2) AS winner " .
-                              " FROM games WHERE state = 'completed' ". 
-                              " ORDER BY winner DESC LIMIT 10");
+    $query = $this->db->query("SELECT player, MAX(score) AS score FROM ranking " .
+                              "GROUP BY player HAVING score > 0 " .
+                              "ORDER BY score DESC limit 10;");
 
     $games = $query->result();
 
     foreach($games as $game)
     {
-      if($game->winner == $game->score1)
-      {
-        $player = new Users($game->player1);
-        $topten[] = array('player' => $player->username, 
-                          'score' => $game->winner);
-      }
-      else
-      {
-        $player = new Users($game->player2);
-        $topten[] = array('player' => $player->username, 
-                          'score' => $game->winner);
-      }
+      $player = new Users($game->player);
+      $topten[] = array('player' => $player->username, 
+                        'score' => $game->score);
     }
 
     return $topten;
