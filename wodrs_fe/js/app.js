@@ -6,11 +6,8 @@ function App()
   this.views = ['game_row','results','game_info','games_list','topten_row'];
 
   App.prototype.load_views = function() {
-    console.log('loading view');
     $.each(this.views, function(index, view) { 
-      console.log('requesting: ' + view);
       $.get('views/' + view + '.js', function(data) {
-        console.log('loading: ' + view);
         $('body').append('<script id="view_' + view + '" type="text/html">' + data + '</script>');
       });
     });
