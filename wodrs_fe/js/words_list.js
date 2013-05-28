@@ -14,7 +14,7 @@ WordList.prototype.each = function(callback) {
 };
 
 WordList.prototype.load = function() {
-  this.dictionary = italian_dictionary;
+  this.dictionary = english_dictionary;
   this.n_dictionary_words = this.dictionary.length;
   this.init_current_words();
 };

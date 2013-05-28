@@ -45,12 +45,13 @@ html,body,input {
 #background {
   position:absolute;
   width:100%;
-  height:200px;
+  height:100%;
   font-size:30px;
   color:#333;
   text-shadow: 1px 1px 1px #222;
   word-wrap:break-word;
   line-height:28px;
+  overflow: hidden;
 }
 
 label {

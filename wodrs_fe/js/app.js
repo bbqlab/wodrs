@@ -130,7 +130,7 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
-  $('#game_list').html($.template('view_games_list',{ games: app.game_list }));
+  $.ui.updateContentDiv('#game_list',$.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
   window.scrollTo(0,1);
 };
@@ -321,7 +321,7 @@ app.animate_logo = function(ev) {
 };
 
 app.fill_background = function() {
-  $('#background').height($('body').height());
+  //$('#background').height($('body').height());
 
   html = '';
   for(i = 0; i < 140; i++)
