@@ -32,18 +32,22 @@ class Users extends BaseEntity
     $list = array(
       'pending' => array(),
       'running' => array(),
+      'running_opponent' => array(),
       'completed' => array()
     );
 
-    $games = $game->search(array( 'player1 =' => $this->usersId,
-                                  'or player2 =' => $this->usersId,
-                                  'state !=' => 'completed'),'','',
+    $games = $game->search("(player1 = '{$this->usersId}' OR " .
+                           " player2 = '{$this->usersId}') AND " .
+                           " state != 'completed'",'','',
                            array('date','DESC'));
-    
-    $completed = $game->search(array( 'player1 =' => $this->usersId,
-                                      'or player2 =' => $this->usersId,
-                                      'state =' => 'completed'), 10,'',
+    Wodrs::log($game->db->last_query());
+    $completed = $game->search("(player1 = '{$this->usersId}' OR " .
+                               " player2 = '{$this->usersId}') AND " .
+                               " state = 'completed'",'','',
                                array('date','DESC'));
+
+
+    Wodrs::log($games);
     $games = array_merge($games, $completed);
 
     foreach($games as $game)
@@ -64,6 +68,10 @@ class Users extends BaseEntity
       $game->player1 = $player1->username;
       $game->player2 = $player2->username;
 
+      if($game->score2< 0 and $game->score1 >= 0)
+      {
+        $game->state = 'running_opponent';
+      }
 
       $list[$game->state][] = $game;
     }
