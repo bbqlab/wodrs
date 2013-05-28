@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `games` (
   `state` varchar(15) NOT NULL,
   `turn` int(11) NOT NULL,
   PRIMARY KEY (`gamesId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 */

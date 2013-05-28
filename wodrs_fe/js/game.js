@@ -72,7 +72,7 @@ WodrsGame.prototype.timer_tick = function() {
 
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
-    $('#words_slider').removeClass('animate')[0].style.webkitAnimationDuration='7s';
+    $('#words_slider').removeClass('animate');//[0].style.webkitAnimationDuration='7s';
 
 
     app.send_results(this.id,this.score);
@@ -197,14 +197,13 @@ WodrsGame.prototype.refresh_word = function() {
 
 WodrsGame.prototype.bind_events = function() {
   $('#typing').on('keydown',this.key_down );
-  this.words_slider.on('webkitAnimationEnd',this.accelerate_slider);
 };
 
 WodrsGame.prototype.unbind_events = function() {
   $('#typing').off('keydown', this.key_down);
-  this.words_slider.off('webkitAnimationEnd', this.accelerate_slider);
 };
 
+/* 
 WodrsGame.prototype.accelerate_slider = function() {
     if(app.current_game.game_time>1) 
     {
@@ -219,7 +218,7 @@ WodrsGame.prototype.accelerate_slider = function() {
       this.style.webkitAnimationPlayState = "running";
     }
 
-};
+};*/
 
 
 WodrsGame.prototype.populate_list = function() {
