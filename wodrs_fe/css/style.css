@@ -200,14 +200,30 @@ label {
 
 /*** ANIMATION ***/
 
-@-webkit-keyframes rotate {
+@-webkit-keyframes rotate1 {
   0% { -webkit-transform: rotateX(360deg); }
   100% { -webkit-transform: rotateX(0deg); }
 }
 
+@-webkit-keyframes rotate2 {
+  0% { -webkit-transform: rotateX(360deg); }
+  100% { -webkit-transform: rotateX(0deg); }
+}
+
+@-webkit-keyframes rotate3 {
+  0% { -webkit-transform: rotateX(360deg); }
+  100% { -webkit-transform: rotateX(0deg); }
+}
+
+
 @-moz-keyframes rotate {
   0% { -moz-transform: rotateX(360deg); }
   100% { -moz-transform: rotateX(0deg); }
+}
+
+.animate {
+  -webkit-animation:  rotate1 10s linear 3 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s;
+  opacity: 1 !important;
 }
 
 
@@ -240,14 +256,6 @@ label {
   -webkit-transform-style: preserve-3d;
 
 
-}
-
-.animate {
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-duration: 7s;
-  -webkit-animation-name: rotate;
-  -webkit-animation-iteration-count: 1;
-  opacity: 1 !important;
 }
 
 .word {
