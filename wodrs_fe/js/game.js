@@ -108,9 +108,6 @@ WodrsGame.prototype.stop = function() {
 WodrsGame.prototype.key_down = function(evt) {
   var key = evt.which;
 
-  console.log('on key down');
-
-
   // check if keycode è un ascii lettera US no numeri, caratteri speciali
   if( key >= 65 &&  key <= 90 )
   {

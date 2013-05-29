@@ -2,9 +2,9 @@ function App()
 {
   this.state = 0;          // using this to know if i'm ready to start application
   this.online = false;
-
+  
+  /* load templates */
   this.views = ['game_row','results','game_info','games_list','topten_row'];
-
   App.prototype.load_views = function() {
     $.each(this.views, function(index, view) { 
       $.get('views/' + view + '.js', function(data) {
@@ -23,6 +23,7 @@ function App()
     }
   }
 
+  /* SETUP APPLICATION (set landscape orientation, click handler, fill background...) */
   App.prototype.setup = function()
   {
     this.load_views();
@@ -42,8 +43,10 @@ function App()
 
   }
 
-  // clickhandler: each touch on active object pass here
-  // TODO: check if reaction on back button touch
+  /* this is called on touch for every anchor (target represent the anchor DOM element)
+   * search for a function of the app called as the href parameter and call it if needed (with parameters on need)
+   * load a panel with the id if no function is found */
+   * */
   App.prototype.clickHandler = function(target)
   {
     if($(target).hasClass('button_disabled')) return true;
@@ -318,7 +321,6 @@ app.animate_logo = function(ev) {
 };
 
 app.fill_background = function() {
-  //$('#background').height($('body').height());
 
   html = '';
   for(i = 0; i < 140; i++)
@@ -342,8 +344,6 @@ function randomString(len, charSet) {
 
 
 app.focus_keyboard = function(){
-//  app.current_game.typing[0].blur();
   app.current_game.typing[0].click();
-  console.log('calling focus');
   app.current_game.typing[0].focus();
 };

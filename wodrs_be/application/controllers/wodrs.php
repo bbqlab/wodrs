@@ -124,8 +124,15 @@ class Wodrs extends CI_Controller {
   public function list_games()
   {
     $token = $this->input->get('token'); 
+    $games = array(
+      'pending' => array();
+      'running' => array();
+      'running_opponent' => array();
+      'completed' => array();
+    );
 
-    $response = array('error' => false, 'data' => array('games' => array()));
+    $response = array('error' => false, 
+                      'data' => array('games' => $games));
     $user = new Users();
     $user->loadFromToken($token);
     if($user->usersId != '')
