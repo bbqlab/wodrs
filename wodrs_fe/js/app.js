@@ -46,7 +46,6 @@ function App()
   /* this is called on touch for every anchor (target represent the anchor DOM element)
    * search for a function of the app called as the href parameter and call it if needed (with parameters on need)
    * load a panel with the id if no function is found */
-   * */
   App.prototype.clickHandler = function(target)
   {
     if($(target).hasClass('button_disabled')) return true;
@@ -281,6 +280,10 @@ app.login = function(storage, callback) {
                 }
               }
     });
+};
+
+app.facebook_login = function() {
+  console.log("Login with facebook");
 };
 
 app.logout = function() {
