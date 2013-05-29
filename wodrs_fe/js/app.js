@@ -134,6 +134,7 @@ app.fill_game_list = function(games) {
   window.scrollTo(0,1);
 };
 
+
 app.set_game_score = function(id,score){
   $.each(app.game_list.running, function(index, game) {
     if( game.gamesId == id ){
