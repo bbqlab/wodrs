@@ -125,6 +125,10 @@ WodrsGame.prototype.key_down = function(evt) {
     app.current_game.clear_current_word();
   }
 
+  evt.preventDefault();
+  evt.stopPropagation();
+
+
 };
 
 WodrsGame.prototype.check_word = function(letter) {
