@@ -125,10 +125,10 @@ class Wodrs extends CI_Controller {
   {
     $token = $this->input->get('token'); 
     $games = array(
-      'pending' => array();
-      'running' => array();
-      'running_opponent' => array();
-      'completed' => array();
+      'pending' => array(),
+      'running' => array(),
+      'running_opponent' => array(),
+      'completed' => array()
     );
 
     $response = array('error' => false, 
@@ -144,6 +144,19 @@ class Wodrs extends CI_Controller {
       $games['topten'] = $game->getTopTen();
       $response['data'] = array('games' => $games);
     }
+    $this->response($response);
+  }
+
+  public function get_user_settings()
+  {
+    $token = $this->input->get('token');
+    $response = array('error' => false,
+                      'data' => array());
+
+    $user = new Users();
+    $user->loadFromToken($token);
+
+    $response['data'] = $user->getSettings();
     $this->response($response);
   }
 
