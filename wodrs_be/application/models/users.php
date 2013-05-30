@@ -6,14 +6,16 @@
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `usersId` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL,
   `password` varchar(20) NOT NULL,
   `created` datetime NOT NULL,
-  'token' varchar(50),
+  `token` varchar(200),
   `email` varchar(100) NOT NULL,
+  `ip` varchar(30) NOT NULL,
+  `facebookId` varchar(100) NOT NULL,
   PRIMARY KEY (`usersId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 */
 
@@ -25,6 +27,7 @@ class Users extends BaseEntity
   var $created;
   var $token;
   var $email;
+  var $image;
 
   public function listGames()
   {
@@ -32,18 +35,22 @@ class Users extends BaseEntity
     $list = array(
       'pending' => array(),
       'running' => array(),
+      'running_opponent' => array(),
       'completed' => array()
     );
 
-    $games = $game->search(array( 'player1 =' => $this->usersId,
-                                  'or player2 =' => $this->usersId,
-                                  'state !=' => 'completed'),'','',
+    $games = $game->search("(player1 = '{$this->usersId}' OR " .
+                           " player2 = '{$this->usersId}') AND " .
+                           " state != 'completed'",'','',
                            array('date','DESC'));
-    
-    $completed = $game->search(array( 'player1 =' => $this->usersId,
-                                      'or player2 =' => $this->usersId,
-                                      'state =' => 'completed'), 10,'',
+    Wodrs::log($game->db->last_query());
+    $completed = $game->search("(player1 = '{$this->usersId}' OR " .
+                               " player2 = '{$this->usersId}') AND " .
+                               " state = 'completed'",'','',
                                array('date','DESC'));
+
+
+    Wodrs::log($games);
     $games = array_merge($games, $completed);
 
     foreach($games as $game)
@@ -64,10 +71,33 @@ class Users extends BaseEntity
       $game->player1 = $player1->username;
       $game->player2 = $player2->username;
 
+      if($game->score2< 0 and $game->score1 >= 0)
+      {
+        $game->state = 'running_opponent';
+      }
 
       $list[$game->state][] = $game;
     }
     
     return $list;
+  }
+
+  public function getSettings()
+  {
+    return array(
+      'username'  => $this->username,
+      'image'     => $this->image
+    );
+  }
+
+  public function save()
+  {
+    if($this->usersId == '')
+    {
+      $this->created = date("Y-m-d H:i:s");
+    }
+  
+    $user->ip = $this->input->ip_address();
+    parent::save();
   }
 }

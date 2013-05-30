@@ -2,11 +2,11 @@ function App()
 {
   this.state = 0;          // using this to know if i'm ready to start application
   this.online = false;
-
-  this.views = ['game_row','results','game_info','games_list','topten_row'];
-
+  
+  /* load templates */
+  this.views = ['game_row','results','game_info','games_list','topten_row','settings'];
   App.prototype.load_views = function() {
-    $.each(this.views, function(index, view) {
+    $.each(this.views, function(index, view) { 
       $.get('views/' + view + '.js', function(data) {
         $('body').append('<script id="view_' + view + '" type="text/html">' + data + '</script>');
       });
@@ -23,6 +23,7 @@ function App()
     }
   }
 
+  /* SETUP APPLICATION (set landscape orientation, click handler, fill background...) */
   App.prototype.setup = function()
   {
     this.load_views();
@@ -39,11 +40,48 @@ function App()
     $.ui.showBackbutton=false
 
     this.fill_background();
-
+    this.facebook_init();
   }
 
-  // clickhandler: each touch on active object pass here
-  // TODO: check if reaction on back button touch
+  App.prototype.facebook_init = function() 
+  {
+    window.fbAsyncInit = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '257139571093057',         // App ID from the app dashboard
+        channelUrl : '//wodrs.com/channel.php', // Channel file for x-domain comms
+        status     : true,                      // Check Facebook Login status
+        xfbml      : true                       // Look for social plugins on the page
+      });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+        if (response.status === 'connected') {
+          console.log('logged with fb');
+          console.log(response);
+          app.auth_facebook_login(response);
+        } else if (response.status === 'not_authorized') {
+          FB.login();
+        } else {
+          FB.login();
+        }
+      });
+
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk')); 
+  }
+
+
+  /* this is called on touch for every anchor (target represent the anchor DOM element)
+   * search for a function of the app called as the href parameter and call it if needed (with parameters on need)
+   * load a panel with the id if no function is found */
   App.prototype.clickHandler = function(target)
   {
     if($(target).hasClass('button_disabled')) return true;
@@ -52,7 +90,7 @@ function App()
     url = $(target).attr('href');
     args = url.split('/');
     controller = args[0];
-    
+
     try
     {
       if( typeof app[controller] == 'function' )
@@ -72,7 +110,7 @@ function App()
       }
     }
     catch(e){
-      app.log("ERROR IN CLICKHANDLER " + e);
+      console.log("ERROR IN CLICKHANDLER " + e);
       return false;
     }
     //returning true prevent default jq.ui event to be handled
@@ -112,9 +150,14 @@ app.main = function(){
       }
     });
   }
+  else {
+    $.ui.loadContent('#login', false, false);
+  }
+
 };
 
 app.show_game_list = function() {
+  $('#words_slider').removeClass('animate');
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
     app.fill_game_list(res.data.games);
   });
@@ -123,9 +166,12 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
-  $('#game_list').html($.template('view_games_list',{ games: app.game_list }));
+  console.log(games);
+  $.ui.updateContentDiv('#game_list',$.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
+  window.scrollTo(0,1);
 };
+
 
 app.set_game_score = function(id,score){
   $.each(app.game_list.running, function(index, game) {
@@ -173,7 +219,7 @@ app.get_game = function(id){
 };
 
 app.request_player = function() {
-  $('#request_player_button').addClass('spin').html('Waiting..').addClass('button_disabled');
+  $('#request_player_button').addClass('spin').html('Waiting player..').addClass('button_disabled');
   $.getJSON(app.backend + 'request_player', {token: app.token}, function(res) {
     app.game_check_interval = setTimeout(app.check_games,1000);
   });
@@ -197,10 +243,11 @@ app.check_games = function() {
 app.start_game = function(game_id) {
   window.scrollTo(0,1);
   $('#wodrs_title').addClass('title_out');
-  $.ui.loadContent('#game_play',false,false);
     
   app.current_game = new WodrsGame(game_id);
   app.current_game.start();
+  $.ui.loadContent('#game_play',false,false);
+  window.scrollTo(0,1);
 };
 
 app.stop_game = function() {
@@ -274,10 +321,44 @@ app.login = function(storage, callback) {
     });
 };
 
+app.facebook_login = function() {
+  console.log("Login with facebook");
+  FB.getLoginStatus(function(response) {
+    if (response.status === 'connected') {
+      // the user is logged in and has authenticated the app
+      app.auth_facebook_login(response); 
+    } else {
+      // the user isn't logged in to Facebook or hasn't auth 
+      FB.login();
+    }
+  });
+};
+
+app.auth_facebook_login = function(auth, callback) {
+  FB.api('/me', function(user) {
+    data = auth.authResponse;
+    data.name = user.name;
+    data.email = user.username + '@facebook.com';
+    
+    $.getJSON(app.backend + 'facebook_login', data, function(res) {
+      app.token = res.data.token;
+      app.facebook_user = true;
+      localStorage.setItem('token', app.token)
+      localStorage.setItem('username', user.name)
+      localStorage.setItem('password', '')
+      localStorage.setItem('facebook_user', true)
+      if(callback)
+        callback(res);
+      app.show_game_list();
+    });
+  });
+};
+
 app.logout = function() {
   localStorage.setItem('token', '')
   localStorage.setItem('username', '')
   localStorage.setItem('password', '')
+  localStorage.setItem('facebook_user', false)
   $.ui.loadContent('#login', false, false);
 };
 
@@ -303,16 +384,24 @@ app.show_game_info = function(game_id){
   }
 
   var game = app.get_game(game_id);
+  game.facebook_user = app.facebook_user;
+  console.log(game);
   $('#game_info').html($.template('view_game_info',{ game: game }));
   $.ui.loadContent('#game_info');
 };
 
+app.settings = function(){
+  window.scrollTo(0,1);
+  $.getJSON(app.backend + 'get_user_settings', {token: app.token}, function(res) {
+      $('#settings').html($.template('view_settings',{ settings: res.data }));
+      $.ui.loadContent('#settings');
+  });
+}
 
 app.animate_logo = function(ev) {
 };
 
 app.fill_background = function() {
-  $('#background').height($('body').height());
 
   html = '';
   for(i = 0; i < 140; i++)
@@ -336,7 +425,6 @@ function randomString(len, charSet) {
 
 
 app.focus_keyboard = function(){
-  app.current_game.typing[0].blur();
   app.current_game.typing[0].click();
   app.current_game.typing[0].focus();
 };

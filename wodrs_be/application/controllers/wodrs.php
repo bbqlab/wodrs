@@ -35,6 +35,40 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
+  public function facebook_login()
+  {
+    $data = $this->input->get();
+    $response = array('error'=> true,
+                      'data'=> 'Authentication error');
+    Wodrs::log('auth fb');
+    Wodrs::log($data);
+
+    $user = new Users();
+    $user->loadFromFacebookId($data['userID']);
+
+    if($user->isValid())  // already registered
+    {
+      Wodrs::log('facebook returning user');
+      $user->token = $data['accessToken'];
+      $response['error'] = false;
+      $response['data'] = array('token'=> $user->token);
+    }
+    else  // new user
+    {
+      Wodrs::log('facebook new user');
+      $user->username = $data['name'];
+      $user->password = '';
+      $user->email = $data['email'];
+      $user->token = $data['accessToken'];
+      $user->facebookId = $data['userID'];
+      $response['error'] = false;
+      $response['data'] = array('token'=> $user->token);
+    }
+
+    $user->save();
+    $this->response($response);
+  }
+
   public function logout()
   {
     $token = $this->input->get('token'); 
@@ -97,7 +131,6 @@ class Wodrs extends CI_Controller {
       $game->load($gameInfo->gamesId);
       $game->player2 = $user->usersId;
       $game->state = 'running';
-      Wodrs::log($game);
       $game->save();
       $gameInfo->delete();
 
@@ -124,10 +157,21 @@ class Wodrs extends CI_Controller {
   public function list_games()
   {
     $token = $this->input->get('token'); 
+    $games = array(
+      'pending' => array(),
+      'running' => array(),
+      'running_opponent' => array(),
+      'completed' => array()
+    );
 
-    $response = array('error' => false, 'data' => array('games' => array()));
+    $response = array('error' => false, 
+                      'data' => array('games' => $games));
+
     $user = new Users();
     $user->loadFromToken($token);
+    Wodrs::log('loading user from token ' . $token);
+    Wodrs::log($user->db->last_query());
+    Wodrs::log($user);
     if($user->usersId != '')
     {
       $games = $user->listGames();
@@ -135,8 +179,22 @@ class Wodrs extends CI_Controller {
       $game = new Games();
 
       $games['topten'] = $game->getTopTen();
+      Wodrs::log($games);
       $response['data'] = array('games' => $games);
     }
+    $this->response($response);
+  }
+
+  public function get_user_settings()
+  {
+    $token = $this->input->get('token');
+    $response = array('error' => false,
+                      'data' => array());
+
+    $user = new Users();
+    $user->loadFromToken($token);
+
+    $response['data'] = $user->getSettings();
     $this->response($response);
   }
 

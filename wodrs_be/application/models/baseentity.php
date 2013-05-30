@@ -47,6 +47,12 @@ class BaseEntity extends CI_Model {
     return $this->table() . "Id";
   }
 
+  function isValid()
+  {
+    $id = $this->id();
+    return $this->$id != '';
+  }
+
 
 
   /*!

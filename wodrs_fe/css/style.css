@@ -45,12 +45,13 @@ html,body,input {
 #background {
   position:absolute;
   width:100%;
-  height:200px;
+  height:100%;
   font-size:30px;
   color:#333;
   text-shadow: 1px 1px 1px #222;
   word-wrap:break-word;
   line-height:28px;
+  overflow: hidden;
 }
 
 label {
@@ -101,8 +102,8 @@ label {
   position: absolute;
   overflow:hidden;
   width: 0px;
-  height: 0px;
-  border: 1px solid rgb(19,29,38);
+  height:0px;
+  border: 1px solid rgba(19,29,38,0.1);
 }
 
 
@@ -139,11 +140,10 @@ label {
   color:rgba(200,200,200,1);
   font-size:26px;
   margin-bottom:20px;
-  -moz-border-radius: 15px;
   border-radius: 15px;
-  height:55px;
+  height:55px !important;
+  line-height: 40px !important;
   padding:10px 20px;
-  -moz-box-shadow: 10px 10px 5px #333;
   -webkit-box-shadow: 10px 10px 15px #333;
   box-shadow: 0 0 1px 1px #999;
 }
@@ -201,14 +201,30 @@ label {
 
 /*** ANIMATION ***/
 
-@-webkit-keyframes rotate {
+@-webkit-keyframes rotate1 {
   0% { -webkit-transform: rotateX(360deg); }
   100% { -webkit-transform: rotateX(0deg); }
 }
 
+@-webkit-keyframes rotate2 {
+  0% { -webkit-transform: rotateX(360deg); }
+  100% { -webkit-transform: rotateX(0deg); }
+}
+
+@-webkit-keyframes rotate3 {
+  0% { -webkit-transform: rotateX(360deg); }
+  100% { -webkit-transform: rotateX(0deg); }
+}
+
+
 @-moz-keyframes rotate {
   0% { -moz-transform: rotateX(360deg); }
   100% { -moz-transform: rotateX(0deg); }
+}
+
+.animate {
+  -webkit-animation:  rotate1 10s linear 3 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s;
+  opacity: 1 !important;
 }
 
 
@@ -241,14 +257,6 @@ label {
   -webkit-transform-style: preserve-3d;
 
 
-}
-
-.animate {
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-duration: 7s;
-  -webkit-animation-name: rotate;
-  -webkit-animation-iteration-count: 1;
-  opacity: 1 !important;
 }
 
 .word {
@@ -391,16 +399,15 @@ label {
   color:rgb(200,200,200);
   text-align:right;
   position:absolute;
-  -webkit-transition: all 1.3s, color 0.7s, margin 0.2s ease-out;
+  -webkit-transition: opacity .6s, font .3s;
   opacity:1;
-  padding-top:120px;
+  top:60px;
   font-size:40px;
 }
 
 .letter_fader .fade_out {
   opacity:0;
-  font-size:100px;
-  padding-top:0px;
+  font-size:150px;
 }
 
 #wrong_letters span {
@@ -409,4 +416,50 @@ label {
 
 #correct_letters span {
   text-shadow:1px 1px 3px green;
+}
+
+#settings_button {
+    background: url('cog.png');
+    width: 50px;
+    height: 50px;
+    display: block;
+    background-size: 49px;
+    float:right;
+    margin: 10px;
+}
+
+
+@media handheld, only screen and (min-width: 1000px){
+
+  .ads { 
+    position:absolute;
+    margin:0px;
+    display: block !important;
+    top: 0px;
+  } 
+
+  #ads_right {
+    right: 0px;
+  }
+
+  #ads_left {
+    left: 0px;
+  }
+
+
+}
+
+.ads {
+  display: none;
+}
+
+
+
+.description {
+  box-shadow: rgba(50, 50, 50, 0.5) 0px 0px 43px inset;
+  border-radius: 23px;
+  font-size: 18px;
+  line-height: 21px;
+  font-weight: normal;
+
 }

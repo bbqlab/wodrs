@@ -1,12 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 
-
-
   <head>
-    <title>Wodrs</title>
+    <title>Wodrs - Show us how fast you can type?</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="inmobi-site-verification" content="ecaa6bd98fce879982c94b027e7959ea">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link href="images/favicon.ico" type="image/x-icon" rel="icon" />
@@ -16,29 +15,52 @@
     <link rel="stylesheet" href="css/progress.css" type="text/css" media="screen" charset="utf-8">
     <link rel="apple-touch-icon" sizes="144x144" href="css/wodrsicon_144.png">
     
-
-
-<!-- the line below is required for access to the appMobi JS library -->
-
-<!--<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/appmobi.js"></script>-->
-
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      $.ui.autoLaunch = false;
+    </script>
     <script src="js/jq.template.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jq.desktopBrowsers.js" type="text/javascript" charset="utf-8"></script>
+
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/log.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/settings.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/words_list.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
-    <script src="dictionaries/italian.js" type="text/javascript" charset="utf-8"></script>
+    <script src="dictionaries/dict.js" type="text/javascript" charset="utf-8"></script>
 
-    <script src='http://my.mobfox.com/ad.js'></script>
+
   </head>
 
   <body>
     <div id='background'></div>
+    <div id='fb_root'></div>
+
+     <!-- 
+    <script type="text/javascript" src="https://www.tapgage.net/index.php/c_js/ads_pre/"></script>
+    <script type="text/javascript">
+        var tapgage_app_id = '2bddcdf7c78b0e9fb49e8350168670e4';
+        var tapgage_interval = 3;
+        var tapgage_new_tab = 0;
+    </script> 
+    <script type="text/javascript" src="js/tapgage.js"></script>
+    <a id="id_tapgage_popup_link" class="tapgage_popup_link" href="#id_tapgage_popup" style="display:none">Click</a>
+    <div id="id_tapgage_popup" style="display:none">Please wait...</div>
+    -->
+
     <div id='jQUi'>
-      
+
+
+    <div id="splashscreen" class='ui-loader'>
+        <span class='ui-icon ui-icon-loading load_animation'></span><h1 >Starting</h1>
+        <br><br><br><br><br>
+        <p class='description'>Wodrs helps you to improve your writing speed on computer keyboards!<br>
+        Challenge your friends and your colleagues, 
+        test your skills as a typist and try to get into the top ten!</p><br>
+        <script>setTimeout("$.ui.launch();",10000);</script>
+        <a class='button' onclick='$.ui.launch();'>Skip!</a>
+    </div>
 
       <header id='game_play_header'>
           <div class='game_score right'>0/0 (0)</div>
@@ -54,8 +76,32 @@
         <span class='green'>s</span>
       </div>
 
-      <div id='content'>
+      <div class='ads' id='ads_left' >
+        <script type="text/javascript"><!--
+        google_ad_client = "ca-pub-9759098288036220";
+        /* galiga2 */
+        google_ad_slot = "4717525949";
+        google_ad_width = 250;
+        google_ad_height = 250;
+        //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script> 
+      </div>
 
+      <div class='ads' id='ads_right'>
+        <script type="text/javascript"><!--
+        google_ad_client = "ca-pub-9759098288036220";
+        /* galiga2 */
+        google_ad_slot = "4717525949";
+        google_ad_width = 250;
+        google_ad_height = 250;
+        //-->
+        </script>
+        <script type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script> 
+      </div>
+
+
+      <div id='content'>
         <div class='panel' id='register' title='Wodrs sign in' data-header='none' 
              data-footer='none'>
             <div class='panel_header'></div>
@@ -78,7 +124,8 @@
               <input class='jq-ui-forms' type='password' id='login_password' placeholder='Password' value=''/>
               <div class='center'>
                 <a class='button' href='login'/>Login</a>
-                <a class='button' href='show_register'/>Sign in</a>
+                <a class='button' href='show_register'/>Sign in</a><br><br>
+                <a class='button' href='facebook_login'/>Facebook login</a>
               </div>
             </div>
         </div>
@@ -88,8 +135,8 @@
 
         <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
           <input type='text' id='typing'>
-          <div id='wrong_letters' class='letter_fader right'><span>.</span></div>
-          <div id='correct_letters' class='letter_fader left'><span>.</span></div>
+          <div id='wrong_letters' class='letter_fader right'></div>
+          <div id='correct_letters' class='letter_fader left'></div>
           <div id="words_slider">
             <div class='word' id='word_0'></div>
             <div class='word' id='word_1'></div>
@@ -105,42 +152,15 @@
              data-footer='none' style=''>
         </div>
 
+        <div class='panel' id='settings' title='Settings' data-header='none'
+             data-footer='none' style=''>
+
+        </div>
+
         <div class='panel' id='results' title='Finish!' data-header='none'
              data-footer='none' style='overflow: hidden;' >
-          <div class='panel_header'>
-              <h4 id='results_score' class='center' >Score: 100</h4><br>
-          </div>
-          <div class='panel_content'>
-            <div class='padder'>
-              <h4 id='results_precision'>Precision: 20</h4>
-              <div class='meter'><span id='stats_precision'><span></div><br>
 
-              <h4 id='results_n_key_pressed'>Pressed keys: 23</h4>
-              <div class='meter'><span id='stats_n_key_pressed'><span></div><br>
-
-              <h4 id='results_n_key_matched'>Matched keys: 2323</h4>
-              <div class='meter'><span id='stats_n_key_matched'><span></div><br>
-
-              <a href='show_game_info' class='button center'>Done</a>
-            </div>
-          </div>
-
-      </div>
+        </div>
     </div>
-
-  <div id='bottom_ads'>
-    <script>
-      RequestAd_({
-
-          // Ad Request Variables
-          s:'80b1837e10cb12a216c9cf4d772046cb',
-          m:'live',
-          backfillhtml:'',
-          prependclickcontent:'',
-          trackingpixelurl:''
-        });
-    </script> 
-  </div>
-
   </body>
 </html>

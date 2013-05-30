@@ -2,7 +2,7 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 10;//app['game_time'];
+  this.game_time = 60;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
@@ -13,6 +13,8 @@ function WodrsGame(id){
   this.audio_ok.push(new Audio('audio/ok2.wav'));
   this.audio_ok.push(new Audio('audio/ok3.wav'));
   this.typing = $('#typing');
+  this.faders = { 'correct': $('#correct_letters')[0], 'wrong': $('#wrong_letters')[0] };
+
   for(i in this.audio_ok)
   {
     this.audio_ok[i].load();
@@ -27,6 +29,7 @@ function WodrsGame(id){
 }
 
 WodrsGame.prototype.start = function() {
+//  app.log("Dentro start del game!");
   this.word_list = new WordList();
   this.populate_list();
   this.bind_events();
@@ -34,21 +37,11 @@ WodrsGame.prototype.start = function() {
 
   this.game_interval = window.setInterval( this.timer_tick, 1000 );
 
-  this.words_slider.addClass('animate');
-
-  //$('#typing').on('blur',this.do_not_blur_input);
-  this.typing[0].focus();
   window.scrollTo(0,0);
+  this.words_slider.addClass('animate');
+  setTimeout(app.focus_keyboard, 20);
+
 };
-
-
-WodrsGame.prototype.do_not_blur_input = function(e) {
-  app.current_game.typing[0].blur();
-  app.current_game.typing[0].click();
-  app.current_game.typing[0].focus();
-};
-
-
 
 
 WodrsGame.prototype.timer_tick = function() {
@@ -63,7 +56,6 @@ WodrsGame.prototype.timer_tick = function() {
 
   if(game_time<10)
   {
-    //game.audio_time.play();
     if(game_time%2)
       $('.game_timer').removeClass('bounce');
     else
@@ -80,24 +72,16 @@ WodrsGame.prototype.timer_tick = function() {
 
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
-    $('#words_slider').removeClass('animate')[0].style.webkitAnimationDuration='7s';
-
-
-    $('#typing').off('blur',this.do_not_blur_input);
-
     app.send_results(this.id,this.score);
 
-    //new Audio('stop.wav').play();
-    
-    var precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
+    this.precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
     this.unbind_events();
 
     $.ui.loadContent('#results', false, false );
     app.set_game_score(this.id,this.score);
-    $('#results_score').html('Score: ' + this.score );
-    $('#results_precision').html('Precision: ' + precision + '%' );
-    $('#results_n_key_pressed').html('Pressed keys: ' + this.n_key_pressed );
-    $('#results_n_key_matched').html('Matched keys: ' + this.n_key_matched );
+
+    this.facebook_user = app.facebook_user;
+    $('#results').html($.template('view_results',{ game: this }));
 
     setTimeout( "$('#typing')[0].blur();", 40);
 
@@ -120,7 +104,6 @@ WodrsGame.prototype.stop = function() {
 WodrsGame.prototype.key_down = function(evt) {
   var key = evt.which;
 
-
   // check if keycode è un ascii lettera US no numeri, caratteri speciali
   if( key >= 65 &&  key <= 90 )
   {
@@ -134,6 +117,10 @@ WodrsGame.prototype.key_down = function(evt) {
   {
     app.current_game.clear_current_word();
   }
+
+  evt.preventDefault();
+  evt.stopPropagation();
+
 
 };
 
@@ -153,6 +140,7 @@ WodrsGame.prototype.check_word = function(letter) {
     $('#word_'+id).html(new_word);
     audio_ok = this.random_ok();
     audio_ok.play();
+    this.add_letter_fader(letter, 'correct');
     this.clear_current_word();
   }
   else if(id==-1) // right letter on uncompleted word
@@ -166,17 +154,16 @@ WodrsGame.prototype.check_word = function(letter) {
     this.clear_current_word();
   }
 
-  $('.game_score').html(this.n_key_pressed + '/' + this.n_key_matched + ' (' + this.score + ')');
+  $('.game_score').html(this.score);
 };
 
 WodrsGame.prototype.add_letter_fader = function(letter, fader) {
-  var fader = $('#' + fader + '_letters');
-  var span = $('<span>'+ letter +'</span>');
-  console.log('adding letter to ' + fader + ' :: ' + letter);
+  var span = document.createElement('span');
+  span.innerHTML=letter;
 
-  fader.append(span);
+  this.faders[fader].appendChild(span);
 
-  setTimeout( function() {span.addClass('fade_out'); }, 50);
+  setTimeout( function() {span.className='fade_out'; }, 50);
   setTimeout(function() {span.remove() }, 2000);
 };
 
@@ -207,14 +194,13 @@ WodrsGame.prototype.refresh_word = function() {
 
 WodrsGame.prototype.bind_events = function() {
   $('#typing').on('keydown',this.key_down );
-  this.words_slider.on('webkitAnimationEnd',this.accelerate_slider);
 };
 
 WodrsGame.prototype.unbind_events = function() {
   $('#typing').off('keydown', this.key_down);
-  this.words_slider.off('webkitAnimationEnd', this.accelerate_slider);
 };
 
+/* 
 WodrsGame.prototype.accelerate_slider = function() {
     if(app.current_game.game_time>1) 
     {
@@ -229,7 +215,7 @@ WodrsGame.prototype.accelerate_slider = function() {
       this.style.webkitAnimationPlayState = "running";
     }
 
-};
+};*/
 
 
 WodrsGame.prototype.populate_list = function() {

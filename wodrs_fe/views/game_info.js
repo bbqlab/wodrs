@@ -6,8 +6,8 @@
     <a class='button left' href='show_game_list'>Back</a>
 </div>
 
-<div class='panel_content'>
 
+<div class='panel_content'>
   <div class='box box_big center'>
     <h3>
      <%if(game.score1==-1){%>Your turn!<%}
