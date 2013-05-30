@@ -418,14 +418,6 @@ label {
   text-shadow:1px 1px 3px green;
 }
 
-#ads_top {
-  text-align:center;
-  position:absolute;
-  width:100%;
-  margin:0px auto;
-  top:25px;
-}
-
 #settings_button {
     background: url('cog.png');
     width: 50px;
@@ -435,3 +427,30 @@ label {
     float:right;
     margin: 10px;
 }
+
+
+@media handheld, only screen and (min-width: 1000px){
+
+  .ads { 
+    position:absolute;
+    margin:0px;
+    display: block !important;
+    top: 100px;
+  } 
+
+  #ads_right {
+    right: 0px;
+  }
+
+  #ads_left {
+    left: 0px;
+  }
+
+
+}
+
+.ads {
+  display: none;
+}
+
+
