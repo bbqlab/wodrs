@@ -215,6 +215,7 @@ label {
 }
 
 .box_big {
+  width:100%;
   font-size:25px;
 }
 
@@ -530,6 +531,7 @@ label {
   position:absolute;
   width:100px;
   display:block;
+<<<<<<< HEAD
 }
 
 .player1_name {
@@ -554,6 +556,21 @@ label {
 
 .player_avatar {
   position:absolute;
+=======
+  text-align:center;
+  margin:20px;
+}
+
+.player_avatar img {
+  border:5px solid  #111;
+  border-radius:4px;
+}
+
+.avatar .player_name {
+  font-size:20px;
+  color:#fff;
+  height:60px;
+>>>>>>> 77e41db1bc610013bddcb6d022e6ba2bbc2e558f
 }
 
 .game_score {

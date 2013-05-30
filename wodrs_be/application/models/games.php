@@ -54,7 +54,8 @@ class Games extends BaseEntity
     foreach($games as $game)
     {
       $player = new Users($game->player);
-      $topten[] = array('player' => $player->username, 
+      $topten[] = array('image' => $player->image,
+                        'player' => $player->username, 
                         'score' => $game->score);
     }
 

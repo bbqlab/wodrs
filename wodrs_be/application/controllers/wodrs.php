@@ -58,6 +58,7 @@ class Wodrs extends CI_Controller {
       Wodrs::log('facebook new user');
       $user->username = $data['name'];
       $user->password = '';
+      $user->image = 'http://graph.facebook.com/'. $data['userID'] .'/picture?type=square';
       $user->email = $data['email'];
       $user->token = $data['accessToken'];
       $user->facebookId = $data['userID'];

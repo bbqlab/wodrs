@@ -28,18 +28,19 @@
  </span>
 
  <span class='game_score'>
-   <%if( game.score2 == -1 ) { %>
-     <span>X</span>
-   <% } else { %>
-     <span><%=game.score2%></span>
-   <% } %>
-    -
    <%if( game.score1 == -1 ) { %>
      <span>X</span>
    <% } else { %>
      <span><%=game.score1%></span>
    <% } %>
+   -
+   <%if( game.score2 == -1 ) { %>
+     <span>X</span>
+   <% } else { %>
+     <span><%=game.score2%></span>
+   <% } %>
  </span>
- </a>
+
  <div style='clear:both'></div>
+ </a>
 </li>
