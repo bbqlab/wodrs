@@ -532,8 +532,7 @@ label {
 }
 
 .avatar img {
-  border:5px solid #111;
-  border-radius:4px;
+  border-radius:10px;
 }
 
 .player_name {
