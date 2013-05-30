@@ -209,6 +209,7 @@ label {
 }
 
 .box_big {
+  width:100%;
   font-size:25px;
 }
 
@@ -502,7 +503,20 @@ label {
   width:50px;
   display:block;
   text-align:center;
+  margin:20px;
 }
+
+.player_avatar img {
+  border:5px solid  #111;
+  border-radius:4px;
+}
+
+.avatar .player_name {
+  font-size:20px;
+  color:#fff;
+  height:60px;
+}
+
 .game_score {
   text-align:center;
   display:block;

@@ -16,7 +16,8 @@ function App()
   App.prototype.try_to_start = function()
   {
     app.state++;
-    if(app.state==2)
+
+    if(app.state==3)
     {
       app.setup();
       app.main();
@@ -40,7 +41,7 @@ function App()
     $.ui.showBackbutton=false
 
 //    this.fill_background();
-    this.facebook_init();
+//    this.facebook_init();
   }
 
   App.prototype.facebook_init = function() 
@@ -66,6 +67,8 @@ function App()
         }
       });
 
+      $(document).trigger('facebookLoaded');
+
     };
 
     // Load the SDK asynchronously
@@ -88,11 +91,12 @@ function App()
 
     app.target = target;
     url = $(target).attr('href');
-    args = url.split('/');
-    controller = args[0];
+    console.log(target);
 
     try
     {
+      args = url.split('/');
+      controller = args[0];
       if( typeof app[controller] == 'function' )
       {
         if(args.length==1)
@@ -120,11 +124,13 @@ function App()
 }
 
 var app = new App();
+app.facebook_init();
 
 document.addEventListener("DOMContentLoaded",app.try_to_start,false);
 document.addEventListener("jq.ui.ready",app.try_to_start,false);
-document.addEventListener("appMobi.device.ready",app.try_to_start,false);
+//document.addEventListener("appMobi.device.ready",app.try_to_start,false);
 document.addEventListener("appMobi.device.update.available",onUpdateAvailable,false); 
+document.addEventListener("facebookLoaded",app.try_to_start,false);
 
 function onUpdateAvailable(evt) 
 {
@@ -135,29 +141,38 @@ function onUpdateAvailable(evt)
 
 app.main = function(){
   app.load_settings();
-
-  if(app.username != '')
+  console.log(app);
+  if(app.username != '' && app.password != '')
   {
-    app.login(true, function() {
-      app.online = true;
-      if(!app.is_logged())
-      {
-        $.ui.loadContent('#login', false, false);
-      }
-      else
-      {
-        app.show_game_list();
-      }
-    });
+    console.log('trying to login 323kl');
+    if(!app.is_logged())
+    {
+      app.login(true, function() {
+        app.online = true;
+        if(!app.is_logged())
+        {
+          $.ui.loadContent('#login', false, false);
+        }
+        else
+        {
+          app.show_game_list();
+        }
+      });
+    }
+    else
+    {
+      console.log('is logged');
+      app.show_game_list();
+    }
   }
   else {
-    $.ui.loadContent('#login', false, false);
+    console.log('trying to login with fb');
+    app.facebook_login();
   }
 
 };
 
 app.show_game_list = function() {
-
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
     app.fill_game_list(res.data.games);
   });
@@ -280,6 +295,7 @@ app.register = function() {
 };
 
 app.is_logged = function() {
+ console.log('token is ' + app.token);
   return app.token != '';
 };
 
@@ -323,6 +339,7 @@ app.login = function(storage, callback) {
 app.facebook_login = function() {
   console.log("Login with facebook");
   FB.getLoginStatus(function(response) {
+    console.log(response);
     if (response.status === 'connected') {
       // the user is logged in and has authenticated the app
       app.auth_facebook_login(response); 
@@ -354,10 +371,12 @@ app.auth_facebook_login = function(auth, callback) {
 };
 
 app.logout = function() {
-  localStorage.setItem('token', '')
-  localStorage.setItem('username', '')
-  localStorage.setItem('password', '')
-  localStorage.setItem('facebook_user', false)
+  localStorage.setItem('token', '');
+  localStorage.setItem('username', '');
+  localStorage.setItem('password', '');
+  localStorage.setItem('facebook_user', false);
+  app.token = '';
+  app.facebook_user = false;
   $.ui.loadContent('#login', false, false);
 };
 

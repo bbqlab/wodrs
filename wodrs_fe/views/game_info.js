@@ -8,7 +8,7 @@
 
 
 <div class='panel_content'>
-  <div class='box box_big center'>
+  <div class='box'>
     <h3>
      <%if(game.score1==-1){%>Your turn!<%}
        else if(game.score2==-1) {%>Opponent turn!<%}
@@ -16,7 +16,6 @@
        else if(game.score2>game.score1) {%>You lose!<%} 
        else {%>Draw!<%}%> 
     </h3>
-    <div>
 
        <span class='avatar right'>
          <div class='player_name'>
@@ -37,18 +36,20 @@
        </span>
 
        <span class='game_score'>
-         <%if( game.score2 == -1 ) { %>
-           <span>X</span>
-         <% } else { %>
-           <span><%=game.score2%></span>
-         <% } %>
-          -
          <%if( game.score1 == -1 ) { %>
            <span>X</span>
          <% } else { %>
            <span><%=game.score1%></span>
          <% } %>
+         -
+         <%if( game.score2 == -1 ) { %>
+           <span>X</span>
+         <% } else { %>
+           <span><%=game.score2%></span>
+         <% } %>
      </span>
+
+     <div style='clear:both'></div>
     </div>
   </div>
 </div>
