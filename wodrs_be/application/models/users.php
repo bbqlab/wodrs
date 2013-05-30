@@ -10,8 +10,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(30) NOT NULL,
   `password` varchar(20) NOT NULL,
   `created` datetime NOT NULL,
-  `token` varchar(50),
+  `token` varchar(200),
   `email` varchar(100) NOT NULL,
+  `ip` varchar(30) NOT NULL,
+  `facebookId` varchar(100) NOT NULL,
   PRIMARY KEY (`usersId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -86,5 +88,16 @@ class Users extends BaseEntity
       'username'  => $this->username,
       'image'     => $this->image
     );
+  }
+
+  public function save()
+  {
+    if($this->usersId == '')
+    {
+      $this->created = date("Y-m-d H:i:s");
+    }
+  
+    $user->ip = $this->input->ip_address();
+    parent::save();
   }
 }
