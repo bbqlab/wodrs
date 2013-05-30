@@ -125,10 +125,10 @@ class Wodrs extends CI_Controller {
   {
     $token = $this->input->get('token'); 
     $games = array(
-      'pending' => array();
-      'running' => array();
-      'running_opponent' => array();
-      'completed' => array();
+      'pending' => array(),
+      'running' => array(),
+      'running_opponent' => array(),
+      'completed' => array()
     );
 
     $response = array('error' => false, 
