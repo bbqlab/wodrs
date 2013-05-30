@@ -16,7 +16,8 @@ function App()
   App.prototype.try_to_start = function()
   {
     app.state++;
-    if(app.state==2)
+
+    if(app.state==3)
     {
       app.setup();
       app.main();
@@ -39,8 +40,8 @@ function App()
     $.ui.customClickHandler = this.clickHandler;
     $.ui.showBackbutton=false
 
-    this.fill_background();
-    this.facebook_init();
+//    this.fill_background();
+//    this.facebook_init();
   }
 
   App.prototype.facebook_init = function() 
@@ -58,15 +59,15 @@ function App()
         if (response.status === 'connected') {
           console.log('logged with fb');
           console.log(response);
-          app.auth_facebook_login(response, function(res) {
-            console.log(res);
-          });
+          app.auth_facebook_login(response);
         } else if (response.status === 'not_authorized') {
           FB.login();
         } else {
           FB.login();
         }
       });
+
+      $(document).trigger('facebookLoaded');
 
     };
 
@@ -90,11 +91,12 @@ function App()
 
     app.target = target;
     url = $(target).attr('href');
-    args = url.split('/');
-    controller = args[0];
+    console.log(target);
 
     try
     {
+      args = url.split('/');
+      controller = args[0];
       if( typeof app[controller] == 'function' )
       {
         if(args.length==1)
@@ -122,11 +124,13 @@ function App()
 }
 
 var app = new App();
+app.facebook_init();
 
 document.addEventListener("DOMContentLoaded",app.try_to_start,false);
 document.addEventListener("jq.ui.ready",app.try_to_start,false);
-document.addEventListener("appMobi.device.ready",app.try_to_start,false);
+//document.addEventListener("appMobi.device.ready",app.try_to_start,false);
 document.addEventListener("appMobi.device.update.available",onUpdateAvailable,false); 
+document.addEventListener("facebookLoaded",app.try_to_start,false);
 
 function onUpdateAvailable(evt) 
 {
@@ -137,23 +141,33 @@ function onUpdateAvailable(evt)
 
 app.main = function(){
   app.load_settings();
-
-  if(app.username != '')
+  console.log(app);
+  if(app.username != '' && app.password != '')
   {
-    app.login(true, function() {
-      app.online = true;
-      if(!app.is_logged())
-      {
-        $.ui.loadContent('#login', false, false);
-      }
-      else
-      {
-        app.show_game_list();
-      }
-    });
+    console.log('trying to login 323kl');
+    if(!app.is_logged())
+    {
+      app.login(true, function() {
+        app.online = true;
+        if(!app.is_logged())
+        {
+          $.ui.loadContent('#login', false, false);
+        }
+        else
+        {
+          app.show_game_list();
+        }
+      });
+    }
+    else
+    {
+      console.log('is logged');
+      app.show_game_list();
+    }
   }
   else {
-    $.ui.loadContent('#login', false, false);
+    console.log('trying to login with fb');
+    app.facebook_login();
   }
 
 };
@@ -252,7 +266,6 @@ app.start_game = function(game_id) {
 };
 
 app.stop_game = function() {
-  $('#wodrs_title').removeClass('title_out');
   app.current_game.stop();
 }
 
@@ -282,6 +295,7 @@ app.register = function() {
 };
 
 app.is_logged = function() {
+ console.log('token is ' + app.token);
   return app.token != '';
 };
 
@@ -325,11 +339,10 @@ app.login = function(storage, callback) {
 app.facebook_login = function() {
   console.log("Login with facebook");
   FB.getLoginStatus(function(response) {
+    console.log(response);
     if (response.status === 'connected') {
       // the user is logged in and has authenticated the app
-      app.auth_facebook_login(response, function(res) {
-        console.log('loggged');
-      });
+      app.auth_facebook_login(response); 
     } else {
       // the user isn't logged in to Facebook or hasn't auth 
       FB.login();
@@ -338,21 +351,18 @@ app.facebook_login = function() {
 };
 
 app.auth_facebook_login = function(auth, callback) {
-  console.log('authing fb to be');
-  console.log(callback);
-
   FB.api('/me', function(user) {
     data = auth.authResponse;
     data.name = user.name;
     data.email = user.username + '@facebook.com';
     
     $.getJSON(app.backend + 'facebook_login', data, function(res) {
-      console.log('after login ');
-      console.log(res);
       app.token = res.data.token;
+      app.facebook_user = true;
       localStorage.setItem('token', app.token)
       localStorage.setItem('username', user.name)
       localStorage.setItem('password', '')
+      localStorage.setItem('facebook_user', true)
       if(callback)
         callback(res);
       app.show_game_list();
@@ -361,9 +371,12 @@ app.auth_facebook_login = function(auth, callback) {
 };
 
 app.logout = function() {
-  localStorage.setItem('token', '')
-  localStorage.setItem('username', '')
-  localStorage.setItem('password', '')
+  localStorage.setItem('token', '');
+  localStorage.setItem('username', '');
+  localStorage.setItem('password', '');
+  localStorage.setItem('facebook_user', false);
+  app.token = '';
+  app.facebook_user = false;
   $.ui.loadContent('#login', false, false);
 };
 
@@ -378,6 +391,7 @@ app.send_results = function(game_id,score){
 
 app.show_game_info = function(game_id){
   window.scrollTo(0,1);
+  $('#wodrs_title').removeClass('title_out');
   if(typeof game_id=='undefined')
     game_id=app.current_game.id;
 
@@ -389,6 +403,8 @@ app.show_game_info = function(game_id){
   }
 
   var game = app.get_game(game_id);
+  game.facebook_user = app.facebook_user;
+  console.log(game);
   $('#game_info').html($.template('view_game_info',{ game: game }));
   $.ui.loadContent('#game_info');
 };

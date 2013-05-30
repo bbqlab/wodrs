@@ -2,24 +2,30 @@
   <a href='request_player' id='request_player_button' class='button right'>
       <span class='active'>New game</span>
   </a>
-  <a href='settings' id='settings_button' class='settings'></a>
       <span class='requesting_player'>Requesting player</span>
-  <a href='start_game/-1' class='button left'>Training</a>
+  <a href='settings' id='settings_button' class='settings left'></a>
 </div>
 <div class='panel_content'>
 
-  <% 
-  if(games.running.length > 0) { %>
       <div class='box'>
         <h3>Your turn</h3>
         <ul id='running_games'>
+  <% 
+  if(games.running.length > 0) { %>
          <% for(game in games.running) { %>
             <%=$.template('view_game_row', {game: games.running[game]})%>
          <% } %>
-        </ul>
-      </div>
   <% 
     }
+  %>
+          <li style='color:#333;'>
+            <a href='start_game/-1'>
+              <span class='center'>Train yourself!</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+  <%
   
     if(games.running_opponent.length > 0) { %>
       <div class='box'>

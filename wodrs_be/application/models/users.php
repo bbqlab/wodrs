@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(20) NOT NULL,
   `created` datetime NOT NULL,
   `token` varchar(200),
+  `image` varchar(200),
   `email` varchar(100) NOT NULL,
   `ip` varchar(30) NOT NULL,
   `facebookId` varchar(100) NOT NULL,
@@ -70,6 +71,9 @@ class Users extends BaseEntity
 
       $game->player1 = $player1->username;
       $game->player2 = $player2->username;
+
+      $game->player1_img = $player1->image;
+      $game->player2_img = $player2->image;
 
       if($game->score2< 0 and $game->score1 >= 0)
       {
