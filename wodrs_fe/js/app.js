@@ -40,8 +40,46 @@ function App()
     $.ui.showBackbutton=false
 
     this.fill_background();
-
+    this.facebook_init();
   }
+
+  App.prototype.facebook_init = function() 
+  {
+    window.fbAsyncInit = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '257139571093057',         // App ID from the app dashboard
+        channelUrl : '//wodrs.com/channel.php', // Channel file for x-domain comms
+        status     : true,                      // Check Facebook Login status
+        xfbml      : true                       // Look for social plugins on the page
+      });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+        if (response.status === 'connected') {
+          console.log('logged with fb');
+          console.log(response);
+          app.auth_facebook_login(response, function(res) {
+            console.log(res);
+          });
+        } else if (response.status === 'not_authorized') {
+          FB.login();
+        } else {
+          FB.login();
+        }
+      });
+
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk')); 
+  }
+
 
   /* this is called on touch for every anchor (target represent the anchor DOM element)
    * search for a function of the app called as the href parameter and call it if needed (with parameters on need)
@@ -129,6 +167,7 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
+  console.log(games);
   $.ui.updateContentDiv('#game_list',$.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
   window.scrollTo(0,1);
@@ -285,6 +324,40 @@ app.login = function(storage, callback) {
 
 app.facebook_login = function() {
   console.log("Login with facebook");
+  FB.getLoginStatus(function(response) {
+    if (response.status === 'connected') {
+      // the user is logged in and has authenticated the app
+      app.auth_facebook_login(response, function(res) {
+        console.log('loggged');
+      });
+    } else {
+      // the user isn't logged in to Facebook or hasn't auth 
+      FB.login();
+    }
+  });
+};
+
+app.auth_facebook_login = function(auth, callback) {
+  console.log('authing fb to be');
+  console.log(callback);
+
+  FB.api('/me', function(user) {
+    data = auth.authResponse;
+    data.name = user.name;
+    data.email = user.username + '@facebook.com';
+    
+    $.getJSON(app.backend + 'facebook_login', data, function(res) {
+      console.log('after login ');
+      console.log(res);
+      app.token = res.data.token;
+      localStorage.setItem('token', app.token)
+      localStorage.setItem('username', user.name)
+      localStorage.setItem('password', '')
+      if(callback)
+        callback(res);
+      app.show_game_list();
+    });
+  });
 };
 
 app.logout = function() {
