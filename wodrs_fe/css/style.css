@@ -196,12 +196,18 @@ label {
   -moz-box-shadow: 10px 10px 5px #999;
   -webkit-box-shadow: 10px 10px 15px #999;
   box-shadow: 0 0 1px 1px #999;
+  padding-bottom:15px;
 }
 
 .box a,
 .box li {
   color:rgba(200,200,200,1);
   font-weight:normal;
+}
+
+.box ul li {
+  border-bottom:1px solid #999;
+  border-top:1px solid #666;
 }
 
 .box ul li a,
@@ -402,12 +408,12 @@ label {
 }
 
 #topten {
-  padding:20px;
   color:rgba(200,200,200,1);
 }
 
 #topten li {
    height:70px;
+   padding:10px 20px 65px;
    position:relative;
 }
 
@@ -418,8 +424,11 @@ label {
   font-size:25px;
 }
 
+#topten .player_avatar {
+  left 0px !important;
+}
 #topten .player_name {
-  left:65px;
+  left:75px;
 }
 
 #topten .player_score {
@@ -531,7 +540,6 @@ label {
   position:absolute;
   width:100px;
   display:block;
-<<<<<<< HEAD
 }
 
 .player1_name {
@@ -556,21 +564,6 @@ label {
 
 .player_avatar {
   position:absolute;
-=======
-  text-align:center;
-  margin:20px;
-}
-
-.player_avatar img {
-  border:5px solid  #111;
-  border-radius:4px;
-}
-
-.avatar .player_name {
-  font-size:20px;
-  color:#fff;
-  height:60px;
->>>>>>> 77e41db1bc610013bddcb6d022e6ba2bbc2e558f
 }
 
 .game_score {

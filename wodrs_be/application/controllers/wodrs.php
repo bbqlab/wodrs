@@ -20,7 +20,7 @@ class Wodrs extends CI_Controller {
 
     $user->loadFromUsername($username);
 
-    if($user->password == $password)
+    if($user->password == $password and $user->isValid())
     {
       $user->token = $this->session->userdata('session_id');
       $user->save();
