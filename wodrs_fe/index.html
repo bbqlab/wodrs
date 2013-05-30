@@ -17,6 +17,9 @@
     
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      $.ui.autoLaunch = false;
+    </script>
     <script src="js/jq.template.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.desktopBrowsers.js" type="text/javascript" charset="utf-8"></script>
 
@@ -48,6 +51,16 @@
 
     <div id='jQUi'>
 
+
+    <div id="splashscreen" class='ui-loader'>
+        <span class='ui-icon ui-icon-loading load_animation'></span><h1 >Starting</h1>
+        <br><br><br><br><br>
+        <p class='description'>Wodrs helps you to improve your writing speed on computer keyboards!<br>
+        Challenge your friends and your colleagues, 
+        test your skills as a typist and try to get into the top ten!</p>
+        <a class='button' onclick='$.ui.launch();'>Play!</a>
+    </div>
+
       <header id='game_play_header'>
           <div class='game_score right'>0/0 (0)</div>
           <div class='game_timer left'>1:00</div>
@@ -71,8 +84,7 @@
         google_ad_height = 250;
         //-->
         </script>
-        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script> 
       </div>
 
       <div class='ads' id='ads_right'>
@@ -84,9 +96,7 @@
         google_ad_height = 250;
         //-->
         </script>
-        <script type="text/javascript"
-        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-        </script>
+        <script type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script> 
       </div>
 
 
@@ -143,7 +153,6 @@
 
         <div class='panel' id='settings' title='Settings' data-header='none'
              data-footer='none' style=''>
-
 
         </div>
 

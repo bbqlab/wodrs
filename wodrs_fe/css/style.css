@@ -435,7 +435,7 @@ label {
     position:absolute;
     margin:0px;
     display: block !important;
-    top: 100px;
+    top: 0px;
   } 
 
   #ads_right {
@@ -454,3 +454,12 @@ label {
 }
 
 
+
+.description {
+  box-shadow: rgba(50, 50, 50, 0.5) 0px 0px 43px inset;
+  border-radius: 23px;
+  font-size: 18px;
+  line-height: 21px;
+  font-weight: normal;
+
+}
