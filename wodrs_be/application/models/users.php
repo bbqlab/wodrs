@@ -25,6 +25,7 @@ class Users extends BaseEntity
   var $created;
   var $token;
   var $email;
+  var $image;
 
   public function listGames()
   {
@@ -77,5 +78,13 @@ class Users extends BaseEntity
     }
     
     return $list;
+  }
+
+  public function getSettings()
+  {
+    return array(
+      'username'  => $this->username,
+      'image'     => $this->image
+    );
   }
 }

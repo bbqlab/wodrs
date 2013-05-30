@@ -4,7 +4,7 @@ function App()
   this.online = false;
   
   /* load templates */
-  this.views = ['game_row','results','game_info','games_list','topten_row'];
+  this.views = ['game_row','results','game_info','games_list','topten_row','settings'];
   App.prototype.load_views = function() {
     $.each(this.views, function(index, view) { 
       $.get('views/' + view + '.js', function(data) {
@@ -54,7 +54,7 @@ function App()
     url = $(target).attr('href');
     args = url.split('/');
     controller = args[0];
-    
+
     try
     {
       if( typeof app[controller] == 'function' )
@@ -320,6 +320,13 @@ app.show_game_info = function(game_id){
   $.ui.loadContent('#game_info');
 };
 
+app.settings = function(){
+  window.scrollTo(0,1);
+  $.getJSON(app.backend + 'get_user_settings', {token: app.token}, function(res) {
+      $('#settings').html($.template('view_settings',{ settings: res.data }));
+      $.ui.loadContent('#settings');
+  });
+}
 
 app.animate_logo = function(ev) {
 };

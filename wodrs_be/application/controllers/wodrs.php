@@ -147,6 +147,19 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
+  public function get_user_settings()
+  {
+    $token = $this->input->get('token');
+    $response = array('error' => false,
+                      'data' => array());
+
+    $user = new Users();
+    $user->loadFromToken($token);
+
+    $response['data'] = $user->getSettings();
+    $this->response($response);
+  }
+
   public function send_results()
   {
     $gamesId = $this->input->get('game_id');
