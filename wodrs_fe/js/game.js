@@ -2,7 +2,7 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 60;//app['game_time'];
+  this.game_time = 2;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
@@ -72,6 +72,7 @@ WodrsGame.prototype.timer_tick = function() {
 
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
+    $('#words_slider').removeClass('animate');
     app.send_results(this.id,this.score);
 
     this.precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
@@ -95,6 +96,8 @@ WodrsGame.prototype.stop = function() {
       $('#stats_n_key_pressed').css('width',stats_n_key_pressed + '%');
       $('#stats_n_key_matched').css('width',stats_n_key_matched + '%');
 
+      $('#score_label').addClass('score_label_big');
+      $('#score_number').addClass('score_number_big');
     }
 
     setTimeout(set_results,500);//$('#stats_precision').css('width','"+ precision + "%');",500);
