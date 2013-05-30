@@ -16,41 +16,45 @@
        else if(game.score2>game.score1) {%>You lose!<%} 
        else {%>Draw!<%}%> 
     </h3>
+    <ul>
+    <li style='position:relative' class='wrapper'>
+ <span class='avatar right'>
+   <div class='player_avatar player2_avatar'>
+     <img src='<%=game.player2_img%>'>
+   </div>
+   <div class='player_name player2_name'>
+     <%=game.player2%>
+   </div>
+ </span>
 
-       <span class='avatar right'>
-         <div class='player_name'>
-           <%=game.player2%>
-         </div>
-         <div class='player_avatar'>
-           <img src='<%=game.player2_img%>'>
-         </div>
-       </span>
+ <span class='avatar left'>
+   <div class='player_name player1_name'>
+     <%=game.player1%>
+   </div>
+   <div class='player_avatar player1_avatar'>
+     <img src='<%=game.player1_img%>'>
+   </div>
+ </span>
 
-       <span class='avatar left'>
-         <div class='player_name'>
-           <%=game.player1%>
-         </div>
-         <div class='player_avatar'>
-           <img src='<%=game.player1_img%>'>
-         </div>
-       </span>
+ <span class='game_score'>
+   <%if( game.score2 == -1 ) { %>
+     <span>X</span>
+   <% } else { %>
+     <span><%=game.score2%></span>
+   <% } %>
+    -
+   <%if( game.score1 == -1 ) { %>
+     <span>X</span>
+   <% } else { %>
+     <span><%=game.score1%></span>
+   <% } %>
+ </span>
 
-       <span class='game_score'>
-         <%if( game.score1 == -1 ) { %>
-           <span>X</span>
-         <% } else { %>
-           <span><%=game.score1%></span>
-         <% } %>
-         -
-         <%if( game.score2 == -1 ) { %>
-           <span>X</span>
-         <% } else { %>
-           <span><%=game.score2%></span>
-         <% } %>
-     </span>
-
-     <div style='clear:both'></div>
     </div>
+
+    <div style='clear:both'></div>
+  </li>
+  </ul>
   </div>
 </div>
 

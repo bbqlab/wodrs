@@ -47,7 +47,7 @@ class Users extends BaseEntity
     Wodrs::log($game->db->last_query());
     $completed = $game->search("(player1 = '{$this->usersId}' OR " .
                                " player2 = '{$this->usersId}') AND " .
-                               " state = 'completed'",'','',
+                               " state = 'completed'",6,'',
                                array('date','DESC'));
 
 
