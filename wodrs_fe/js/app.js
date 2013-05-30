@@ -184,6 +184,7 @@ app.fill_game_list = function(games) {
   console.log(games);
   $.ui.updateContentDiv('#game_list',$.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
+  $('#wodrs_title').addClass('wodrs_title_animation');
   window.scrollTo(0,1);
 };
 

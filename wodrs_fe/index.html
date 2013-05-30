@@ -18,7 +18,7 @@
     <script src="js/jq.mobi.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.ui.js" type="text/javascript" charset="utf-8"></script>
     <script>
-      $.ui.autoLaunch = true;
+      $.ui.autoLaunch = false;
     </script>
     <script src="js/jq.template.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jq.desktopBrowsers.js" type="text/javascript" charset="utf-8"></script>
@@ -30,27 +30,12 @@
     <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
     <script src="dictionaries/dict.js" type="text/javascript" charset="utf-8"></script>
 
-
   </head>
 
   <body>
-    <div id='background'></div>
     <div id='fb_root'></div>
 
-     <!-- 
-    <script type="text/javascript" src="https://www.tapgage.net/index.php/c_js/ads_pre/"></script>
-    <script type="text/javascript">
-        var tapgage_app_id = '2bddcdf7c78b0e9fb49e8350168670e4';
-        var tapgage_interval = 3;
-        var tapgage_new_tab = 0;
-    </script> 
-    <script type="text/javascript" src="js/tapgage.js"></script>
-    <a id="id_tapgage_popup_link" class="tapgage_popup_link" href="#id_tapgage_popup" style="display:none">Click</a>
-    <div id="id_tapgage_popup" style="display:none">Please wait...</div>
-    -->
-
     <div id='jQUi'>
-
 
     <div id="splashscreen" class='ui-loader'>
         <div class='panel_content'>
@@ -63,12 +48,6 @@
         </div>
     </div>
 
-      <header id='game_play_header'>
-          <div class='game_score right'>0/0 (0)</div>
-          <div class='game_timer left'>1:00</div>
-          <div class='word_typer'></div>
-      </header>
-      
       <div id='wodrs_title'>
         <span class='red'>W</span>
         <span class='orange'>o</span>
@@ -77,6 +56,7 @@
         <span class='green'>s</span>
       </div>
 
+      <div id='content'>
       <div class='ads' id='ads_left' >
         <script type="text/javascript"><!--
         if(window.innerWidth>=1000){
@@ -103,23 +83,19 @@
         <script type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script> 
       </div>
 
-      <div id='content'>
-        <div class='panel' id='register' title='Wodrs sign in' data-header='none' 
-             data-footer='none'>
+
+        <div class='panel' id='register' title='Wodrs sign in' data-header='none' data-footer='none'>
             <div class='panel_header'></div>
             <div class='panel_content'>
-              <input class='jq-ui-forms' id='reg_username' 
-                     placeholder='Choose a username'/>
-              <input class='jq-ui-forms' type='password' id='reg_password' 
-                     placeholder='Choose a password'/>
+              <input class='jq-ui-forms' id='reg_username' placeholder='Choose a username'/>
+              <input class='jq-ui-forms' type='password' id='reg_password' placeholder='Choose a password'/>
               <div class='center'>
                 <a class='button' href='register'/>Sign in</a>
               </div>
             </div>
         </div>
 
-        <div class='panel' id='login' title='Wodrs login' data-header='none'
-             data-footer='none' selected=true>
+        <div class='panel' id='login' title='Wodrs login' data-header='none' data-footer='none' selected=true>
             <div class='panel_header'></div>
             <div class='panel_content'>
               <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
@@ -135,7 +111,12 @@
         <div class='panel' id='game_list' title='Wodrs' data-footer='none' data-header='none'>
         </div>
 
-        <div class='panel' id='game_play' data-header='game_play_header' data-footer='none' style='overflow: hidden;'>
+        <div class='panel' id='game_play' data-header='none' data-footer='none' style='overflow: hidden;'>
+          <div class='panel_header'>
+            <div class='game_score right'>0/0 (0)</div>
+            <div class='game_timer left'>1:00</div>
+            <div class='word_typer'></div>
+          </div>
           <input type='text' id='typing'>
           <div id='wrong_letters' class='letter_fader right'></div>
           <div id='correct_letters' class='letter_fader left'></div>
