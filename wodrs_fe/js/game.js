@@ -72,20 +72,16 @@ WodrsGame.prototype.timer_tick = function() {
 
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
-    $('#words_slider').removeClass('animate');//[0].style.webkitAnimationDuration='7s';
-
-
     app.send_results(this.id,this.score);
 
-    var precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
+    this.precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
     this.unbind_events();
 
     $.ui.loadContent('#results', false, false );
     app.set_game_score(this.id,this.score);
-    $('#results_score').html('Score: ' + this.score );
-    $('#results_precision').html('Precision: ' + precision + '%' );
-    $('#results_n_key_pressed').html('Pressed keys: ' + this.n_key_pressed );
-    $('#results_n_key_matched').html('Matched keys: ' + this.n_key_matched );
+
+    this.facebook_user = app.facebook_user;
+    $('#results').html($.template('view_results',{ game: this }));
 
     setTimeout( "$('#typing')[0].blur();", 40);
 

@@ -58,9 +58,7 @@ function App()
         if (response.status === 'connected') {
           console.log('logged with fb');
           console.log(response);
-          app.auth_facebook_login(response, function(res) {
-            console.log(res);
-          });
+          app.auth_facebook_login(response);
         } else if (response.status === 'not_authorized') {
           FB.login();
         } else {
@@ -159,6 +157,7 @@ app.main = function(){
 };
 
 app.show_game_list = function() {
+  $('#words_slider').removeClass('animate');
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
     app.fill_game_list(res.data.games);
   });
@@ -327,9 +326,7 @@ app.facebook_login = function() {
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       // the user is logged in and has authenticated the app
-      app.auth_facebook_login(response, function(res) {
-        console.log('loggged');
-      });
+      app.auth_facebook_login(response); 
     } else {
       // the user isn't logged in to Facebook or hasn't auth 
       FB.login();
@@ -338,21 +335,18 @@ app.facebook_login = function() {
 };
 
 app.auth_facebook_login = function(auth, callback) {
-  console.log('authing fb to be');
-  console.log(callback);
-
   FB.api('/me', function(user) {
     data = auth.authResponse;
     data.name = user.name;
     data.email = user.username + '@facebook.com';
     
     $.getJSON(app.backend + 'facebook_login', data, function(res) {
-      console.log('after login ');
-      console.log(res);
       app.token = res.data.token;
+      app.facebook_user = true;
       localStorage.setItem('token', app.token)
       localStorage.setItem('username', user.name)
       localStorage.setItem('password', '')
+      localStorage.setItem('facebook_user', true)
       if(callback)
         callback(res);
       app.show_game_list();
@@ -364,6 +358,7 @@ app.logout = function() {
   localStorage.setItem('token', '')
   localStorage.setItem('username', '')
   localStorage.setItem('password', '')
+  localStorage.setItem('facebook_user', false)
   $.ui.loadContent('#login', false, false);
 };
 
@@ -389,6 +384,8 @@ app.show_game_info = function(game_id){
   }
 
   var game = app.get_game(game_id);
+  game.facebook_user = app.facebook_user;
+  console.log(game);
   $('#game_info').html($.template('view_game_info',{ game: game }));
   $.ui.loadContent('#game_info');
 };
