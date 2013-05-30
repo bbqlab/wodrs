@@ -10,19 +10,19 @@
 
 <a href='show_game_info/<%=game.gamesId%>'>
  <span class='avatar right'>
-   <div class='player_name'>
-     <%=game.player2%>
-   </div>
-   <div class='player_avatar'>
+   <div class='player_avatar player2_avatar'>
      <img src='<%=game.player2_img%>'>
+   </div>
+   <div class='player_name player2_name'>
+     <%=game.player2%>
    </div>
  </span>
 
  <span class='avatar left'>
-   <div class='player_name'>
+   <div class='player_name player1_name'>
      <%=game.player1%>
    </div>
-   <div class='player_avatar'>
+   <div class='player_avatar player1_avatar'>
      <img src='<%=game.player1_img%>'>
    </div>
  </span>
