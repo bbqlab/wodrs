@@ -16,7 +16,6 @@
     <div class='meter'><span id='stats_n_key_matched'><span></div><br>
 
     <%if(game.facebook_user) {%>
-       <a href='show_game_info' class='button center'>Share on facebook</a>
     <%}%>
 
     <a href='show_game_info' class='button center'>Done</a>
