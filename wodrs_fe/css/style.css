@@ -429,7 +429,8 @@ label {
 }
 
 
-@media handheld, only screen and (min-width: 1000px){
+/*
+@media handheld, only screen and (min-width: 1000px){ */
 
   .ads { 
     position:absolute;
@@ -446,12 +447,12 @@ label {
     left: 0px;
   }
 
-
+/*
 }
 
 .ads {
   display: none;
-}
+}*/
 
 
 
