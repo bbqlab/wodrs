@@ -11,4 +11,6 @@
     <% } %>
     <input class='jq-ui-forms' id='username' read-only value='<%=settings.username%>' />
     <input class='jq-ui-forms' id='save_profile' type='button' value='Save' />
+
+    <a class='button' href='logout'>Logout</a>
 </div>

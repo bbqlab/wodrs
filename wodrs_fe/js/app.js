@@ -39,7 +39,7 @@ function App()
     $.ui.customClickHandler = this.clickHandler;
     $.ui.showBackbutton=false
 
-    this.fill_background();
+//    this.fill_background();
     this.facebook_init();
   }
 
@@ -157,7 +157,7 @@ app.main = function(){
 };
 
 app.show_game_list = function() {
-  $('#words_slider').removeClass('animate');
+
   $.getJSON(app.backend + 'list_games', {token: app.token}, function(res) {
     app.fill_game_list(res.data.games);
   });
@@ -251,7 +251,6 @@ app.start_game = function(game_id) {
 };
 
 app.stop_game = function() {
-  $('#wodrs_title').removeClass('title_out');
   app.current_game.stop();
 }
 
@@ -373,6 +372,7 @@ app.send_results = function(game_id,score){
 
 app.show_game_info = function(game_id){
   window.scrollTo(0,1);
+  $('#wodrs_title').removeClass('title_out');
   if(typeof game_id=='undefined')
     game_id=app.current_game.id;
 
