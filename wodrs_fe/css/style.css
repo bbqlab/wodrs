@@ -109,7 +109,7 @@ label {
 
 @-webkit-keyframes grow_number {
   0% {font-size: 35px; opacity:0}
-  100% { font-size: 150px; opacity:1 }
+  100% { font-size: 135px; opacity:1 }
 }
 
 #score_label {
@@ -134,7 +134,7 @@ label {
 
 .score_number_big {
   -webkit-animation: grow_number 1s;
-  font-size:150px !important;
+  font-size:135px !important;
   opacity:1 !important;
 }
 

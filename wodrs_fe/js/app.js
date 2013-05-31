@@ -40,7 +40,7 @@ function App()
     $.ui.customClickHandler = this.clickHandler;
     $.ui.showBackbutton=false
 
-//    this.fill_background();
+    //this.fill_background();
 //    this.facebook_init();
   }
 
