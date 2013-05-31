@@ -57,8 +57,6 @@ function App()
 
       FB.Event.subscribe('auth.authResponseChange', function(response) {
         if (response.status === 'connected') {
-          console.log('logged with fb');
-          console.log(response);
           app.auth_facebook_login(response);
         } else if (response.status === 'not_authorized') {
           FB.login();
@@ -91,7 +89,6 @@ function App()
 
     app.target = target;
     url = $(target).attr('href');
-    console.log(target);
 
     try
     {
@@ -141,10 +138,8 @@ function onUpdateAvailable(evt)
 
 app.main = function(){
   app.load_settings();
-  console.log(app);
   if(app.username != '' && app.password != '')
   {
-    console.log('trying to login 323kl');
     if(!app.is_logged())
     {
       app.login(true, function() {
@@ -161,12 +156,10 @@ app.main = function(){
     }
     else
     {
-      console.log('is logged');
       app.show_game_list();
     }
   }
   else {
-    console.log('trying to login with fb');
     app.facebook_login();
   }
 
@@ -181,7 +174,6 @@ app.show_game_list = function() {
 app.fill_game_list = function(games) {
   var html = '';
   app.game_list=games;
-  console.log(games);
   $.ui.updateContentDiv('#game_list',$.template('view_games_list',{ games: app.game_list }));
   $.ui.loadContent('#game_list', false, false);
   $('#wodrs_title').addClass('wodrs_title_animation');
@@ -296,7 +288,6 @@ app.register = function() {
 };
 
 app.is_logged = function() {
- console.log('token is ' + app.token);
   return app.token != '';
 };
 
@@ -338,9 +329,7 @@ app.login = function(storage, callback) {
 };
 
 app.facebook_login = function() {
-  console.log("Login with facebook");
   FB.getLoginStatus(function(response) {
-    console.log(response);
     if (response.status === 'connected') {
       // the user is logged in and has authenticated the app
       app.auth_facebook_login(response); 
@@ -405,7 +394,6 @@ app.show_game_info = function(game_id){
 
   var game = app.get_game(game_id);
   game.facebook_user = app.facebook_user;
-  console.log(game);
   $('#game_info').html($.template('view_game_info',{ game: game }));
   $.ui.loadContent('#game_info');
 };
