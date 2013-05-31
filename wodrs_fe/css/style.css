@@ -264,6 +264,7 @@ label {
   100% { -moz-transform: rotateX(0deg); }
 }
 
+/*
 
 @-webkit-keyframes rotate2 {
   0% { -webkit-transform: rotateX(360deg); }
@@ -284,10 +285,11 @@ label {
   0% { -moz-transform: rotateX(360deg); }
   100% { -moz-transform: rotateX(0deg); }
 }
+*/
 
 .animate {
-  -webkit-animation:  rotate1 10s linear 3 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s;
-  -moz-animation:  rotate1 10s linear 3 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s; 
+  -webkit-animation:  rotate1 10s linear infinite;/* 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s;*/
+  -moz-animation:  rotate1 10s linear infinite;/* rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s; */
   opacity: 1 !important;
 }
 
