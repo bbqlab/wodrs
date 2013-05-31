@@ -31,8 +31,7 @@
 }
 
 body {
-  background: #cfcfcf url(bk.png);
-  background: #111;
+  background: #252525 url(bk.png);
   background-size: 90px;
 }
 
@@ -67,7 +66,6 @@ label {
 
 #wodrs_title {
   text-align:center;
-  letter-spacing:-22px;
   font-size:150px;
   margin-top:95px;
   text-shadow:0px 1px 1px #666;
@@ -75,6 +73,13 @@ label {
 /*  rgba(181,94,30,1);*/
   -webkit-transition: all 1s ease-out;
 }
+
+
+.wodrs_title_animation {
+  letter-spacing:-22px !important;
+  text-shadow: 0px 2px 7px rgba(100,150,150,.6) !important;
+}
+
 
 .title_out {
   opacity:0;
@@ -184,23 +189,23 @@ label {
 }
 
 .button {
-  background:rgba(100,100,100,0.8);
   font-weight:normal;
   text-shadow:0px 1px 1px #666;
   color:rgba(200,200,200,1);
   font-size:26px;
   margin-bottom:20px;
-  border-radius: 15px;
-  height:55px !important;
+  /* height:55px !important; */
   line-height: 40px !important;
-  padding:10px 20px;
-  -webkit-box-shadow: 10px 10px 15px #333;
-  box-shadow: 0 0 1px 1px #999;
+  padding:0px 20px;
+  box-shadow: 2px 3px 14px 0px #444;
+  -moz-transition: all 1s;
+  -webkit-transition: all 1s;
 }
 
-.button.selected {
-  background:rgba(100,100,100,0.5);
- 
+.button.pressed, .button.selected {
+  margin-top: 9px;
+  margin-left: 9px;
+  box-shadow: 0px 1px 10px 0px #444;
 }
 
 .box {
@@ -209,9 +214,7 @@ label {
   -moz-border-radius: 15px;
   border-radius: 15px;
   -moz-box-shadow: 10px 10px 5px #999;
-  -webkit-box-shadow: 10px 10px 15px #999;
-  box-shadow: 0 0 1px 1px #999;
-  padding-bottom:15px;
+  box-shadow: 0 0 3px 0px #888;
 }
 
 .box a,
@@ -221,18 +224,23 @@ label {
 }
 
 .box ul li {
-  border-bottom:1px solid #999;
-  border-top:1px solid #666;
+  border-top: 1px solid rgba(102, 102, 102, 0.4);
+  background-image: -webkit-gradient(linear,left top,right bottom,from(rgba(10, 10, 10, .95)),to(rgba(100, 100, 100, .8)));
 }
 
 .box ul li a,
 .box ul li.wrapper {
-  padding:15px 10px 50px;
+  padding:15px 10px 40px;
 }
 
 .box a:active {
   color:#333;
   background-color: rgba(200,200,200,0.3);
+}
+
+.box ul {
+  border-radius: 0px 0px 15px 15px;
+  overflow: hidden;
 }
 
 .box_big {
@@ -250,10 +258,10 @@ label {
 .box h3{
   padding:15px;
   text-shadow:0px 1px 1px #666 !important;
-  background:rgba(140,140,140,0.4);
   -moz-border-radius: 15px 15px 0px 0px;
   border-radius: 15px 15px 0px 0px;
-  }
+  background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(10, 10, 10, .95)),to(rgba(60, 60, 60, .95)));
+}
 
 .bounce {
   color: orange;
@@ -268,6 +276,13 @@ label {
   0% { -webkit-transform: rotateX(360deg); }
   100% { -webkit-transform: rotateX(0deg); }
 }
+
+@-moz-keyframes rotate1 {
+  0% { -moz-transform: rotateX(360deg); }
+  100% { -moz-transform: rotateX(0deg); }
+}
+
+/*
 
 @-webkit-keyframes rotate2 {
   0% { -webkit-transform: rotateX(360deg); }
@@ -284,9 +299,11 @@ label {
   0% { -moz-transform: rotateX(360deg); }
   100% { -moz-transform: rotateX(0deg); }
 }
+*/
 
 .animate {
-  -webkit-animation:  rotate1 10s linear 3 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s;
+  -webkit-animation:  rotate1 10s linear infinite;/* 0s, rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s;*/
+  -moz-animation:  rotate1 10s linear infinite;/* rotate2  5s linear 4 30s, rotate3 2.5s linear 4 50s; */
   opacity: 1 !important;
 }
 
@@ -362,6 +379,8 @@ label {
 
 .panel_header {
   height:70px;
+  -webkit-perspective: 800;
+
 }
 
 .panel_content {
@@ -506,7 +525,7 @@ label {
 }
 
 
-@media handheld, only screen and (min-width: 1000px){
+@media handheld, only screen and (min-width: 840px){
 
   .ads { 
     position:absolute;
@@ -548,6 +567,7 @@ label {
 
 .avatar img {
   border-radius:10px;
+  margin: 0px 5px 0px 5px;
 }
 
 .player_name {

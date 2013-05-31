@@ -173,14 +173,17 @@ z-index:2;
 	padding:0px 8px;
 	margin-top:6px; margin-left:6px; 
 	text-overflow:ellipsis; 
-	-webkit-border-radius:6px; border-radius:6px;
-	background-image:-webkit-gradient(linear,left top, left bottom, from(#fff), to(#999));
+	-webkit-border-radius:10px; border-radius:10px;
+  background-image: -webkit-gradient(linear,left top, left bottom, from(rgba(60, 60, 60, 0.3)), to(rgba(250, 70, 70, .4)));
+	/*background-image:-webkit-gradient(linear,left top, left bottom, from(#fff), to(#999));*/
+
 
 	background:linear-gradient(0deg, #999, #fff);
 
   line-height: 40px;
   font-size: 20px;
 } /* Styling for CSS-generated buttons, including the back button. These buttons can bue used anywhere in the UI. */
+
 
 .button.pressed {
 	color:#fff;
