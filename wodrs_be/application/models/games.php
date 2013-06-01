@@ -63,11 +63,10 @@ class Games extends BaseEntity
     if( $ret['is_topten_record'] ) return $ret;
 
     // check if it is personal record
-    $query = $this->db->query("SELECT MAX(score) personal_record FROM ranking WHERE player=" . $user->usersId;
+    $query = $this->db->query("SELECT MAX(score) personal_record FROM ranking WHERE player=" . $user->usersId);
     $personal_record = $query->result();
-    Wodrs::log("Check if personal record");
-    Wodrs::log($personal_record);
-    if($personal_record[0]['personal_record']==$score)
+
+    if($personal_record[0]->personal_record==$score)
       $ret['is_personal_record']=true;
 
     return $ret;

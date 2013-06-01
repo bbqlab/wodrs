@@ -129,6 +129,9 @@ class BaseEntity extends CI_Model {
 
   function loadFromAttribute( $attribute, $value )
   {
+    // TOFIX: use get_where in una sola riga con il limit, 
+    // se value == false sostituire con '' ma poi controlla
+    // se ci sono dei record restituiti altrimenti torna false
     $this->db->select('*')->from($this->table());
     $this->db->where(array( $attribute => $value ));
     $result = $this->db->get()->row();
