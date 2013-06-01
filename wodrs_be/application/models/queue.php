@@ -51,6 +51,7 @@ class Queue extends BaseEntity
     $query = $this->db->query('select count(*) as total from queue '.
                                "where usersId != '$usersId'");
     $data = $query->result_array();
+    Wodrs::log($data);
     return $data[0]['total'];
   }
 }

@@ -129,7 +129,9 @@ class Wodrs extends CI_Controller {
       // add new player
       $gameInfo = $queue->pop($user->usersId);
 
+      Wodrs::log($gameInfo);
       $game->load($gameInfo->gamesId);
+      Wodrs::log($game);
       $game->player2 = $user->usersId;
       $game->state = 'running';
       $game->save();

@@ -59,9 +59,9 @@ function App()
         if (response.status === 'connected') {
           app.auth_facebook_login(response);
         } else if (response.status === 'not_authorized') {
-          FB.login();
+          FB.login(function(){},{scope: 'publish_actions'});
         } else {
-          FB.login();
+          FB.login(function(){},{scope: 'publish_actions'});
         }
       });
 
@@ -160,7 +160,7 @@ app.main = function(){
     }
   }
   else {
-    app.facebook_login();
+       app.facebook_login();
   }
 
 };
@@ -335,7 +335,7 @@ app.facebook_login = function() {
       app.auth_facebook_login(response); 
     } else {
       // the user isn't logged in to Facebook or hasn't auth 
-      FB.login();
+      FB.login(function(){},{scope: 'publish_actions'});
     }
   });
 };
@@ -349,10 +349,13 @@ app.auth_facebook_login = function(auth, callback) {
     $.getJSON(app.backend + 'facebook_login', data, function(res) {
       app.token = res.data.token;
       app.facebook_user = true;
-      localStorage.setItem('token', app.token)
-      localStorage.setItem('username', user.name)
-      localStorage.setItem('password', '')
-      localStorage.setItem('facebook_user', true)
+      console.log(user);
+      app.facebook_id = user.id;
+      localStorage.setItem('token', app.token);
+      localStorage.setItem('username', user.name);
+      localStorage.setItem('password', '');
+      localStorage.setItem('facebook_user', true);
+      localStorage.setItem('facebook_id', user.id);
       if(callback)
         callback(res);
       app.show_game_list();
@@ -365,17 +368,51 @@ app.logout = function() {
   localStorage.setItem('username', '');
   localStorage.setItem('password', '');
   localStorage.setItem('facebook_user', false);
+  localStorage.setItem('facebook_id', '');
   app.token = '';
   app.facebook_user = false;
   $.ui.loadContent('#login', false, false);
 };
 
-app.send_results = function(game_id,score){
+app.send_results = function(game, score, callback){
+  console.log(game);
   $.getJSON( app.backend + 'send_results', 
-            { game_id: game_id, score: score, token: app.token }, 
+            { game_id: game.id, score: score, token: app.token }, 
             function(res){
+              console.log(res);
+              app.current_game.is_personal_record = res.data.is_personal_record;
+              app.current_game.is_topten_record = res.data.is_topten_record;
+              callback(game);
 
             });
+};
+
+app.send_results_to_fb = function(type, game) { 
+    var mess, name, description;
+    if(type == 'topten')
+    {
+      mess = "I joined Wodrs TopTen with  " + game.score +  " points!";
+      name = "Wodrs TopTen Record!";
+    }
+    else
+    {
+      mess = "I did my personal Wodrs record with  " + game.score +  " points!"
+      name = "Wodrs Personal Record!";
+    }
+ 
+    description = "Challenge your friends and your colleagues, " +
+         " test your skills as a typist and try to get into the top ten!";
+    
+    console.log('posting to fb for ' + app.facebook_id);
+    FB.api('/' + app.facebook_id + '/feed', 'POST', {
+      access_token: app.token,
+      message: mess,
+      name: name,
+      description:  description,
+      link: 'http://wodrs.com',
+      type: 'link'
+    }, function(data) { console.log(data) });
+
 };
 
 

@@ -73,35 +73,53 @@ WodrsGame.prototype.timer_tick = function() {
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
     $('#words_slider').removeClass('animate');
-    app.send_results(this.id,this.score);
+    app.send_results(this,this.score, function () {
+      game = app.current_game;
 
-    this.precision = (100*this.n_key_matched/this.n_key_pressed).toFixed(2);
-    this.unbind_events();
+      game.precision = (100*game.n_key_matched/game.n_key_pressed).toFixed(2);
+      game.unbind_events();
 
-    $.ui.loadContent('#results', false, false );
-    app.set_game_score(this.id,this.score);
+      $.ui.loadContent('#results', false, false );
+      app.set_game_score(game.id,game.score);
 
-    this.facebook_user = app.facebook_user;
-    $('#results').html($.template('view_results',{ game: this }));
+      game.facebook_user = app.facebook_user;
+      $('#results').html($.template('view_results',{ game: game }));
 
-    setTimeout( "$('#typing')[0].blur();", 40);
+      setTimeout( "$('#typing')[0].blur();", 40);
 
-    function set_results()
-    {
-      var game = app.current_game;
-      var precision = (100*game.n_key_matched/game.n_key_pressed);
-      var stats_n_key_pressed = (100*game.n_key_pressed/600);
-      var stats_n_key_matched = (100*game.n_key_matched/360);
-      $('#stats_precision').css('width',precision + '%');
-      $('#stats_n_key_pressed').css('width',stats_n_key_pressed + '%');
-      $('#stats_n_key_matched').css('width',stats_n_key_matched + '%');
+      function set_results()
+      {
+        var game = app.current_game;
+        var precision = (100*game.n_key_matched/game.n_key_pressed);
+        var stats_n_key_pressed = (100*game.n_key_pressed/600);
+        var stats_n_key_matched = (100*game.n_key_matched/360);
+        $('#stats_precision').css('width',precision + '%');
+        $('#stats_n_key_pressed').css('width',stats_n_key_pressed + '%');
+        $('#stats_n_key_matched').css('width',stats_n_key_matched + '%');
 
-      $('#score_label').addClass('score_label_big');
-      $('#score_number').addClass('score_number_big');
-    }
+        $('#score_label').addClass('score_label_big');
+        $('#score_number').addClass('score_number_big');
 
-    setTimeout(set_results,500);//$('#stats_precision').css('width','"+ precision + "%');",500);
+        if(game.is_topten_record){
+          $('#topten_record').addClass('record_popup_out');
+          if(app.facebook_user)
+          {
+            app.send_results_to_fb('topten', game);
+          }
+        }
 
+        if(game.is_personal_record) {
+          console.log('personal record');
+          $('#personal_record').addClass('record_popup_out');
+          if(app.facebook_user)
+          {
+            app.send_results_to_fb('personal', game);
+          }
+        }
+      }
+
+      setTimeout(set_results,500);//$('#stats_precision').css('width','"+ precision + "%');",500);
+    });
 };
 
 WodrsGame.prototype.key_down = function(evt) {

@@ -5,6 +5,12 @@
 </div>
 
 <div class='panel_content'>
+  <div id='topten_record' class='record_popup'>
+    TOPTEN RECORD!
+  </div>
+  <div id='personal_record' class='record_popup'>
+    PERSONAL RECORD!
+  </div>
   <div class='padder'>
     <h4 id='results_precision'>Precision: <%=game.precision%></h4>
     <div class='meter'><span id='stats_precision'><span></div><br>
