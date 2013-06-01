@@ -214,8 +214,11 @@ class Wodrs extends CI_Controller {
       $game = new Games($gamesId);
       if($game->gamesId != '')
         $completed = $game->setScore($user, $score);
-      
     }
+
+    $response = array('error' => false, 'data' => array());
+    $response['data'] = $game->checkRecords($user,$score);
+    $this->response($response);
   }
 
   /* private functions */

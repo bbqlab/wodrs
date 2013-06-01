@@ -42,6 +42,37 @@ class Games extends BaseEntity
     $this->turn = 1;
   }
 
+  public function checkRecords($user,$score)
+  {
+    $ret = array('is_personal_record'=> false, 'is_topten_record' => false);
+
+    // check if is topten record
+    $query = $this->db->query("SELECT player, MAX(score) AS score FROM ranking " .
+                              "GROUP BY player HAVING score > 0 " .
+                              "ORDER BY score DESC limit 10;");
+    $games = $query->result();
+    foreach($games as $game)
+    {
+      if($user->usersId==$game->player AND $game->score==$score)
+      {
+        $ret['is_topten_record'] = true;
+        break;
+      }
+    }
+
+    if( $ret['is_topten_record'] ) return $ret;
+
+    // check if it is personal record
+    $query = $this->db->query("SELECT MAX(score) personal_record FROM ranking WHERE player=" . $user->usersId;
+    $personal_record = $query->result();
+    Wodrs::log("Check if personal record");
+    Wodrs::log($personal_record);
+    if($personal_record[0]['personal_record']==$score)
+      $ret['is_personal_record']=true;
+
+    return $ret;
+  }
+
   public function getTopTen()
   {
     $topten = array();
