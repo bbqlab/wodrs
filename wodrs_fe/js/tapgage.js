@@ -15,7 +15,7 @@ function tapgage_init() {
 function tapgage_after_click_popup(is_error, url) {
 	if (is_error == 1) {
 		/* There is an error. Error message is passed on url var */
-		$('#id_tapgage_popup').html('There is an error : '+url);
+		jQuery('#id_tapgage_popup').html('There is an error : '+url);
 	} else {
 		/* redirect to URL */
 		if (0 == tapgage_new_tab) {
@@ -38,7 +38,7 @@ function tapgage_click_json(tapgage_json) {
 
 function tapgage_click_popup() {
 	post_data = 'client_js=1';
-	$.ajax({
+	jQuery.ajax({
 		url: tapgage_last_click_url(),
 		data : post_data,
 		cache: false,
@@ -61,10 +61,11 @@ function tapgage_click_popup() {
 }
 
 function tapgage_close_popup() {
-	$.fancybox.close(true);
+	jQuery.fancybox.close(true);
 }
 
 function tapgage_display_popup(icon, title, error_message, height, width) {
+  console.log('displaying popup');
 	if (1 == tapgage_fire) {
 		return false;
 	}
@@ -76,7 +77,8 @@ function tapgage_display_popup(icon, title, error_message, height, width) {
 		width = 250;
 	}
 
-	if (error_message != '') {/* There is an error */
+	if (error_message != '') {/* There is an error */ 
+    console.log('is error: ' + error_message);
 		test_string = '<div style="padding:1em 0.5em">'+error_message+'</div>';
 	} else {
 		if ('' == icon) {
@@ -105,19 +107,21 @@ function tapgage_display_popup(icon, title, error_message, height, width) {
 			//test_string += 'width = '+width+', height = '+height+' <img onclick="tapgage_click_popup()" alt="'+title+'" title="'+title+'" src="'+icon+'" border="0" style="cursor:pointer" />';
 		}
 	}
-	$('#id_tapgage_popup').html(test_string);
-	$('#id_tapgage_popup_link').trigger('click');
+	jQuery('#id_tapgage_popup').html(test_string);
+	jQuery('#id_tapgage_popup_link').trigger('click');
 	tapgage_fire = 1;
 }
 
 function tapgage_display_popup_json(tapgage_json) {
+  console.log(tapgage_json);
 	if (1 == tapgage_fire) {
 		return false;
 	}
 	/* alert(JSON.stringify(tapgage_json)); */
 	if (tapgage_json.is_error == 1) {
+    console.log('error');
 		if (tapgage_json.message.indexOf('skip') < 0) {
-			/* tapgage_display_popup('', '', tapgage_json.message, 0, 0); */
+			 tapgage_display_popup('', '', tapgage_json.message, 0, 0); 
 		}
 	} else {
 		tapgage_click_url = tapgage_json.offer_data[0].x_click_url;
@@ -130,21 +134,28 @@ function tapgage_last_click_url() {
 }
 
 function tapgage_load_popup_ads() {
+  console.log('loading popup ads');
 	if (!tapgage_app_id) {
 		tapgage_error = 'App ID is empty';
 		return 1;
 	}
+  console.log('setting post data');
 	post_data = 'app_id='+tapgage_app_id+'&sdk_version='+tapgage_sdk_version+'&screen_width='+tapgage_viewportwidth+'&screen_height='+tapgage_viewportheight+'&screen_width_2='+window.screen.width+'&screen_height_2='+window.screen.height+'&position=manual&client_js=1';
-	$.ajax({
+	jQuery.ajax({
 		url: tapgage_server + 'index.php/c_mobile_library_json/get_banner/?callback=tapgage_display_popup_json',
 		data : post_data,
 		cache: false,
-		type: 'GET',
+		type: 'POST',
 		dataType: 'jsonp',
 		jsonpCallback: 'tapgage_display_popup_json',
 		success: function(tapgage_json) {
+      console.log('success');
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
+      console.log('dsad');
+      console.log('text status: ' + textStatus);
+      console.log('text error: ' + errorThrown);
+
 			if (!textStatus) {
 				tapgage_error = textStatus;
 			} else if (!errorThrown) {
@@ -166,9 +177,9 @@ function tapgage_timer() {
 	}
 }
 
-$(document).ready(function() {
-	$('body').scrollTop(1);
-	$('.tapgage_popup_link').fancybox({
+jQuery(document).ready(function() {
+	jQuery('body').scrollTop(1);
+	jQuery('.tapgage_popup_link').fancybox({
 		modal: false,
 		autoSize: true,
 		autoCenter: true,

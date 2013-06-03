@@ -1573,6 +1573,7 @@ if (!window.jq || typeof (jq) !== "function") {
                             settings.dataType = "text/html";
                             break;
                         case "jsonp":
+                            console.log('jsonp ajax call');
                             return $.jsonP(opts);
                             break;
                     }

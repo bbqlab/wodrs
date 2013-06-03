@@ -11,7 +11,7 @@ App.prototype.load_settings = function()
                             token:['', false],
                             game_time: [60,false],
                             app_name: ['Wodrs',false],
-                            facebook_user:[false, false],
+                            facebook_user:[0, false],
                             facebook_id:['', false],
                             current_version: [0,false],
                             user: [null,true],

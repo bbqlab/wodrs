@@ -59,9 +59,11 @@ function App()
         if (response.status === 'connected') {
           app.auth_facebook_login(response);
         } else if (response.status === 'not_authorized') {
+          console.log('login 1');
           FB.login(function(){},{scope: 'publish_actions'});
         } else {
           FB.login(function(){},{scope: 'publish_actions'});
+          console.log('login 2');
         }
       });
 
@@ -160,7 +162,12 @@ app.main = function(){
     }
   }
   else {
+    console.log(app.facebook_user);
+    if(app.is_facebook_user())
+    {
+      console.log('fb returning user try to auth');
        app.facebook_login();
+    }
   }
 
 };
@@ -336,8 +343,13 @@ app.facebook_login = function() {
     } else {
       // the user isn't logged in to Facebook or hasn't auth 
       FB.login(function(){},{scope: 'publish_actions'});
+      console.log('login 3');
     }
   });
+};
+
+app.is_facebook_user = function() {
+   return app.facebook_user != 0;
 };
 
 app.auth_facebook_login = function(auth, callback) {
@@ -348,13 +360,13 @@ app.auth_facebook_login = function(auth, callback) {
     
     $.getJSON(app.backend + 'facebook_login', data, function(res) {
       app.token = res.data.token;
-      app.facebook_user = true;
+      app.facebook_user = 1;
       console.log(user);
       app.facebook_id = user.id;
       localStorage.setItem('token', app.token);
       localStorage.setItem('username', user.name);
       localStorage.setItem('password', '');
-      localStorage.setItem('facebook_user', true);
+      localStorage.setItem('facebook_user', 1);
       localStorage.setItem('facebook_id', user.id);
       if(callback)
         callback(res);
@@ -367,10 +379,12 @@ app.logout = function() {
   localStorage.setItem('token', '');
   localStorage.setItem('username', '');
   localStorage.setItem('password', '');
-  localStorage.setItem('facebook_user', false);
+  localStorage.setItem('facebook_user', 0);
   localStorage.setItem('facebook_id', '');
+
   app.token = '';
-  app.facebook_user = false;
+  app.facebook_user = 0;
+  console.log(app.facebook_user);
   $.ui.loadContent('#login', false, false);
 };
 
