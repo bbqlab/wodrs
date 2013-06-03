@@ -422,6 +422,7 @@ app.send_results_to_fb = function(type, game) {
       access_token: app.token,
       message: mess,
       name: name,
+      picture: 'http://wodrs.com/public/images/wodrs_icon.png',
       description:  description,
       link: 'http://wodrs.com',
       type: 'link'
