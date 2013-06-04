@@ -453,8 +453,18 @@ app.show_game_info = function(game_id){
 app.settings = function(){
   window.scrollTo(0,1);
   $.getJSON(app.backend + 'get_user_settings', {token: app.token}, function(res) {
+      res.data.facebook_user = app.facebook_user;
+      res.data.facebook_id = app.facebook_id;
       $('#settings').html($.template('view_settings',{ settings: res.data }));
       $.ui.loadContent('#settings');
+
+      $('.wodrs_avatar').click(function(ev) {
+        console.log($(this).attr('src'));
+        $('.wodrs_avatar_selected').removeClass('wodrs_avatar_selected');
+        $(this).addClass('wodrs_avatar_selected');
+        $.getJSON(app.backend + 'update_avatar', {token:app.token,
+                                               url:$(this).attr('src')}, function(res) {});
+      });
   });
 }
 
