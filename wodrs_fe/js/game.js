@@ -2,7 +2,7 @@ function WodrsGame(id){
   this.id = id;
   this.words = [];
   this.current_word = [];
-  this.game_time = 60;//app['game_time'];
+  this.game_time = 30;//app['game_time'];
   this.rules = { letter_weight: 10 };
   this.score = 0;
   this.words_slider = $('#words_slider');
@@ -13,7 +13,7 @@ function WodrsGame(id){
   this.audio_ok.push(new Audio('audio/ok2.wav'));
   this.audio_ok.push(new Audio('audio/ok3.wav'));
   this.typing = $('#typing');
-  this.faders = { 'correct': $('#correct_letters')[0], 'wrong': $('#wrong_letters')[0] };
+  this.faders = {'correct': $('#correct_letters')[0], 'wrong': $('#wrong_letters')[0]};
 
   for(i in this.audio_ok)
   {
@@ -73,7 +73,19 @@ WodrsGame.prototype.timer_tick = function() {
 WodrsGame.prototype.stop = function() {
     window.clearInterval(this.game_interval);
     $('#words_slider').removeClass('animate');
-    app.send_results(this,this.score, function () {
+    var game = app.current_game;
+    var precision = (100*game.n_key_matched/game.n_key_pressed);
+    var stats_n_key_pressed = (100*game.n_key_pressed/600);
+    var stats_n_key_matched = (100*game.n_key_matched/360);
+
+    var stats = {};
+
+    stats['key_pressed'] = game.n_key_pressed;
+    stats['key_bad'] = game.n_key_pressed - game.n_key_matched;
+    stats['key_good'] = game.n_key_matched;
+    stats['score'] = this.score;
+
+    app.send_results(this, stats, function () {
       game = app.current_game;
 
       game.precision = (100*game.n_key_matched/game.n_key_pressed).toFixed(2);
@@ -89,10 +101,6 @@ WodrsGame.prototype.stop = function() {
 
       function set_results()
       {
-        var game = app.current_game;
-        var precision = (100*game.n_key_matched/game.n_key_pressed);
-        var stats_n_key_pressed = (100*game.n_key_pressed/600);
-        var stats_n_key_matched = (100*game.n_key_matched/360);
         $('#stats_precision').css('width',precision + '%');
         $('#stats_n_key_pressed').css('width',stats_n_key_pressed + '%');
         $('#stats_n_key_matched').css('width',stats_n_key_matched + '%');
@@ -161,18 +169,18 @@ WodrsGame.prototype.check_word = function(letter) {
     $('#word_'+id).html(new_word);
     audio_ok = this.random_ok();
     audio_ok.play();
-    this.add_letter_fader(letter, 'correct');
-    this.clear_current_word();
+//    this.add_letter_fader(letter, 'correct');
+    this.clear_current_word('correct');
   }
   else if(id==-1) // right letter on uncompleted word
   {
-    this.add_letter_fader(letter, 'correct');
+//    this.add_letter_fader(letter, 'correct');
   }
   else if(id==-2) // wrong letter
   {
-    this.add_letter_fader(letter, 'wrong');
+//    this.add_letter_fader(letter, 'wrong');
     this.audio_error.play();
-    this.clear_current_word();
+    this.clear_current_word('wrong');
   }
 
   $('.game_score').html(this.score);
@@ -199,7 +207,28 @@ WodrsGame.prototype.word_hit = function(word) {
   $('.game_score').html(this.score);
 };
 
-WodrsGame.prototype.clear_current_word = function() {
+WodrsGame.prototype.current_word_out = function(type) {
+  var word_pos = $('.word_typer').offset();
+
+  console.log(word_pos);
+  $('.last_word').css({ top: word_pos.top, 
+                        left: word_pos.left});
+
+//  $('.last_word').css('top:'
+  console.log($('.iword').html());
+
+  $('.last_word').removeClass('last_word_out_' + type);
+  $('.last_word').html($('.iword').html());
+  $('.last_word').addClass('last_word_out_' + type);
+
+  setTimeout(function() {
+  //  $('.last_word').html('');
+    $('.last_word').removeClass('last_word_out_'+type);
+  }, 1000);
+};
+
+WodrsGame.prototype.clear_current_word = function(type) {
+  this.current_word_out(type);
   this.current_word = [];
   this.refresh_word();
 };
@@ -210,7 +239,16 @@ WodrsGame.prototype.add_letter = function(letter) {
 };
 
 WodrsGame.prototype.refresh_word = function() {
-  $('.word_typer').html(this.current_word.join(''));
+  if(this.current_word.length > 0)
+  {
+    $('.hint').css('opacity',0);
+    $('.iword').html(this.current_word.join(''));
+  }
+  else
+  {
+    $('.iword').html("...");
+    $('.hint').css('opacity',1);
+  }
 };
 
 WodrsGame.prototype.bind_events = function() {
