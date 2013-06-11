@@ -188,6 +188,24 @@ class Wodrs extends CI_Controller {
     $this->response($response);
   }
 
+  public function update_avatar()
+  {
+    $token = $this->input->get('token');
+    $url = $this->input->get('url');
+    $response = array('error' => true,
+                      'data' => array());
+
+    $user = new Users();
+    $user->loadFromToken($token);
+
+    if($user->isValid())
+    {
+      $user->image = $url;
+      $user->save();
+    }
+    $this->response($response);
+  }
+
   public function get_user_settings()
   {
     $token = $this->input->get('token');
@@ -197,7 +215,8 @@ class Wodrs extends CI_Controller {
     $user = new Users();
     $user->loadFromToken($token);
 
-    $response['data'] = $user->getSettings();
+    $response['data']['settings'] = $user->getSettings();
+    $response['data']['user'] = $user;
     $this->response($response);
   }
 
@@ -205,21 +224,25 @@ class Wodrs extends CI_Controller {
   {
     $gamesId = $this->input->get('game_id');
     $token = $this->input->get('token');
-    $score = $this->input->get('score');
+    $stats = $this->input->get('stats');
 
     $user = new Users();
     $user->loadFromToken($token);
-    Wodrs::log("Result {$user->username} for $gamesId: $score"); 
+    Wodrs::log("Result {$user->username} for $gamesId: {$stats['score']}"); 
 
     if($user->usersId != '')
     {
       $game = new Games($gamesId);
       if($game->gamesId != '')
-        $completed = $game->setScore($user, $score);
+      {
+        $completed = $game->setScore($user, $stats['score']);
+        $_stats = new Stats();
+        $_stats->evaluate($user, $game, $stats);
+      }
     }
 
     $response = array('error' => false, 'data' => array());
-    $response['data'] = $game->checkRecords($user,$score);
+    $response['data'] = $game->checkRecords($user,$stats['score']);
     $this->response($response);
   }
 
