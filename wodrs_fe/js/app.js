@@ -140,8 +140,10 @@ function onUpdateAvailable(evt)
 
 app.main = function(){
   app.load_settings();
+  console.log('main');
   if(app.username != '' && app.password != '')
   {
+    console.log('dsadsa');
     if(!app.is_logged())
     {
       app.login(true, function() {
@@ -167,6 +169,11 @@ app.main = function(){
     {
       console.log('fb returning user try to auth');
        app.facebook_login();
+    }
+    else
+    {
+      console.log('passing here');
+      $.ui.loadContent('#login', false, false);
     }
   }
 
@@ -336,6 +343,7 @@ app.login = function(storage, callback) {
 };
 
 app.facebook_login = function() {
+
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       // the user is logged in and has authenticated the app
@@ -388,10 +396,10 @@ app.logout = function() {
   $.ui.loadContent('#login', false, false);
 };
 
-app.send_results = function(game, score, callback){
+app.send_results = function(game, stats, callback){
   console.log(game);
   $.getJSON( app.backend + 'send_results', 
-            { game_id: game.id, score: score, token: app.token }, 
+            { game_id: game.id, stats: stats, token: app.token }, 
             function(res){
               console.log(res);
               app.current_game.is_personal_record = res.data.is_personal_record;

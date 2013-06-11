@@ -87,6 +87,8 @@
         </div>
     </div>
 
+
+
       <div id='wodrs_title'>
         <span class='red'>W</span>
         <span class='orange'>o</span>
@@ -96,7 +98,7 @@
       </div>
 
       <div id='content'>
-      <div class='ads' id='ads_left' >
+      <div class='ads' id='<ads_left></ads_left>' >
         <script type="text/javascript"><!--
           if(window.innerWidth>=850){
             google_ad_client = "ca-pub-9759098288036220";
@@ -123,18 +125,18 @@
       </div>
 
 
-        <div class='panel' id='register' title='Wodrs sign in' data-header='none' data-footer='none'>
-            <div class='panel_header'></div>
-            <div class='panel_content'>
-              <input class='jq-ui-forms' id='reg_username' placeholder='Choose a username'/>
-              <input class='jq-ui-forms' type='password' id='reg_password' placeholder='Choose a password'/>
-              <div class='center'>
-                <a class='button' href='register'/>Sign in</a>
-              </div>
-            </div>
+      <div class='panel' id='register' title='Wodrs sign in' data-header='none' data-footer='none'>
+        <div class='panel_header'></div>
+        <div class='panel_content'>
+          <input class='jq-ui-forms' id='reg_username' placeholder='Choose a username'/>
+          <input class='jq-ui-forms' type='password' id='reg_password' placeholder='Choose a password'/>
+          <div class='center'>
+            <a class='button' href='register'/>Sign in</a>
+          </div>
         </div>
+      </div>
 
-        <div class='panel' id='login' title='Wodrs login' data-header='none' data-footer='none' selected=true>
+        <div class='panel' id='login' title='Wodrs login' data-header='none' data-footer='none' true=selected>
             <div class='panel_header'></div>
             <div class='panel_content'>
               <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
@@ -149,6 +151,7 @@
             </div>
         </div>
 
+
         <div class='panel' id='game_list' title='Wodrs' data-footer='none' data-header='none'>
         </div>
 
@@ -156,7 +159,6 @@
           <div class='panel_header'>
             <div class='game_score right'>0/0 (0)</div>
             <div class='game_timer left'>1:00</div>
-            <div class='word_typer'></div>
           </div>
           <input type='text' id='typing'>
           <div id='wrong_letters' class='letter_fader right'></div>
@@ -169,7 +171,16 @@
             <div class='word' id='word_4'></div>
             <div class='word' id='word_5'></div>
           </div>
-          <a href='focus_keyboard' id='keyboard_icon'><img src='css/keyboard.png'></a>
+<!--          <a href='focus_keyboard' id='keyboard_icon'><img src='css/keyboard.png'></a>-->
+          <div class='typer'>
+            <div class='word_typer'>
+              <span class='inner_span'>
+                <i class='iword'>...</i>
+                <div class='last_word'></div>
+              </span>
+            </div>
+            <div class='hint'>Write!</div>
+          </div>
         </div>
 
         <div class='panel' id='game_info' title='Game' data-header='none'
@@ -186,5 +197,5 @@
 
         </div>
     </div>
-  </body>
+    </body>
 </html>
