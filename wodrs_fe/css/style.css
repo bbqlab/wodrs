@@ -31,8 +31,7 @@
 }
 
 body {
-  background: #252525 url(bk.png);
-  background-size: 90px;
+  background:#0f4550 url('wodrs_bg.png') repeat-x;
 }
 
 html,body,input {
@@ -66,6 +65,7 @@ label {
 
 #wodrs_title {
   text-align:center;
+  position:relative;
   font-size:150px;
   margin-top:95px;
   text-shadow:0px 1px 1px #666;
@@ -207,7 +207,7 @@ label {
 .typer {
   text-align:center;
   text-transform: lowercase;
-  margin-top:-40px;
+  margin-top:-80px;
 }
 
 .word_typer { 
@@ -296,14 +296,25 @@ label {
   text-shadow:0px 1px 1px #666;
   color:rgba(200,200,200,1);
   font-size:26px;
-  margin:10px 10px 20px;
-  height:45px;
+  margin:10px 0px 20px;
+  height:55px;
   /* height:55px !important; */
-  padding:5px 20px 13px;
-  background:rgba(0, 80, 80, 0.8);
-  box-shadow:0px 0px 20px rgba(0,255,255,0.5);
+  padding:10px 15px 18px;
   -moz-transition: all 1s;
   -webkit-transition: all 1s;
+  background-image: linear-gradient(top, rgb(39,173,197) 53%, rgb(26,118,137) 51%);
+  background-image: -o-linear-gradient(top, rgb(39,173,197) 53%, rgb(26,118,137) 51%);
+  background-image: -moz-linear-gradient(top, rgb(39,173,197) 53%, rgb(26,118,137) 51%);
+  background-image: -webkit-linear-gradient(top, rgb(39,173,197) 53%, rgb(26,118,137) 51%);
+  background-image: -ms-linear-gradient(top, rgb(39,173,197) 53%, rgb(26,118,137) 51%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.53, rgb(39,173,197)),
+    color-stop(0.51, rgb(26,118,137))
+  );
 }
 
 .button.pressed, .button.selected {
@@ -313,12 +324,27 @@ label {
 }
 
 .box {
-  background:rgba(100,100,100,0.8);
   margin-bottom:20px;
   -moz-border-radius: 15px;
   border-radius: 15px;
   -moz-box-shadow: 10px 10px 5px #999;
   box-shadow: 0 0 3px 0px #888;
+}
+
+.pink {
+  background:#f2696e;
+}
+
+.pink h3 {
+  background:#ad4455 !important;
+}
+
+.blue {
+  background:#27acc5;
+}
+
+.blue h3{
+  background:#1a7789 !important;
 }
 
 .box a,
@@ -329,7 +355,6 @@ label {
 
 .box ul li {
   border-top: 1px solid rgba(102, 102, 102, 0.4);
-  background-image: -webkit-gradient(linear,left top,right bottom,from(rgba(10, 10, 10, .95)),to(rgba(100, 100, 100, .8)));
 }
 
 .box ul li a,
@@ -428,7 +453,7 @@ label {
   width: 80%;
   text-align: center;
   height: 415px; 
-  margin-top: 18px;
+  margin-top: -30px;
   -webkit-transition: opacity .5s;
   transition: opacity 0.5s;
   opacity: 0;
@@ -731,3 +756,75 @@ label {
 .settings_content {
  padding:10px 80px;
 }
+
+
+.bg_footer {
+  position:fixed;
+  bottom:0px;
+  height:20px;
+  background:red;
+}
+
+#navbar {
+  background:#00a200;
+  height:30px;
+  poistion:relative;
+}
+
+
+.tree {
+  position:absolute;
+  background:url('tree.png') no-repeat;
+  top:-163px;
+  width:130px;
+  height:163px;
+}
+
+.tree_left {
+  left:30px;
+}
+
+.tree_right {
+  right:30px;
+}
+
+
+.tree_middle {
+  right:50px;
+  height:50px;
+  background-size:auto 50px;
+  top:-50px;
+}
+
+.cloud {
+  position:absolute;
+  background:url('cloud.png') no-repeat;
+  width:120px;
+  height:80px;
+}
+
+.cloud_left {
+  top:-90px;
+  left:15px;
+}
+
+.cloud_right {
+  top:-70px;
+  right:15px;
+}
+
+.cloud_topright {
+  top:20px;
+  right:50px;
+  height:50px;
+  background-size:auto 50px;
+}
+
+.cloud_topleft {
+  top:0px;
+  left:150px;
+  height:50px;
+  background-size:auto 50px;
+}
+
+

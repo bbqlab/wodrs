@@ -103,6 +103,10 @@
         <span class='yellow'>d</span>
         <span class='lgreen'>r</span>
         <span class='green'>s</span>
+        <div class='cloud cloud_left'></div>
+        <div class='cloud cloud_right'></div>
+        <div class='cloud cloud_topleft'></div>
+        <div class='cloud cloud_topright'></div>
       </div>
 
       <div id='content'>
@@ -133,7 +137,7 @@
       </div>
 
 
-      <div class='panel' id='register' title='Wodrs sign in' data-header='none' data-footer='none'>
+      <div class='panel' id='register' title='Wodrs sign in' data-header='none' >
         <div class='panel_header'></div>
         <div class='panel_content'>
           <input class='jq-ui-forms' id='reg_username' placeholder='Choose a username'/>
@@ -144,7 +148,7 @@
         </div>
       </div>
 
-        <div class='panel' id='login' title='Wodrs login' data-header='none' data-footer='none' true=selected>
+        <div class='panel' id='login' title='Wodrs login' data-header='none' true=selected>
             <div class='panel_header'></div>
             <div class='panel_content'>
               <input class='jq-ui-forms' id='login_username' placeholder='Username' value=''/>
@@ -160,10 +164,10 @@
         </div>
 
 
-        <div class='panel' id='game_list' title='Wodrs' data-footer='none' data-header='none'>
+        <div class='panel' id='game_list' title='Wodrs' data-header='none'>
         </div>
 
-        <div class='panel' id='game_play' data-header='none' data-footer='none' style='overflow: hidden;'>
+        <div class='panel' id='game_play' data-header='none'  style='overflow: hidden;'>
           <div class='panel_header'>
             <div class='game_score right'>0/0 (0)</div>
             <div class='game_timer left'>1:00</div>
@@ -192,18 +196,23 @@
         </div>
 
         <div class='panel' id='game_info' title='Game' data-header='none'
-             data-footer='none' style=''>
+              style=''>
         </div>
 
         <div class='panel' id='settings' title='Settings' data-header='none'
-             data-footer='none' style=''>
+              style=''>
 
         </div>
 
         <div class='panel' id='results' title='Finish!' data-header='none'
-             data-footer='none' style='overflow: hidden;' >
+              style='overflow: hidden;' >
 
         </div>
+    </div>
+    <div id='navbar'>
+      <div class='tree tree_left'></div>
+      <div class='tree tree_middle'></div>
+      <div class='tree tree_right'></div>
     </div>
     </body>
 </html>

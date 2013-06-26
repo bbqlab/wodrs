@@ -8,7 +8,7 @@
 
 
 <div class='panel_content'>
-  <div class='box'>
+  <div class='box blue'>
     <h3>
      <%if(game.score1==-1){%>Your turn!<%}
        else if(game.score2==-1) {%>Opponent turn!<%}

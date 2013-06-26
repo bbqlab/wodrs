@@ -4,7 +4,7 @@
 </div>
 <div class='panel_content'>
 
-      <div class='box'>
+      <div class='box blue'>
         <h3>Your turn</h3>
         <ul id='running_games'>
   <% 
@@ -25,7 +25,7 @@
   <%
   
     if(games.running_opponent.length > 0) { %>
-      <div class='box'>
+      <div class='box pink'>
         <h3>Opponent turn</h3>
         <ul id='opponent_games'>
          <% for(game in games.running_opponent) { %>
@@ -39,7 +39,7 @@
 
 
    if(games.topten.length > 0) { %>
-      <div class="box">
+      <div class="box blue">
         <h3>Top ten</h3>
         <ul id='topten'>
         <% for(score in games.topten) { %>
@@ -52,7 +52,7 @@
     }
 
    if(games.completed.length > 0) { %>
-      <div class="box">
+      <div class="box pink">
         <h3>Completed</h3>
         <ul id='completed_games'>
          <% for(game in games.completed) { %>
